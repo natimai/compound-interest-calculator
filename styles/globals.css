@@ -89,3 +89,10 @@ button {
   overflow-x: auto;
   margin-top: 20px;
 }
+.nav-link {
+    @apply text-gray-700 hover:text-blue-600 px-3 py-2 text-sm font-medium;
+  }
+  
+  .nav-link-active {
+    @apply text-blue-600;
+  }
