@@ -86,94 +86,104 @@ export const Calculator = () => {
   }
 
   return (
-    <div className="calculator">
-      <h1>מחשבון ריבית דריבית</h1>
-      
-      <div className="form-group">
-        <label htmlFor="initialAmount">סכום הפקדה ראשוני:</label>
-        <input type="number" id="initialAmount" placeholder="הסכום הראשוני שיופקד" />
-      </div>
+    <div className="calculator max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      {/* כותרת מעוצבת */}
+      <header className="text-center mb-12">
+        <h1 className="text-4xl font-bold text-gray-900 mb-4">מחשבון ריבית דריבית</h1>
+        <p className="text-xl text-gray-600">חשב את התשואה העתידית על ההשקעות שלך</p>
+      </header>
 
-      <div className="form-group">
-        <label htmlFor="monthlyDeposit">סכום הפקדה חודשי:</label>
-        <input type="number" id="monthlyDeposit" placeholder="הסכום שיופקד בכל חודש" />
-      </div>
-
-      <div className="form-group">
-        <label htmlFor="interestRate">תשואה שנתית ממוצעת:</label>
-        <input type="number" id="interestRate" placeholder="אחוז התשואה הממוצעת שיישיג התיק" />
-      </div>
-
-      <div className="form-group">
-        <label htmlFor="managementFeeDeposit">דמי ניהול מהפקדה (%):</label>
-        <input type="number" id="managementFeeDeposit" placeholder="אם אין דמי ניהול, השאר ריק או רשום 0" />
-      </div>
-
-      <div className="form-group">
-        <label htmlFor="managementFeeAccumulation">דמי ניהול מהצבירה (%):</label>
-        <input type="number" id="managementFeeAccumulation" placeholder="אם אין דמי ניהול, השאר ריק או רשום 0" />
-      </div>
-
-      <div className="form-group">
-        <label htmlFor="years">מספר שנות השקעה:</label>
-        <input type="number" id="years" placeholder="מספר השנים בהן יתבצעו ההפקדות החודשיות" />
-      </div>
-
-      <div className="form-group inline">
-        <input type="checkbox" id="capitalGainsTax" />
-        <label htmlFor="capitalGainsTax">מס רווחי הון (25% מהרווח)</label>
-      </div>
-
-      <button onClick={calculateCompoundInterest}>חשב</button>
-
-      {result && typeof result === 'object' && (
-        <div className="result">
-          <div className="summary">
-            <div>סך הפקדות: <span className="green">{formatNumber(result.totalDeposit)} ש"ח</span></div>
-            <div>רווחי ריבית: <span className="green">{formatNumber(result.totalInterest)} ש"ח</span></div>
-            {result.totalCapitalGainsTax > 0 && (
-              <div>מס רווחי הון: <span className="red">{formatNumber(result.totalCapitalGainsTax)} ש"ח</span></div>
-            )}
-            <div>עלות דמי ניהול: <span className="red">{formatNumber(result.totalFees)} ש"ח</span></div>
-            <div>סה"כ בקופה: <strong>{formatNumber(result.finalAmount)} ש"ח</strong></div>
-          </div>
-          
-          <div className="toggle-details" onClick={() => setShowYearlyDetails(!showYearlyDetails)}>
-            {showYearlyDetails ? 'הסתר פירוט' : 'הצג פירוט'}
-          </div>
-
-          {showYearlyDetails && (
-            <div id="details">
-              <table className="result-table">
-                <thead>
-                  <tr>
-                    <th>שנה</th>
-                    <th>הפקדות מצטברות</th>
-                    <th className="green">רווחים מצטברים</th>
-                    <th className="red">דמי ניהול מצטברים</th>
-                    <th>סה"כ חיסכון</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {yearlyData.map((year) => (
-                    <tr key={year.year}>
-                      <td>{year.year}</td>
-                      <td>{formatNumber(year.accumulatedDeposits)} ש"ח</td>
-                      <td className="green">{formatNumber(year.accumulatedInterest)} ש"ח</td>
-                      <td className="red">{formatNumber(year.accumulatedFees)} ש"ח</td>
-                      <td>{formatNumber(year.totalAmount)} ש"ח</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          )}
+      <div className="bg-white rounded-xl shadow-lg p-8">
+        <div className="form-group">
+          <label htmlFor="initialAmount">סכום הפקדה ראשוני:</label>
+          <input type="number" id="initialAmount" placeholder="הסכום הראשוני שיופקד" />
         </div>
-      )}
 
-      {result && typeof result === 'string' && (
-        <div className="error">{result}</div>
-      )}
+        <div className="form-group">
+          <label htmlFor="monthlyDeposit">סכום הפקדה חודשי:</label>
+          <input type="number" id="monthlyDeposit" placeholder="הסכום שיופקד בכל חודש" />
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="interestRate">תשואה שנתית ממוצעת:</label>
+          <input type="number" id="interestRate" placeholder="אחוז התשואה הממוצעת שיישיג התיק" />
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="managementFeeDeposit">דמי ניהול מהפקדה (%):</label>
+          <input type="number" id="managementFeeDeposit" placeholder="אם אין דמי ניהול, השאר ריק או רשום 0" />
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="managementFeeAccumulation">דמי ניהול מהצבירה (%):</label>
+          <input type="number" id="managementFeeAccumulation" placeholder="אם אין דמי ניהול, השאר ריק או רשום 0" />
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="years">מספר שנות השקעה:</label>
+          <input type="number" id="years" placeholder="מספר השנים בהן יתבצעו ההפקדות החודשיות" />
+        </div>
+
+        <div className="form-group inline">
+          <input type="checkbox" id="capitalGainsTax" />
+          <label htmlFor="capitalGainsTax">מס רווחי הון (25% מהרווח)</label>
+        </div>
+
+        <button onClick={calculateCompoundInterest} 
+          className="w-full mt-6 bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors">
+          חשב
+        </button>
+
+        {result && typeof result === 'object' && (
+          <div className="result mt-8">
+            <div className="summary bg-gray-50 p-6 rounded-lg">
+              <div>סך הפקדות: <span className="green">{formatNumber(result.totalDeposit)} ש"ח</span></div>
+              <div>רווחי ריבית: <span className="green">{formatNumber(result.totalInterest)} ש"ח</span></div>
+              {result.totalCapitalGainsTax > 0 && (
+                <div>מס רווחי הון: <span className="red">{formatNumber(result.totalCapitalGainsTax)} ש"ח</span></div>
+              )}
+              <div>עלות דמי ניהול: <span className="red">{formatNumber(result.totalFees)} ש"ח</span></div>
+              <div>סה"כ בקופה: <strong>{formatNumber(result.finalAmount)} ש"ח</strong></div>
+            </div>
+            
+            <div className="toggle-details text-center mt-6 text-blue-600 hover:text-blue-800 cursor-pointer"
+              onClick={() => setShowYearlyDetails(!showYearlyDetails)}>
+              {showYearlyDetails ? 'הסתר פירוט' : 'הצג פירוט'}
+            </div>
+
+            {showYearlyDetails && (
+              <div id="details" className="mt-6 overflow-x-auto">
+                <table className="result-table w-full">
+                  <thead>
+                    <tr className="bg-gray-50">
+                      <th className="p-2 border">שנה</th>
+                      <th className="p-2 border">הפקדות מצטברות</th>
+                      <th className="p-2 border green">רווחים מצטברים</th>
+                      <th className="p-2 border red">דמי ניהול מצטברים</th>
+                      <th className="p-2 border">סה"כ חיסכון</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {yearlyData.map((year) => (
+                      <tr key={year.year} className="hover:bg-gray-50">
+                        <td className="p-2 border">{year.year}</td>
+                        <td className="p-2 border">{formatNumber(year.accumulatedDeposits)} ש"ח</td>
+                        <td className="p-2 border green">{formatNumber(year.accumulatedInterest)} ש"ח</td>
+                        <td className="p-2 border red">{formatNumber(year.accumulatedFees)} ש"ח</td>
+                        <td className="p-2 border">{formatNumber(year.totalAmount)} ש"ח</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
+          </div>
+        )}
+
+        {result && typeof result === 'string' && (
+          <div className="error mt-4 text-red-600">{result}</div>
+        )}
+      </div>
     </div>
   )
 }
