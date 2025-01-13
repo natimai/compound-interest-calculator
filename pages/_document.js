@@ -28,7 +28,7 @@ export default function Document() {
           dangerouslySetInnerHTML={{
             __html: `
               var _protocol="https:"==document.location.protocol?"https://":"http://";
-              *site*hash_code = "2cb1a4b76981b924810fde6be5d7549b",_suid=57915, plerdyScript=document.createElement("script");
+              _site_hash_code = "2cb1a4b76981b924810fde6be5d7549b",_suid=57915, plerdyScript=document.createElement("script");
               plerdyScript.setAttribute("defer",""),plerdyScript.dataset.plerdymainscript="plerdymainscript",
               plerdyScript.src="https://d.plerdy.com/public/js/click/main.js?v="+Math.random();
               var plerdymainscript=document.querySelector("[data-plerdymainscript='plerdymainscript']");
