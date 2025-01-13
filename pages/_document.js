@@ -20,7 +20,7 @@ export default function Document() {
           }}
         />
         
-        {/* Plerdy Code */}
+        {/* Plerdy Main Code */}
         <script
           type="text/javascript"
           defer
@@ -36,6 +36,21 @@ export default function Document() {
               try{document.head.appendChild(plerdyScript)}catch(t){console.log(t,"unable add script tag")}
             `
           }}
+        />
+
+        {/* Plerdy A/B Testing Code */}
+        <script
+          type="text/javascript"
+          dangerouslySetInnerHTML={{
+            __html: `
+              var _suid=57915;
+            `
+          }}
+        />
+        <script
+          async
+          type="text/javascript"
+          src="https://d.plerdy.com/public/js/click/plerdy_ab-min.js?v=ab19b6a"
         />
       </Head>
       <body>
