@@ -9,7 +9,7 @@ const tooltips = {
   managementFeeDeposit: 'אחוז דמי הניהול שנגבים מכל הפקדה חדשה',
   managementFeeAccumulation: 'אחוז דמי הניהול השנתיים שנגבים מסך החיסכון',
   years: 'מספר השנים שבהן יימשך החיסכון',
-  capitalGainsTax: 'מס בשיעור 25% שיחול על הרווחים בלבד (לא על הקרן)'
+  capitalGainsTax: 'הפחתת מס בשיעור 25% מהרווחים (לא מהקרן)'
 };
 
 const InputWithTooltip = ({ id, label, value, onChange, error, tooltip }) => (
@@ -158,8 +158,8 @@ export const Calculator = () => {
   };
 
   return (
-<div className="w-full max-w-4xl mx-auto px-2 sm:px-6">
-        <div className="bg-white rounded-xl shadow-lg p-6 mb-8">
+    <div className="w-full max-w-4xl mx-auto px-2 sm:px-6">
+      <div className="bg-white rounded-xl shadow-lg p-6 mb-8">
         <h2 className="text-2xl font-bold text-gray-900 mb-6">מחשבון ריבית דריבית</h2>
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -203,7 +203,7 @@ export const Calculator = () => {
             id="managementFeeDeposit"
             label="דמי ניהול מהפקדה (%)"
             value={formData.managementFeeDeposit}
-            onChange={(e) => handleInputChange({ target: { name: 'managementFeeDeposit', value: e.target.value } })}
+            onChange={(e) => handleInputChange({ target: { name: 'managementFeeDeposit', value: e.target.value || '0' } })}
             error={errors.managementFeeDeposit}
             tooltip={tooltips.managementFeeDeposit}
           />
@@ -212,7 +212,7 @@ export const Calculator = () => {
             id="managementFeeAccumulation"
             label="דמי ניהול מצבירה (%)"
             value={formData.managementFeeAccumulation}
-            onChange={(e) => handleInputChange({ target: { name: 'managementFeeAccumulation', value: e.target.value } })}
+            onChange={(e) => handleInputChange({ target: { name: 'managementFeeAccumulation', value: e.target.value || '0' } })}
             error={errors.managementFeeAccumulation}
             tooltip={tooltips.managementFeeAccumulation}
           />
@@ -227,7 +227,7 @@ export const Calculator = () => {
               onChange={handleInputChange}
               className="w-4 h-4 text-blue-600 rounded border-gray-300 focus:ring-blue-500"
             />
-            <span className="text-sm text-gray-700">חישוב מס רווחי הון (25%)</span>
+            <span className="text-sm text-gray-700">הפחתת מס רווחי הון (25%)</span>
           </label>
         </div>
 
@@ -274,35 +274,35 @@ export const Calculator = () => {
           </div>
 
           {/* גרף התפתחות החיסכון */}
-<div className="h-64 mt-8">
-  <ResponsiveContainer width="100%" height="100%">
-    <LineChart
-      data={yearlyData}
-      margin={{ top: 5, right: 20, left: 20, bottom: 5 }} // הוספנו margin
-    >
-      <CartesianGrid strokeDasharray="3 3" />
-      <XAxis dataKey="year" />
-      <YAxis 
-        width={80} // קובע רוחב קבוע לציר ה-Y
-        tickFormatter={(value) => `₪${(value / 1000)}K`} // מקצר את המספרים
-        dx={-10} // מזיז את התוויות שמאלה
-      />
-      <Tooltip formatter={(value) => `₪${value.toLocaleString('he-IL', { maximumFractionDigits: 0 })}`} />
-      <Line 
-        type="monotone" 
-        dataKey="totalAmount" 
-        stroke="#2563eb"
-        name="סך הכל"
-      />
-      <Line 
-        type="monotone" 
-        dataKey="totalDeposit" 
-        stroke="#9ca3af"
-        name="הפקדות"
-      />
-    </LineChart>
-  </ResponsiveContainer>
-</div>
+          <div className="h-64 mt-8">
+            <ResponsiveContainer width="100%" height="100%">
+              <LineChart
+                data={yearlyData}
+                margin={{ top: 5, right: 20, left: 20, bottom: 5 }}
+              >
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="year" />
+                <YAxis 
+                  width={80}
+                  tickFormatter={(value) => `₪${(value / 1000)}K`}
+                  dx={-10}
+                />
+                <Tooltip formatter={(value) => `₪${value.toLocaleString('he-IL', { maximumFractionDigits: 0 })}`} />
+                <Line 
+                  type="monotone" 
+                  dataKey="totalAmount" 
+                  stroke="#2563eb"
+                  name="סך הכל"
+                />
+                <Line 
+                  type="monotone" 
+                  dataKey="totalDeposit" 
+                  stroke="#9ca3af"
+                  name="הפקדות"
+                />
+              </LineChart>
+            </ResponsiveContainer>
+          </div>
 
           <div className="mt-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
             <p className="text-sm text-gray-600">
