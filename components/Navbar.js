@@ -8,8 +8,8 @@ export const Navbar = () => {
     <nav className="bg-white shadow-lg">
       <div className="max-w-7xl mx-auto px-4">
         {/* תפריט ראשי */}
-        <div className="relative flex items-center justify-center h-16">
-          {/* כפתור המבורגר למובייל - עכשיו בצד ימין */}
+        <div className="relative flex items-center justify-between h-16">
+          {/* כפתור המבורגר למובייל */}
           <div className="absolute right-0 inset-y-0 flex items-center md:hidden">
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -50,7 +50,7 @@ export const Navbar = () => {
           </div>
 
           {/* לוגו במרכז */}
-          <div className="flex-1 flex items-center justify-center">
+          <div className="flex-1 flex items-center justify-center md:justify-start">
             <Link href="/" className="text-2xl font-bold text-blue-600">
               DeRibit
             </Link>
@@ -75,6 +75,12 @@ export const Navbar = () => {
               className="text-gray-700 hover:text-blue-600 px-3 py-2 text-sm font-medium"
             >
               מדריכים
+            </Link>
+            <Link 
+              href="/gross-to-net" 
+              className="text-gray-700 hover:text-blue-600 px-3 py-2 text-sm font-medium"
+            >
+              מחשבון ברוטו לנטו
             </Link>
           </div>
         </div>
@@ -102,6 +108,13 @@ export const Navbar = () => {
               onClick={() => setIsMenuOpen(false)}
             >
               מדריכים
+            </Link>
+            <Link 
+              href="/gross-to-net" 
+              className="text-gray-700 hover:text-blue-600 block px-3 py-2 rounded-md text-base font-medium"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              מחשבון ברוטו לנטו
             </Link>
           </div>
         </div>
