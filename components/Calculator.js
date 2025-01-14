@@ -20,7 +20,11 @@ const InputWithTooltip = ({ id, label, value, onChange, error, tooltip }) => (
       </label>
       <div className="group relative mr-2">
         <Info size={16} className="text-gray-400 hover:text-gray-600 cursor-help" />
-        <div className="invisible group-hover:visible absolute z-10 w-64 p-2 bg-gray-800 text-white text-sm rounded-lg shadow-lg right-0 top-6">
+        <div className="invisible group-hover:visible absolute z-10 w-64 p-2 bg-gray-800 text-white text-sm rounded-lg shadow-lg 
+          right-0 md:right-0 top-6
+          md:transform md:translate-x-0
+          transform -translate-x-1/2
+          left-1/2 md:left-auto">
           {tooltip}
         </div>
       </div>
@@ -45,8 +49,8 @@ export const Calculator = () => {
     initialAmount: '',
     monthlyDeposit: '',
     interestRate: '',
-    managementFeeDeposit: '',
-    managementFeeAccumulation: '',
+    managementFeeDeposit: '0',
+    managementFeeAccumulation: '0',
     years: '',
     capitalGainsTax: false
   });
@@ -88,7 +92,10 @@ export const Calculator = () => {
     // בדיקת ולידציה לפני החישוב
     const newErrors = {};
     Object.keys(formData).forEach(key => {
-      if (key !== 'capitalGainsTax' && !formData[key]) {
+      if (key !== 'capitalGainsTax' && 
+          key !== 'managementFeeDeposit' && 
+          key !== 'managementFeeAccumulation' && 
+          !formData[key]) {
         newErrors[key] = 'שדה חובה';
       } else {
         const error = validate(key, formData[key]);
@@ -158,7 +165,7 @@ export const Calculator = () => {
   };
 
   return (
-    <div className="w-full max-w-4xl mx-auto px-2 sm:px-6">
+    <div className="w-full max-w-4xl mx-auto p-4">
       <div className="bg-white rounded-xl shadow-lg p-6 mb-8">
         <h2 className="text-2xl font-bold text-gray-900 mb-6">מחשבון ריבית דריבית</h2>
         
@@ -309,7 +316,7 @@ export const Calculator = () => {
               התוצאות מבוססות על הנחת תשואה קבועה לאורך זמן. במציאות, התשואות משתנות משנה לשנה.
             </p>
           </div>
-        </div>
+          </div>
       )}
     </div>
   );
