@@ -20,16 +20,14 @@ const InputWithTooltip = ({ id, label, value, onChange, error, tooltip }) => (
       </label>
       <div className="group relative mr-2">
   <Info size={16} className="text-gray-400 hover:text-gray-600 cursor-help" />
-  <div className="invisible group-hover:visible absolute z-10 p-2 bg-gray-800 text-white text-sm rounded-lg shadow-lg 
+  <div className="invisible group-hover:visible fixed sm:absolute z-10 p-2 bg-gray-800 text-white text-sm rounded-lg shadow-lg 
     w-[calc(100vw-2rem)]
-    md:w-64 
-    right-[-50vw]
-    left-[50%]
-    transform -translate-x-1/2
-    md:transform-none
-    md:right-0
-    md:left-auto
-    top-6">
+    sm:w-64
+    left-[1rem]
+    sm:left-auto
+    sm:right-0
+    top-[50%]
+    sm:top-6">
     {tooltip}
   </div>
 </div>
