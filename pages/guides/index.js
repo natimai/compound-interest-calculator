@@ -26,6 +26,27 @@ const GuidesPage = () => {
       category: 'חישובים פיננסיים'
     },
     {
+      id: 'mortgage-calculator',
+      title: 'חישוב משכנתא',
+      description: 'מדריך מקיף להבנת חישובי משכנתא, השוואת מסלולים, והשפעת הריבית על ההחזר החודשי',
+      icon: '🏠',
+      sections: [
+        {
+          title: 'סוגי מסלולי משכנתא',
+          content: 'הסבר על המסלולים השונים - פריים, קבועה, צמודה ומשתנה'
+        },
+        {
+          title: 'חישוב החזר חודשי',
+          content: 'איך מחשבים את ההחזר החודשי והגורמים המשפיעים עליו'
+        },
+        {
+          title: 'בניית תמהיל נכון',
+          content: 'טיפים לבניית תמהיל משכנתא מאוזן ומותאם אישית'
+        }
+      ],
+      category: 'חישובים פיננסיים'
+    },
+    {
       id: 'investment-basics',
       title: 'יסודות ההשקעות',
       description: 'בקרוב - מדריך בסיסי להשקעות, סוגי נכסים ואסטרטגיות השקעה',
@@ -52,7 +73,7 @@ const GuidesPage = () => {
       <Head>
         <title>מדריכים פיננסיים | DeRibit</title>
         <meta name="description" content="מדריכים מקיפים להבנת עולם ההשקעות והחיסכון - ריבית דריבית, השקעות, תכנון מס ועוד" />
-        <meta name="keywords" content="מדריכים פיננסיים, ריבית דריבית, השקעות, תכנון מס, חיסכון" />
+        <meta name="keywords" content="מדריכים פיננסיים, ריבית דריבית, משכנתא, השקעות, תכנון מס, חיסכון" />
       </Head>
 
       <div className="min-h-screen bg-gradient-to-b from-[#eef2f3] to-[#8e9eab] py-12">
