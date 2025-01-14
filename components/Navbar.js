@@ -70,6 +70,12 @@ export const Navbar = () => {
             >
               מוצרי השקעה
             </Link>
+            <Link 
+              href="/guides" 
+              className="text-gray-700 hover:text-blue-600 px-3 py-2 text-sm font-medium"
+            >
+              מדריכים
+            </Link>
           </div>
         </div>
 
@@ -89,6 +95,13 @@ export const Navbar = () => {
               onClick={() => setIsMenuOpen(false)}
             >
               מוצרי השקעה
+            </Link>
+            <Link 
+              href="/guides" 
+              className="text-gray-700 hover:text-blue-600 block px-3 py-2 rounded-md text-base font-medium"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              מדריכים
             </Link>
           </div>
         </div>
