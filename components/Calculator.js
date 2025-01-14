@@ -23,8 +23,12 @@ const InputWithTooltip = ({ id, label, value, onChange, error, tooltip }) => (
   <div className="invisible group-hover:visible absolute z-10 p-2 bg-gray-800 text-white text-sm rounded-lg shadow-lg 
     w-[calc(100vw-2rem)]
     md:w-64 
-    right-auto
-    left-[-15px]
+    right-[-50vw]
+    left-[50%]
+    transform -translate-x-1/2
+    md:transform-none
+    md:right-0
+    md:left-auto
     top-6">
     {tooltip}
   </div>
