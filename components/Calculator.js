@@ -158,8 +158,8 @@ export const Calculator = () => {
   };
 
   return (
-    <div className="max-w-4xl mx-auto p-6">
-      <div className="bg-white rounded-xl shadow-lg p-6 mb-8">
+<div className="w-full max-w-4xl mx-auto px-2 sm:px-6">
+        <div className="bg-white rounded-xl shadow-lg p-6 mb-8">
         <h2 className="text-2xl font-bold text-gray-900 mb-6">מחשבון ריבית דריבית</h2>
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -274,28 +274,35 @@ export const Calculator = () => {
           </div>
 
           {/* גרף התפתחות החיסכון */}
-          <div className="h-64 mt-8">
-            <ResponsiveContainer width="100%" height="100%">
-              <LineChart data={yearlyData}>
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="year" />
-                <YAxis />
-                <Tooltip formatter={(value) => `₪${value.toLocaleString('he-IL', { maximumFractionDigits: 0 })}`} />
-                <Line 
-                  type="monotone" 
-                  dataKey="totalAmount" 
-                  stroke="#2563eb"
-                  name="סך הכל"
-                />
-                <Line 
-                  type="monotone" 
-                  dataKey="totalDeposit" 
-                  stroke="#9ca3af"
-                  name="הפקדות"
-                />
-              </LineChart>
-            </ResponsiveContainer>
-          </div>
+<div className="h-64 mt-8">
+  <ResponsiveContainer width="100%" height="100%">
+    <LineChart
+      data={yearlyData}
+      margin={{ top: 5, right: 20, left: 20, bottom: 5 }} // הוספנו margin
+    >
+      <CartesianGrid strokeDasharray="3 3" />
+      <XAxis dataKey="year" />
+      <YAxis 
+        width={80} // קובע רוחב קבוע לציר ה-Y
+        tickFormatter={(value) => `₪${(value / 1000)}K`} // מקצר את המספרים
+        dx={-10} // מזיז את התוויות שמאלה
+      />
+      <Tooltip formatter={(value) => `₪${value.toLocaleString('he-IL', { maximumFractionDigits: 0 })}`} />
+      <Line 
+        type="monotone" 
+        dataKey="totalAmount" 
+        stroke="#2563eb"
+        name="סך הכל"
+      />
+      <Line 
+        type="monotone" 
+        dataKey="totalDeposit" 
+        stroke="#9ca3af"
+        name="הפקדות"
+      />
+    </LineChart>
+  </ResponsiveContainer>
+</div>
 
           <div className="mt-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
             <p className="text-sm text-gray-600">
