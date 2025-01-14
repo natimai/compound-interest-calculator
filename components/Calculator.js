@@ -40,7 +40,7 @@ const InputWithTooltip = ({ id, label, value, onChange, error, tooltip }) => (
   </div>
 );
 
-export default function ImprovedCalculator() {
+export const Calculator = () => {
   const [formData, setFormData] = useState({
     initialAmount: '',
     monthlyDeposit: '',
@@ -306,4 +306,4 @@ export default function ImprovedCalculator() {
       )}
     </div>
   );
-}
+};
