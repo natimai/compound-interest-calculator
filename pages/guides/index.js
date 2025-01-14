@@ -47,6 +47,31 @@ const GuidesPage = () => {
       category: 'חישובים פיננסיים'
     },
     {
+      id: 'balanced-portfolio',
+      title: 'בניית תיק השקעות מאוזן',
+      description: 'מדריך מקיף לבניית תיק השקעות מאוזן - עקרונות הפיזור, ניהול סיכונים, והתאמה אישית של התיק',
+      icon: '💼',
+      sections: [
+        {
+          title: 'עקרונות היסוד',
+          content: 'הבנת מושגי היסוד בבניית תיק השקעות - סיכון, תשואה ופיזור'
+        },
+        {
+          title: 'סוגי נכסים והתאמתם',
+          content: 'סקירת סוגי הנכסים השונים והתאמתם לפרופילי סיכון שונים'
+        },
+        {
+          title: 'אסטרטגיות פיזור',
+          content: 'שיטות מתקדמות לפיזור השקעות וניהול סיכונים בתיק'
+        },
+        {
+          title: 'ניהול ומעקב',
+          content: 'כלים ושיטות למעקב אחר ביצועי התיק ועדכונו לאורך זמן'
+        }
+      ],
+      category: 'השקעות'
+    },
+    {
       id: 'investment-basics',
       title: 'יסודות ההשקעות',
       description: 'בקרוב - מדריך בסיסי להשקעות, סוגי נכסים ואסטרטגיות השקעה',
