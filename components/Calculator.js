@@ -254,34 +254,43 @@ export const Calculator = () => {
           <h3 className="text-xl font-bold text-gray-900 mb-4">תוצאות החישוב</h3>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-            <div className="p-4 bg-gray-50 rounded-lg">
-              <p className="text-sm text-gray-600">סך הפקדות</p>
-              <p className="text-lg font-bold text-gray-900">
-                ₪{result.totalDeposit.toLocaleString('he-IL', { maximumFractionDigits: 0 })}
-              </p>
-            </div>
-            
-            <div className="p-4 bg-green-50 rounded-lg">
-              <p className="text-sm text-gray-600">רווחי ריבית</p>
-              <p className="text-lg font-bold text-green-600">
-                ₪{result.totalInterest.toLocaleString('he-IL', { maximumFractionDigits: 0 })}
-              </p>
-            </div>
+  <div className="p-4 bg-gray-50 rounded-lg">
+    <p className="text-sm text-gray-600">סך הפקדות</p>
+    <p className="text-lg font-bold text-gray-900">
+      ₪{result.totalDeposit.toLocaleString('he-IL', { maximumFractionDigits: 0 })}
+    </p>
+  </div>
+  
+  <div className="p-4 bg-green-50 rounded-lg">
+    <p className="text-sm text-gray-600">רווחי ריבית</p>
+    <p className="text-lg font-bold text-green-600">
+      ₪{result.totalInterest.toLocaleString('he-IL', { maximumFractionDigits: 0 })}
+    </p>
+  </div>
 
-            <div className="p-4 bg-red-50 rounded-lg">
-              <p className="text-sm text-gray-600">דמי ניהול</p>
-              <p className="text-lg font-bold text-red-600">
-                ₪{result.totalFees.toLocaleString('he-IL', { maximumFractionDigits: 0 })}
-              </p>
-            </div>
+  <div className="p-4 bg-red-50 rounded-lg">
+    <p className="text-sm text-gray-600">דמי ניהול</p>
+    <p className="text-lg font-bold text-red-600">
+      ₪{result.totalFees.toLocaleString('he-IL', { maximumFractionDigits: 0 })}
+    </p>
+  </div>
 
-            <div className="p-4 bg-blue-50 rounded-lg">
-              <p className="text-sm text-gray-600">סה"כ בקופה</p>
-              <p className="text-lg font-bold text-blue-600">
-                ₪{result.finalAmount.toLocaleString('he-IL', { maximumFractionDigits: 0 })}
-              </p>
-            </div>
-          </div>
+  {result.totalCapitalGainsTax > 0 && (
+    <div className="p-4 bg-yellow-50 rounded-lg">
+      <p className="text-sm text-gray-600">הפחתת מס רווחי הון</p>
+      <p className="text-lg font-bold text-yellow-600">
+        -₪{result.totalCapitalGainsTax.toLocaleString('he-IL', { maximumFractionDigits: 0 })}
+      </p>
+    </div>
+  )}
+
+  <div className="p-4 bg-blue-50 rounded-lg">
+    <p className="text-sm text-gray-600">סה"כ בקופה</p>
+    <p className="text-lg font-bold text-blue-600">
+      ₪{result.finalAmount.toLocaleString('he-IL', { maximumFractionDigits: 0 })}
+    </p>
+  </div>
+</div>
 
           {/* גרף התפתחות החיסכון */}
           <div className="h-64 mt-8">
