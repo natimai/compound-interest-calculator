@@ -20,14 +20,12 @@ const InputWithTooltip = ({ id, label, value, onChange, error, tooltip }) => (
       </label>
       <div className="group relative mr-2">
   <Info size={16} className="text-gray-400 hover:text-gray-600 cursor-help" />
-  <div className="invisible group-hover:visible absolute z-10 w-64 p-2 bg-gray-800 text-white text-sm rounded-lg shadow-lg 
-    left-auto
-    right-0
-    md:right-0 
-    top-6
-    rtl
-    max-w-[calc(100vw-32px)]
-    md:max-w-xs">
+  <div className="invisible group-hover:visible absolute z-10 p-2 bg-gray-800 text-white text-sm rounded-lg shadow-lg 
+    w-[calc(100vw-2rem)]
+    md:w-64 
+    right-auto
+    left-[-15px]
+    top-6">
     {tooltip}
   </div>
 </div>
@@ -168,7 +166,7 @@ export const Calculator = () => {
   };
 
   return (
-    <div className="w-full max-w-4xl mx-auto p-4">
+    <div className="w-full max-w-4xl mx-auto px-0">
       <div className="bg-white rounded-xl shadow-lg p-6 mb-8">
         <h2 className="text-2xl font-bold text-gray-900 mb-6">מחשבון ריבית דריבית</h2>
         
