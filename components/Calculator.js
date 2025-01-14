@@ -1,189 +1,309 @@
-import { useState } from 'react'
+import React, { useState } from 'react';
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
+import { Info } from 'lucide-react';
 
-export const Calculator = () => {
-  const [result, setResult] = useState(null)
-  const [showYearlyDetails, setShowYearlyDetails] = useState(false)
-  const [yearlyData, setYearlyData] = useState([])
+const tooltips = {
+  initialAmount: 'הסכום הראשוני שממנו תתחיל לצבור ריבית',
+  monthlyDeposit: 'סכום קבוע שיופקד מדי חודש לאורך תקופת החיסכון',
+  interestRate: 'התשואה השנתית הצפויה באחוזים (לדוגמה: 4 עבור 4%)',
+  managementFeeDeposit: 'אחוז דמי הניהול שנגבים מכל הפקדה חדשה',
+  managementFeeAccumulation: 'אחוז דמי הניהול השנתיים שנגבים מסך החיסכון',
+  years: 'מספר השנים שבהן יימשך החיסכון',
+  capitalGainsTax: 'מס בשיעור 25% שיחול על הרווחים בלבד (לא על הקרן)'
+};
 
-  function formatNumber(number) {
-    if (number === undefined || number === null) return '0.00'
-    return number.toLocaleString('he-IL', { 
-      minimumFractionDigits: 2, 
-      maximumFractionDigits: 2 
-    })
-  }
+const InputWithTooltip = ({ id, label, value, onChange, error, tooltip }) => (
+  <div className="relative mb-4">
+    <div className="flex items-center mb-1">
+      <label htmlFor={id} className="text-sm font-medium text-gray-700">
+        {label}
+      </label>
+      <div className="group relative mr-2">
+        <Info size={16} className="text-gray-400 hover:text-gray-600 cursor-help" />
+        <div className="invisible group-hover:visible absolute z-10 w-64 p-2 bg-gray-800 text-white text-sm rounded-lg shadow-lg right-0 top-6">
+          {tooltip}
+        </div>
+      </div>
+    </div>
+    <input
+      id={id}
+      type="number"
+      value={value}
+      onChange={onChange}
+      className={`w-full p-2 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none ${
+        error ? 'border-red-500 bg-red-50' : 'border-gray-300'
+      }`}
+    />
+    {error && (
+      <p className="mt-1 text-sm text-red-500">{error}</p>
+    )}
+  </div>
+);
 
-  function calculateCompoundInterest() {
-    const initialAmount = parseFloat(document.getElementById('initialAmount').value) || 0
-    const monthlyDeposit = parseFloat(document.getElementById('monthlyDeposit').value) || 0
-    const interestRate = parseFloat(document.getElementById('interestRate').value) / 100 || 0
-    const managementFeeDeposit = parseFloat(document.getElementById('managementFeeDeposit').value) / 100 || 0
-    const managementFeeAccumulation = parseFloat(document.getElementById('managementFeeAccumulation').value) / 100 || 0
-    const years = parseInt(document.getElementById('years').value) || 0
-    const includeCapitalGainsTax = document.getElementById('capitalGainsTax').checked
+export default function ImprovedCalculator() {
+  const [formData, setFormData] = useState({
+    initialAmount: '',
+    monthlyDeposit: '',
+    interestRate: '',
+    managementFeeDeposit: '',
+    managementFeeAccumulation: '',
+    years: '',
+    capitalGainsTax: false
+  });
 
-    if (years === 0) {
-      setResult('אנא הזן מספר שנים גדול מ-0')
-      return
+  const [errors, setErrors] = useState({});
+  const [result, setResult] = useState(null);
+  const [yearlyData, setYearlyData] = useState([]);
+
+  const validate = (name, value) => {
+    if (name === 'years' && value < 1) {
+      return 'יש להזין מספר שנים חיובי';
+    }
+    if ((name === 'interestRate' || name.startsWith('managementFee')) && value < 0) {
+      return 'יש להזין אחוז חיובי';
+    }
+    if ((name === 'initialAmount' || name === 'monthlyDeposit') && value < 0) {
+      return 'יש להזין סכום חיובי';
+    }
+    return '';
+  };
+
+  const handleInputChange = (e) => {
+    const { name, value, type } = e.target;
+    const newValue = type === 'checkbox' ? e.target.checked : value;
+    
+    setFormData(prev => ({
+      ...prev,
+      [name]: newValue
+    }));
+
+    const error = validate(name, newValue);
+    setErrors(prev => ({
+      ...prev,
+      [name]: error
+    }));
+  };
+
+  const calculateResults = () => {
+    // בדיקת ולידציה לפני החישוב
+    const newErrors = {};
+    Object.keys(formData).forEach(key => {
+      if (key !== 'capitalGainsTax' && !formData[key]) {
+        newErrors[key] = 'שדה חובה';
+      } else {
+        const error = validate(key, formData[key]);
+        if (error) newErrors[key] = error;
+      }
+    });
+
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+      return;
     }
 
-    let totalDeposit = initialAmount
-    let totalAmount = initialAmount
-    let accumulatedFees = 0
-    let accumulatedInterest = 0
-    let totalCapitalGainsTax = 0
-    let yearlyDetails = []
-    let accumulatedDeposits = initialAmount
+    // המרת ערכים למספרים
+    const initialAmount = parseFloat(formData.initialAmount);
+    const monthlyDeposit = parseFloat(formData.monthlyDeposit);
+    const interestRate = parseFloat(formData.interestRate) / 100;
+    const managementFeeDeposit = parseFloat(formData.managementFeeDeposit) / 100 || 0;
+    const managementFeeAccumulation = parseFloat(formData.managementFeeAccumulation) / 100 || 0;
+    const years = parseInt(formData.years);
+    
+    let totalDeposit = initialAmount;
+    let totalAmount = initialAmount;
+    let accumulatedFees = 0;
+    let accumulatedInterest = 0;
+    const yearlyResults = [];
 
     for (let year = 1; year <= years; year++) {
-      const yearStartAmount = totalAmount
-      let yearlyFees = 0
+      const yearStartAmount = totalAmount;
+      let yearlyFees = 0;
       
       for (let month = 1; month <= 12; month++) {
-        const depositFee = monthlyDeposit * managementFeeDeposit
-        const accumulationFee = totalAmount * managementFeeAccumulation / 12
-        yearlyFees += depositFee + accumulationFee
-        accumulatedFees += depositFee + accumulationFee
-        totalDeposit += monthlyDeposit
-        totalAmount += monthlyDeposit - depositFee
-        totalAmount *= (1 + interestRate / 12)
+        const depositFee = monthlyDeposit * managementFeeDeposit;
+        const accumulationFee = totalAmount * (managementFeeAccumulation / 12);
+        
+        yearlyFees += depositFee + accumulationFee;
+        accumulatedFees += depositFee + accumulationFee;
+        
+        totalDeposit += monthlyDeposit;
+        totalAmount += monthlyDeposit - depositFee;
+        totalAmount *= (1 + interestRate / 12);
+        totalAmount -= accumulationFee;
       }
 
-      accumulatedDeposits += monthlyDeposit * 12
-      const yearEndAmount = totalAmount
-      const yearlyInterest = yearEndAmount - yearStartAmount - (monthlyDeposit * 12) + yearlyFees
-      accumulatedInterest += yearlyInterest
+      accumulatedInterest = totalAmount - totalDeposit + accumulatedFees;
       
-      if (includeCapitalGainsTax) {
-        totalCapitalGainsTax = accumulatedInterest * 0.25
-      }
-
-      const currentYearData = {
-        year: new Date().getFullYear() + year - 1,
-        accumulatedDeposits: accumulatedDeposits,
-        accumulatedInterest: accumulatedInterest,
-        accumulatedFees: accumulatedFees,
-        totalAmount: yearEndAmount - (includeCapitalGainsTax ? totalCapitalGainsTax : 0)
-      }
-
-      Object.keys(currentYearData).forEach(key => {
-        if (typeof currentYearData[key] === 'number' && !isFinite(currentYearData[key])) {
-          currentYearData[key] = 0
-        }
-      })
-
-      yearlyDetails.push(currentYearData)
+      yearlyResults.push({
+        year,
+        totalAmount,
+        accumulatedInterest,
+        totalDeposit,
+        accumulatedFees
+      });
     }
 
-    setYearlyData(yearlyDetails)
+    setYearlyData(yearlyResults);
+
+    // חישוב מס רווחי הון אם נבחר
+    const totalCapitalGainsTax = formData.capitalGainsTax ? accumulatedInterest * 0.25 : 0;
+
     setResult({
       totalDeposit,
       totalInterest: accumulatedInterest,
       totalFees: accumulatedFees,
       totalCapitalGainsTax,
       finalAmount: totalAmount - totalCapitalGainsTax
-    })
-  }
+    });
+  };
 
   return (
-    <div className="calculator max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-      {/* כותרת מעוצבת */}
-      <header className="text-center mb-12">
-        <h1 className="text-4xl font-bold text-gray-900 mb-4">מחשבון ריבית דריבית</h1>
-        <p className="text-xl text-gray-600">חשב את התשואה העתידית על ההשקעות שלך</p>
-      </header>
+    <div className="max-w-4xl mx-auto p-6">
+      <div className="bg-white rounded-xl shadow-lg p-6 mb-8">
+        <h2 className="text-2xl font-bold text-gray-900 mb-6">מחשבון ריבית דריבית</h2>
+        
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <InputWithTooltip
+            id="initialAmount"
+            label="סכום הפקדה ראשוני"
+            value={formData.initialAmount}
+            onChange={(e) => handleInputChange({ target: { name: 'initialAmount', value: e.target.value } })}
+            error={errors.initialAmount}
+            tooltip={tooltips.initialAmount}
+          />
 
-      <div className="bg-white rounded-xl shadow-lg p-8">
-        <div className="form-group">
-          <label htmlFor="initialAmount">סכום הפקדה ראשוני:</label>
-          <input type="number" id="initialAmount" placeholder="הסכום הראשוני שיופקד" />
+          <InputWithTooltip
+            id="monthlyDeposit"
+            label="סכום הפקדה חודשי"
+            value={formData.monthlyDeposit}
+            onChange={(e) => handleInputChange({ target: { name: 'monthlyDeposit', value: e.target.value } })}
+            error={errors.monthlyDeposit}
+            tooltip={tooltips.monthlyDeposit}
+          />
+
+          <InputWithTooltip
+            id="interestRate"
+            label="תשואה שנתית ממוצעת (%)"
+            value={formData.interestRate}
+            onChange={(e) => handleInputChange({ target: { name: 'interestRate', value: e.target.value } })}
+            error={errors.interestRate}
+            tooltip={tooltips.interestRate}
+          />
+
+          <InputWithTooltip
+            id="years"
+            label="מספר שנות השקעה"
+            value={formData.years}
+            onChange={(e) => handleInputChange({ target: { name: 'years', value: e.target.value } })}
+            error={errors.years}
+            tooltip={tooltips.years}
+          />
+
+          <InputWithTooltip
+            id="managementFeeDeposit"
+            label="דמי ניהול מהפקדה (%)"
+            value={formData.managementFeeDeposit}
+            onChange={(e) => handleInputChange({ target: { name: 'managementFeeDeposit', value: e.target.value } })}
+            error={errors.managementFeeDeposit}
+            tooltip={tooltips.managementFeeDeposit}
+          />
+
+          <InputWithTooltip
+            id="managementFeeAccumulation"
+            label="דמי ניהול מצבירה (%)"
+            value={formData.managementFeeAccumulation}
+            onChange={(e) => handleInputChange({ target: { name: 'managementFeeAccumulation', value: e.target.value } })}
+            error={errors.managementFeeAccumulation}
+            tooltip={tooltips.managementFeeAccumulation}
+          />
         </div>
 
-        <div className="form-group">
-          <label htmlFor="monthlyDeposit">סכום הפקדה חודשי:</label>
-          <input type="number" id="monthlyDeposit" placeholder="הסכום שיופקד בכל חודש" />
+        <div className="mt-4 mb-6">
+          <label className="flex items-center space-x-2 space-x-reverse cursor-pointer">
+            <input
+              type="checkbox"
+              name="capitalGainsTax"
+              checked={formData.capitalGainsTax}
+              onChange={handleInputChange}
+              className="w-4 h-4 text-blue-600 rounded border-gray-300 focus:ring-blue-500"
+            />
+            <span className="text-sm text-gray-700">חישוב מס רווחי הון (25%)</span>
+          </label>
         </div>
 
-        <div className="form-group">
-          <label htmlFor="interestRate">תשואה שנתית ממוצעת:</label>
-          <input type="number" id="interestRate" placeholder="אחוז התשואה הממוצעת שיישיג התיק" />
-        </div>
-
-        <div className="form-group">
-          <label htmlFor="managementFeeDeposit">דמי ניהול מהפקדה (%):</label>
-          <input type="number" id="managementFeeDeposit" placeholder="אם אין דמי ניהול, השאר ריק או רשום 0" />
-        </div>
-
-        <div className="form-group">
-          <label htmlFor="managementFeeAccumulation">דמי ניהול מהצבירה (%):</label>
-          <input type="number" id="managementFeeAccumulation" placeholder="אם אין דמי ניהול, השאר ריק או רשום 0" />
-        </div>
-
-        <div className="form-group">
-          <label htmlFor="years">מספר שנות השקעה:</label>
-          <input type="number" id="years" placeholder="מספר השנים בהן יתבצעו ההפקדות החודשיות" />
-        </div>
-
-        <div className="form-group inline">
-          <input type="checkbox" id="capitalGainsTax" />
-          <label htmlFor="capitalGainsTax">מס רווחי הון (25% מהרווח)</label>
-        </div>
-
-        <button onClick={calculateCompoundInterest} 
-          className="w-full mt-6 bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors">
-          חשב
+        <button
+          onClick={calculateResults}
+          className="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition-colors"
+        >
+          חשב תוצאות
         </button>
+      </div>
 
-        {result && typeof result === 'object' && (
-          <div className="result mt-8">
-            <div className="summary bg-gray-50 p-6 rounded-lg">
-              <div>סך הפקדות: <span className="green">{formatNumber(result.totalDeposit)} ש"ח</span></div>
-              <div>רווחי ריבית: <span className="green">{formatNumber(result.totalInterest)} ש"ח</span></div>
-              {result.totalCapitalGainsTax > 0 && (
-                <div>מס רווחי הון: <span className="red">{formatNumber(result.totalCapitalGainsTax)} ש"ח</span></div>
-              )}
-              <div>עלות דמי ניהול: <span className="red">{formatNumber(result.totalFees)} ש"ח</span></div>
-              <div>סה"כ בקופה: <strong>{formatNumber(result.finalAmount)} ש"ח</strong></div>
+      {result && (
+        <div className="bg-white rounded-xl shadow-lg p-6">
+          <h3 className="text-xl font-bold text-gray-900 mb-4">תוצאות החישוב</h3>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+            <div className="p-4 bg-gray-50 rounded-lg">
+              <p className="text-sm text-gray-600">סך הפקדות</p>
+              <p className="text-lg font-bold text-gray-900">
+                ₪{result.totalDeposit.toLocaleString('he-IL', { maximumFractionDigits: 0 })}
+              </p>
             </div>
             
-            <div className="toggle-details text-center mt-6 text-blue-600 hover:text-blue-800 cursor-pointer"
-              onClick={() => setShowYearlyDetails(!showYearlyDetails)}>
-              {showYearlyDetails ? 'הסתר פירוט' : 'הצג פירוט'}
+            <div className="p-4 bg-green-50 rounded-lg">
+              <p className="text-sm text-gray-600">רווחי ריבית</p>
+              <p className="text-lg font-bold text-green-600">
+                ₪{result.totalInterest.toLocaleString('he-IL', { maximumFractionDigits: 0 })}
+              </p>
             </div>
 
-            {showYearlyDetails && (
-              <div id="details" className="mt-6 overflow-x-auto">
-                <table className="result-table w-full">
-                  <thead>
-                    <tr className="bg-gray-50">
-                      <th className="p-2 border">שנה</th>
-                      <th className="p-2 border">הפקדות מצטברות</th>
-                      <th className="p-2 border green">רווחים מצטברים</th>
-                      <th className="p-2 border red">דמי ניהול מצטברים</th>
-                      <th className="p-2 border">סה"כ חיסכון</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {yearlyData.map((year) => (
-                      <tr key={year.year} className="hover:bg-gray-50">
-                        <td className="p-2 border">{year.year}</td>
-                        <td className="p-2 border">{formatNumber(year.accumulatedDeposits)} ש"ח</td>
-                        <td className="p-2 border green">{formatNumber(year.accumulatedInterest)} ש"ח</td>
-                        <td className="p-2 border red">{formatNumber(year.accumulatedFees)} ש"ח</td>
-                        <td className="p-2 border">{formatNumber(year.totalAmount)} ש"ח</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            )}
-          </div>
-        )}
+            <div className="p-4 bg-red-50 rounded-lg">
+              <p className="text-sm text-gray-600">דמי ניהול</p>
+              <p className="text-lg font-bold text-red-600">
+                ₪{result.totalFees.toLocaleString('he-IL', { maximumFractionDigits: 0 })}
+              </p>
+            </div>
 
-        {result && typeof result === 'string' && (
-          <div className="error mt-4 text-red-600">{result}</div>
-        )}
-      </div>
+            <div className="p-4 bg-blue-50 rounded-lg">
+              <p className="text-sm text-gray-600">סה"כ בקופה</p>
+              <p className="text-lg font-bold text-blue-600">
+                ₪{result.finalAmount.toLocaleString('he-IL', { maximumFractionDigits: 0 })}
+              </p>
+            </div>
+          </div>
+
+          {/* גרף התפתחות החיסכון */}
+          <div className="h-64 mt-8">
+            <ResponsiveContainer width="100%" height="100%">
+              <LineChart data={yearlyData}>
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="year" />
+                <YAxis />
+                <Tooltip formatter={(value) => `₪${value.toLocaleString('he-IL', { maximumFractionDigits: 0 })}`} />
+                <Line 
+                  type="monotone" 
+                  dataKey="totalAmount" 
+                  stroke="#2563eb"
+                  name="סך הכל"
+                />
+                <Line 
+                  type="monotone" 
+                  dataKey="totalDeposit" 
+                  stroke="#9ca3af"
+                  name="הפקדות"
+                />
+              </LineChart>
+            </ResponsiveContainer>
+          </div>
+
+          <div className="mt-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+            <p className="text-sm text-gray-600">
+              התוצאות מבוססות על הנחת תשואה קבועה לאורך זמן. במציאות, התשואות משתנות משנה לשנה.
+            </p>
+          </div>
+        </div>
+      )}
     </div>
-  )
+  );
 }
