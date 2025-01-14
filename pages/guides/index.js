@@ -23,7 +23,8 @@ const GuidesPage = () => {
           content: 'כיצד לחשב תשואה בצורה נכונה תוך התחשבות בכל הפרמטרים'
         }
       ],
-      category: 'חישובים פיננסיים'
+      category: 'חישובים פיננסיים',
+      href: '/guides/compound-interest'
     },
     {
       id: 'mortgage-calculator',
@@ -44,7 +45,8 @@ const GuidesPage = () => {
           content: 'טיפים לבניית תמהיל משכנתא מאוזן ומותאם אישית'
         }
       ],
-      category: 'חישובים פיננסיים'
+      category: 'חישובים פיננסיים',
+      href: '/guides/mortgage-calculator'
     },
     {
       id: 'balanced-portfolio',
@@ -69,7 +71,8 @@ const GuidesPage = () => {
           content: 'כלים ושיטות למעקב אחר ביצועי התיק ועדכונו לאורך זמן'
         }
       ],
-      category: 'השקעות'
+      category: 'השקעות',
+      href: '/guides/balanced-portfolio'
     },
     {
       id: 'investment-basics',
@@ -141,7 +144,7 @@ const GuidesPage = () => {
                         )}
                         {!guide.comingSoon ? (
                           <Link 
-                            href={`/guides/${guide.id}`}
+                            href={guide.href}
                             className="mt-4 w-full bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors inline-block text-center"
                           >
                             למדריך המלא
