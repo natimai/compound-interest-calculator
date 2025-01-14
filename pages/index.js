@@ -2,95 +2,80 @@ import Head from 'next/head'
 import Link from 'next/link'
 import { Calculator } from '../components/Calculator'
 import { Guide } from '../components/Guide'
+import { useState, useEffect } from 'react'
 
 export default function Home() {
-  const title = 'מחשבון ריבית דריבית - חשב את הרווחים העתידיים שלך | DeRibit'
-  const description = 'מחשבון ריבית דריבית חינמי שיעזור לך לחשב את הרווחים העתידיים שלך. כולל אפשרות לחישוב דמי ניהול, מס רווחי הון ותחזיות ארוכות טווח. נסה עכשיו!'
-  const keywords = 'מחשבון ריבית דריבית, חישוב ריבית דריבית, מחשבון פנסיה, דמי ניהול, מס רווחי הון, חישוב תשואה, השקעות, חיסכון פנסיוני'
-  
+  const [isLoading, setIsLoading] = useState(true)
+
+  useEffect(() => {
+    setIsLoading(false)
+  }, [])
+
   return (
-    <div dir="rtl">
+    <div dir="rtl" className={`min-h-screen ${isLoading ? 'opacity-0' : 'opacity-100 transition-opacity duration-500'}`}>
       <Head>
-        {/* בסיסי */}
-        <title>{title}</title>
-        <meta name="description" content={description} />
-        <meta name="keywords" content={keywords} />
-        
-        {/* שפה וכיוון */}
-        <html lang="he" dir="rtl" />
-        <meta property="og:locale" content="he_IL" />
-        
-        {/* Open Graph / Facebook */}
+        <title>מחשבון ריבית דריבית - חשב את הרווחים העתידיים שלך | DeRibit</title>
+        <meta name="description" content="מחשבון ריבית דריבית חינמי שיעזור לך לחשב את הרווחים העתידיים שלך. כולל אפשרות לחישוב דמי ניהול, מס רווחי הון ותחזיות ארוכות טווח." />
+        <meta name="keywords" content="מחשבון ריבית דריבית, חישוב ריבית דריבית, מחשבון פנסיה, דמי ניהול, מס רווחי הון, חישוב תשואה" />
+        <meta property="og:title" content="מחשבון ריבית דריבית - DeRibit" />
+        <meta property="og:description" content="מחשבון ריבית דריבית חינמי לחישוב רווחים עתידיים" />
         <meta property="og:type" content="website" />
-        <meta property="og:title" content={title} />
-        <meta property="og:description" content={description} />
         <meta property="og:url" content="https://deribit.co.il" />
-        <meta property="og:site_name" content="DeRibit - מחשבון ריבית דריבית" />
-
-        {/* Twitter */}
+        <meta property="og:site_name" content="DeRibit" />
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content={title} />
-        <meta name="twitter:description" content={description} />
-        
-        {/* נוסף */}
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <meta name="robots" content="index, follow, max-image-preview:large" />
-        <link rel="canonical" href="https://deribit.co.il" />
-
-        {/* Schema.org */}
-        <script 
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              "@context": "https://schema.org",
-              "@type": "WebApplication",
-              "name": "מחשבון ריבית דריבית - DeRibit",
-              "description": description,
-              "url": "https://deribit.co.il",
-              "applicationCategory": "FinanceApplication",
-              "operatingSystem": "Any",
-              "inLanguage": "he-IL",
-              "offers": {
-                "@type": "Offer",
-                "price": "0",
-                "priceCurrency": "ILS"
-              },
-              "creator": {
-                "@type": "Organization",
-                "name": "DeRibit"
-              }
-            })
-          }}
-        />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
 
       <main className="min-h-screen bg-gradient-to-b from-[#eef2f3] to-[#8e9eab] p-5">
+        {/* כותרת ראשית */}
+        <div className="max-w-4xl mx-auto mb-8 text-center">
+          <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">
+            חשב את העתיד הפיננסי שלך
+          </h1>
+          <p className="text-lg sm:text-xl text-gray-700 mb-8">
+            מחשבון מקצועי לתכנון פיננסי חכם
+          </p>
+        </div>
+
         {/* מוצרי השקעה מובילים */}
         <div className="max-w-4xl mx-auto mb-8 bg-white rounded-xl shadow-lg p-6">
           <h2 className="text-2xl font-bold text-center mb-6">מוצרי השקעה מובילים</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <Link 
               href="/investment-products/keren-hishtalmut"
-              className="bg-blue-50 hover:bg-blue-100 transition-colors p-4 rounded-lg border border-blue-100"
+              className="group bg-blue-50 hover:bg-blue-100 transition-all p-4 rounded-lg border border-blue-100 hover:shadow-lg"
             >
               <div className="flex items-center space-x-4 space-x-reverse">
                 <div className="text-2xl">💰</div>
                 <div>
                   <h3 className="font-bold">קרן השתלמות</h3>
-                  <p className="text-sm text-gray-600">חיסכון לטווח בינוני עם הטבות מס משמעותיות</p>
+                  <p className="text-sm text-gray-600">הטבות מס משמעותיות</p>
                 </div>
               </div>
             </Link>
             
             <Link 
               href="/investment-products/kupat-gemel"
-              className="bg-blue-50 hover:bg-blue-100 transition-colors p-4 rounded-lg border border-blue-100"
+              className="group bg-blue-50 hover:bg-blue-100 transition-all p-4 rounded-lg border border-blue-100 hover:shadow-lg"
             >
               <div className="flex items-center space-x-4 space-x-reverse">
                 <div className="text-2xl">🏦</div>
                 <div>
                   <h3 className="font-bold">קופת גמל להשקעה</h3>
-                  <p className="text-sm text-gray-600">חיסכון גמיש עם אפשרות למשיכה בכל עת</p>
+                  <p className="text-sm text-gray-600">גמישות מקסימלית</p>
+                </div>
+              </div>
+            </Link>
+
+            <Link 
+              href="/investment-products/pension-fund"
+              className="group bg-blue-50 hover:bg-blue-100 transition-all p-4 rounded-lg border border-blue-100 hover:shadow-lg"
+            >
+              <div className="flex items-center space-x-4 space-x-reverse">
+                <div className="text-2xl">👵</div>
+                <div>
+                  <h3 className="font-bold">קרן פנסיה</h3>
+                  <p className="text-sm text-gray-600">חיסכון לטווח ארוך</p>
                 </div>
               </div>
             </Link>
@@ -111,25 +96,33 @@ export default function Home() {
         
         <Guide />
 
-        {/* קישורים למדריכים בסוף העמוד */}
+        {/* מדריכים מקצועיים */}
         <div className="max-w-4xl mx-auto mt-8 bg-white rounded-xl shadow-lg p-6">
-          <h2 className="text-xl font-bold mb-4 text-center">מדריכים מקצועיים</h2>
-          <div className="flex flex-col md:flex-row justify-center items-center gap-4 text-center">
+          <h2 className="text-2xl font-bold text-center mb-6">מדריכים מקצועיים</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
             <Link 
-              href="/investment-products/keren-hishtalmut"
-              className="text-blue-600 hover:text-blue-800 px-4 py-2 rounded-lg hover:bg-blue-50 transition-colors"
+              href="/guides/compound-interest"
+              className="text-blue-600 hover:text-blue-800 p-4 rounded-lg hover:bg-blue-50 transition-all text-center"
             >
-              מדריך לקרן השתלמות
+              <span className="text-2xl block mb-2">📈</span>
+              מדריך לריבית דריבית
             </Link>
-            <span className="hidden md:inline text-gray-300">|</span>
             <Link 
-              href="/investment-products/kupat-gemel"
-              className="text-blue-600 hover:text-blue-800 px-4 py-2 rounded-lg hover:bg-blue-50 transition-colors"
+              href="/guides/balanced-portfolio"
+              className="text-blue-600 hover:text-blue-800 p-4 rounded-lg hover:bg-blue-50 transition-all text-center"
             >
-              מדריך לקופת גמל להשקעה
-            </Link>
-          </div>
-        </div>
+                <span className="text-2xl block mb-2">💼</span>
+        תיק השקעות מאוזן
+      </Link>
+      <Link 
+        href="/guides/mortgage-calculator"
+        className="text-blue-600 hover:text-blue-800 p-4 rounded-lg hover:bg-blue-50 transition-all text-center"
+      >
+        <span className="text-2xl block mb-2">🏠</span>
+        חישוב משכנתא
+      </Link>
+    </div>
+  </div>
       </main>
     </div>
   )
