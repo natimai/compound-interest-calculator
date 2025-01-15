@@ -1,49 +1,75 @@
 // pages/sitemap.xml.js
-import fs from 'fs'
-import path from 'path'
-
 const DOMAIN = 'https://www.deribit.co.il'
 
-// רשימה קבועה של נתיבים (דפים) באתר
 const STATIC_PATHS = [
-  '/',
-  '/investment-products',
-  '/investment-products/money-fund',
-  '/investment-products/pension-fund',
-  '/investment-products/keren-hishtalmut',
-  '/investment-products/kupat-gemel',
-  '/investment-products/bank-deposit',
-  '/investment-products/savings-policy',
-  '/guides',
-  '/guides/compound-interest',
-  '/guides/mortgage-calculator',
-  '/guides/balanced-portfolio'
+  {
+    path: '/',
+    priority: '1.0'
+  },
+  {
+    path: '/investment-products',
+    priority: '0.8'
+  },
+  {
+    path: '/investment-products/money-fund',
+    priority: '0.8'
+  },
+  {
+    path: '/investment-products/pension-fund',
+    priority: '0.8'
+  },
+  {
+    path: '/investment-products/keren-hishtalmut',
+    priority: '0.8'
+  },
+  {
+    path: '/investment-products/kupat-gemel',
+    priority: '0.8'
+  },
+  {
+    path: '/investment-products/bank-deposit',
+    priority: '0.8'
+  },
+  {
+    path: '/investment-products/savings-policy',
+    priority: '0.8'
+  },
+  {
+    path: '/guides',
+    priority: '0.8'
+  },
+  {
+    path: '/guides/compound-interest',
+    priority: '0.8'
+  },
+  {
+    path: '/guides/mortgage-calculator',
+    priority: '0.8'
+  },
+  {
+    path: '/guides/balanced-portfolio',
+    priority: '0.8'
+  }
 ]
 
 function generateSiteMap(pages) {
   return `<?xml version="1.0" encoding="UTF-8"?>
    <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
      ${pages
-       .map((page) => {
+       .map(({ path, priority }) => {
          return `
        <url>
-           <loc>${`${DOMAIN}${page}`}</loc>
+           <loc>${`${DOMAIN}${path}`}</loc>
            <changefreq>weekly</changefreq>
-           <priority>0.8</priority>
-           <lastmod>${new Date().toISOString()}</lastmod>
+           <priority>${priority}</priority>
+           <lastmod>${new Date().toISOString().split('T')[0]}</lastmod>
        </url>`
        })
        .join('')}
    </urlset>`
 }
 
-function SiteMap() {
-  // getServerSideProps יטפל בהכל
-  return null
-}
-
 export async function getServerSideProps({ res }) {
-  // יצירת ה-sitemap
   const sitemap = generateSiteMap(STATIC_PATHS)
 
   res.setHeader('Content-Type', 'text/xml')
@@ -55,4 +81,6 @@ export async function getServerSideProps({ res }) {
   }
 }
 
-export default SiteMap
+export default function Sitemap() {
+  return null
+}
