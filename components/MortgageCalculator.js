@@ -160,9 +160,7 @@ const MortgageCalculator = () => {
      setRoutes(routes.filter(route => route.id !== id));
    }
  };
-
  const downloadAmortizationTable = (route) => {
-<<<<<<< HEAD
     let csvRows = [];
     
     // Add headers
@@ -190,29 +188,6 @@ const MortgageCalculator = () => {
     link.download = `לוח-סילוקין-${route.type}.csv`;
     link.click();
   };
-
-  
-=======
-   const csvContent = [
-     ['תשלום', 'שנה', 'תשלום קרן', 'תשלום ריבית', 'תשלום חודשי', 'יתרה'],
-     ...route.amortizationTable.map(row => [
-       row.payment,
-       row.year,
-       row.principalPayment.toFixed(2),
-       row.interestPayment.toFixed(2),
-       row.monthlyPayment.toFixed(2),
-       row.remainingBalance.toFixed(2)
-     ])
-   ].map(row => row.join(',')).join('\n');
-
-   const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
-   const link = document.createElement('a');
-   link.href = URL.createObjectURL(blob);
-   link.download = `לוח-סילוקין-${route.type}.csv`;
-   link.click();
- };
->>>>>>> 14f174562ba4cba5019ec0f484327b3bf69810c1
-
  const formatCurrency = (value) => {
    return new Intl.NumberFormat('he-IL', { style: 'currency', currency: 'ILS' }).format(value);
  };
