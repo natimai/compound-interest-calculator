@@ -1,4 +1,10 @@
+# *
 User-agent: *
 Allow: /
 
+# Host
+Host: https://www.deribit.co.il
+
+# Sitemaps
 Sitemap: https://www.deribit.co.il/sitemap.xml
+Sitemap: https://www.deribit.co.il/server-sitemap.xml
