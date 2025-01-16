@@ -4,6 +4,19 @@ export default function Document() {
   return (
     <Html lang="he" dir="rtl">
       <Head>
+        <link rel="manifest" href="/manifest.json" />
+        <link rel="icon" href="/favicon.ico" />
+        <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" />
+        <meta name="theme-color" content="#3B82F6" />
+        <meta name="application-name" content="דריבית" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+        <meta name="apple-mobile-web-app-title" content="דריבית" />
+        <meta name="format-detection" content="telephone=no" />
+        <meta name="mobile-web-app-capable" content="yes" />
+        <meta name="msapplication-TileColor" content="#3B82F6" />
+        <meta name="msapplication-tap-highlight" content="no" />
+        
         {/* Google Analytics */}
         <script
           async

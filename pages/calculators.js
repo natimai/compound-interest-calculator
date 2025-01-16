@@ -63,6 +63,32 @@ export default function Calculators() {
           name="description"
           content="מגוון מחשבונים פיננסיים לתכנון כלכלי חכם - משכנתא, שכר, השקעות ועוד"
         />
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "ItemList",
+            "itemListElement": [
+              {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "מחשבון ריבית דריבית",
+                "url": "https://www.deribit.co.il/compound-interest"
+              },
+              {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "מחשבון משכנתא",
+                "url": "https://www.deribit.co.il/mortgage-calculator"
+              },
+              {
+                "@type": "ListItem",
+                "position": 3,
+                "name": "מחשבון שכר",
+                "url": "https://www.deribit.co.il/gross-to-net"
+              }
+            ]
+          })}
+        </script>
       </Head>
 
       <main className="max-w-7xl mx-auto px-4 py-12">

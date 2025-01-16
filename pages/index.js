@@ -39,6 +39,20 @@ export default function Home() {
             }
           })}
         </script>
+
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "WebSite",
+            "name": "דריבית - מחשבונים פיננסיים",
+            "url": "https://www.deribit.co.il",
+            "potentialAction": {
+              "@type": "SearchAction",
+              "target": "https://www.deribit.co.il/search?q={search_term_string}",
+              "query-input": "required name=search_term_string"
+            }
+          })}
+        </script>
       </Head>
 
       <main className="min-h-screen bg-gradient-to-b from-gray-50 to-white dark:from-gray-900 dark:to-gray-950">

@@ -1,16 +1,40 @@
-import Head from 'next/head';
+import { NextSeo } from 'next-seo';
 import { Calculator } from '../components/Calculator';
+import { Breadcrumbs } from '../components/Breadcrumbs';
 
 export default function CompoundInterestPage() {
+  const breadcrumbItems = [
+    { title: 'מחשבונים', href: '/calculators' },
+    { title: 'מחשבון ריבית דריבית', href: '/compound-interest' }
+  ];
+
   return (
     <>
-      <Head>
-        <title>מחשבון ריבית דריבית | דריבית - DeRibit</title>
-        <meta 
-          name="description" 
-          content="מחשבון ריבית דריבית חכם לחישוב הצמיחה של ההשקעות שלך לאורך זמן. כלי פשוט ויעיל לתכנון פיננסי." 
-        />
-      </Head>
+      <Breadcrumbs items={breadcrumbItems} />
+      <NextSeo
+        title="מחשבון ריבית דריבית"
+        description="חשב את הצמיחה של ההשקעות שלך לאורך זמן. מחשבון ריבית דריבית חכם הכולל דמי ניהול ומס רווחי הון."
+        canonical="https://www.deribit.co.il/compound-interest"
+        openGraph={{
+          url: 'https://www.deribit.co.il/compound-interest',
+          title: 'מחשבון ריבית דריבית | דריבית',
+          description: 'חשב את הצמיחה של ההשקעות שלך לאורך זמן בעזרת מחשבון ריבית דריבית חכם',
+          images: [
+            {
+              url: '/compound-interest-og.png',
+              width: 1200,
+              height: 630,
+              alt: 'מחשבון ריבית דריבית',
+            },
+          ],
+        }}
+        additionalMetaTags={[
+          {
+            name: 'keywords',
+            content: 'מחשבון ריבית דריבית, חישוב ריבית דריבית, תשואה על השקעות, דמי ניהול, מס רווחי הון'
+          }
+        ]}
+      />
 
       <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white dark:from-gray-900 dark:to-gray-950 py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
