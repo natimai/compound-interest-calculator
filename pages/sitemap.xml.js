@@ -49,6 +49,22 @@ const STATIC_PATHS = [
   {
     path: '/guides/balanced-portfolio',
     priority: '0.8'
+  },
+  {
+    path: '/calculators',
+    priority: '0.9'
+  },
+  {
+    path: '/compound-interest',
+    priority: '0.8'
+  },
+  {
+    path: '/mortgage-calculator',
+    priority: '0.8'
+  },
+  {
+    path: '/gross-to-net',
+    priority: '0.8'
   }
 ]
 

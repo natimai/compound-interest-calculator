@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import { Info } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import Head from 'next/head';
 
 const tooltips = {
   initialAmount: 'הסכום הראשוני שממנו תתחיל לצבור ריבית',
@@ -169,97 +170,113 @@ export const Calculator = () => {
   };
 
   return (
-    <div className="w-full max-w-4xl mx-auto px-0">
-      <div className="bg-white rounded-xl shadow-lg p-6 mb-8">
-        <h2 className="text-2xl font-bold text-gray-900 mb-6">מחשבון ריבית דריבית</h2>
-        
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <InputWithTooltip
-            id="initialAmount"
-            label="סכום הפקדה ראשוני"
-            value={formData.initialAmount}
-            onChange={(e) => handleInputChange({ target: { name: 'initialAmount', value: e.target.value } })}
-            error={errors.initialAmount}
-            tooltip={tooltips.initialAmount}
-          />
-
-          <InputWithTooltip
-            id="monthlyDeposit"
-            label="סכום הפקדה חודשי"
-            value={formData.monthlyDeposit}
-            onChange={(e) => handleInputChange({ target: { name: 'monthlyDeposit', value: e.target.value } })}
-            error={errors.monthlyDeposit}
-            tooltip={tooltips.monthlyDeposit}
-          />
-
-          <InputWithTooltip
-            id="interestRate"
-            label="תשואה שנתית ממוצעת (%)"
-            value={formData.interestRate}
-            onChange={(e) => handleInputChange({ target: { name: 'interestRate', value: e.target.value } })}
-            error={errors.interestRate}
-            tooltip={tooltips.interestRate}
-          />
-
-          <InputWithTooltip
-            id="years"
-            label="מספר שנות השקעה"
-            value={formData.years}
-            onChange={(e) => handleInputChange({ target: { name: 'years', value: e.target.value } })}
-            error={errors.years}
-            tooltip={tooltips.years}
-          />
-
-          <InputWithTooltip
-            id="managementFeeDeposit"
-            label="דמי ניהול מהפקדה (%)"
-            value={formData.managementFeeDeposit}
-            onChange={(e) => handleInputChange({ target: { name: 'managementFeeDeposit', value: e.target.value || '0' } })}
-            error={errors.managementFeeDeposit}
-            tooltip={tooltips.managementFeeDeposit}
-          />
-
-          <InputWithTooltip
-            id="managementFeeAccumulation"
-            label="דמי ניהול מצבירה (%)"
-            value={formData.managementFeeAccumulation}
-            onChange={(e) => handleInputChange({ target: { name: 'managementFeeAccumulation', value: e.target.value || '0' } })}
-            error={errors.managementFeeAccumulation}
-            tooltip={tooltips.managementFeeAccumulation}
-          />
-        </div>
-
-        <div className="mt-4 mb-6">
-          <label className="flex items-center space-x-2 space-x-reverse cursor-pointer">
-            <input
-              type="checkbox"
-              name="capitalGainsTax"
-              checked={formData.capitalGainsTax}
-              onChange={handleInputChange}
-              className="w-4 h-4 text-blue-600 rounded border-gray-300 focus:ring-blue-500"
-            />
-            <span className="text-sm text-gray-700">הפחתת מס רווחי הון (25%)</span>
-          </label>
-        </div>
-
-        <button
-          onClick={calculateResults}
-          className="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition-colors"
-        >
-          חשב תוצאות
-        </button>
-      </div>
-
-      {result && (
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -20 }}
-          className="bg-white rounded-xl shadow-lg p-6"
-        >
-          <h3 className="text-xl font-bold text-gray-900 mb-4">תוצאות החישוב</h3>
+    <>
+      <Head>
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "FinancialProduct",
+            "name": "מחשבון ריבית דריבית",
+            "description": "מחשבון לחישוב ריבית דריבית והצמיחה של השקעות לאורך זמן",
+            "provider": {
+              "@type": "Organization",
+              "name": "דריבית",
+              "url": "https://deribit.co.il"
+            }
+          })}
+        </script>
+      </Head>
+      <div className="w-full max-w-4xl mx-auto px-0">
+        <div className="bg-white rounded-xl shadow-lg p-6 mb-8">
+          <h2 className="text-2xl font-bold text-gray-900 mb-6">מחשבון ריבית דריבית</h2>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <InputWithTooltip
+              id="initialAmount"
+              label="סכום הפקדה ראשוני"
+              value={formData.initialAmount}
+              onChange={(e) => handleInputChange({ target: { name: 'initialAmount', value: e.target.value } })}
+              error={errors.initialAmount}
+              tooltip={tooltips.initialAmount}
+            />
+
+            <InputWithTooltip
+              id="monthlyDeposit"
+              label="סכום הפקדה חודשי"
+              value={formData.monthlyDeposit}
+              onChange={(e) => handleInputChange({ target: { name: 'monthlyDeposit', value: e.target.value } })}
+              error={errors.monthlyDeposit}
+              tooltip={tooltips.monthlyDeposit}
+            />
+
+            <InputWithTooltip
+              id="interestRate"
+              label="תשואה שנתית ממוצעת (%)"
+              value={formData.interestRate}
+              onChange={(e) => handleInputChange({ target: { name: 'interestRate', value: e.target.value } })}
+              error={errors.interestRate}
+              tooltip={tooltips.interestRate}
+            />
+
+            <InputWithTooltip
+              id="years"
+              label="מספר שנות השקעה"
+              value={formData.years}
+              onChange={(e) => handleInputChange({ target: { name: 'years', value: e.target.value } })}
+              error={errors.years}
+              tooltip={tooltips.years}
+            />
+
+            <InputWithTooltip
+              id="managementFeeDeposit"
+              label="דמי ניהול מהפקדה (%)"
+              value={formData.managementFeeDeposit}
+              onChange={(e) => handleInputChange({ target: { name: 'managementFeeDeposit', value: e.target.value || '0' } })}
+              error={errors.managementFeeDeposit}
+              tooltip={tooltips.managementFeeDeposit}
+            />
+
+            <InputWithTooltip
+              id="managementFeeAccumulation"
+              label="דמי ניהול מצבירה (%)"
+              value={formData.managementFeeAccumulation}
+              onChange={(e) => handleInputChange({ target: { name: 'managementFeeAccumulation', value: e.target.value || '0' } })}
+              error={errors.managementFeeAccumulation}
+              tooltip={tooltips.managementFeeAccumulation}
+            />
+          </div>
+
+          <div className="mt-4 mb-6">
+            <label className="flex items-center space-x-2 space-x-reverse cursor-pointer">
+              <input
+                type="checkbox"
+                name="capitalGainsTax"
+                checked={formData.capitalGainsTax}
+                onChange={handleInputChange}
+                className="w-4 h-4 text-blue-600 rounded border-gray-300 focus:ring-blue-500"
+              />
+              <span className="text-sm text-gray-700">הפחתת מס רווחי הון (25%)</span>
+            </label>
+          </div>
+
+          <button
+            onClick={calculateResults}
+            className="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition-colors"
+          >
+            חשב תוצאות
+          </button>
+        </div>
+
+        {result && (
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            className="bg-white rounded-xl shadow-lg p-6"
+          >
+            <h3 className="text-xl font-bold text-gray-900 mb-4">תוצאות החישוב</h3>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
   <div className="p-4 bg-gray-50 rounded-lg">
     <p className="text-sm text-gray-600">סך הפקדות</p>
     <p className="text-lg font-bold text-gray-900">
@@ -298,44 +315,45 @@ export const Calculator = () => {
   </div>
 </div>
 
-          {/* גרף התפתחות החיסכון */}
-          <div className="h-64 mt-8">
-            <ResponsiveContainer width="100%" height="100%">
-              <LineChart
-                data={yearlyData}
-                margin={{ top: 5, right: 20, left: 20, bottom: 5 }}
-              >
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="year" />
-                <YAxis 
-                  width={80}
-                  tickFormatter={(value) => `₪${(value / 1000)}K`}
-                  dx={-10}
-                />
-                <Tooltip formatter={(value) => `₪${value.toLocaleString('he-IL', { maximumFractionDigits: 0 })}`} />
-                <Line 
-                  type="monotone" 
-                  dataKey="totalAmount" 
-                  stroke="#2563eb"
-                  name="סך הכל"
-                />
-                <Line 
-                  type="monotone" 
-                  dataKey="totalDeposit" 
-                  stroke="#9ca3af"
-                  name="הפקדות"
-                />
-              </LineChart>
-            </ResponsiveContainer>
-          </div>
+            {/* גרף התפתחות החיסכון */}
+            <div className="h-64 mt-8">
+              <ResponsiveContainer width="100%" height="100%">
+                <LineChart
+                  data={yearlyData}
+                  margin={{ top: 5, right: 20, left: 20, bottom: 5 }}
+                >
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis dataKey="year" />
+                  <YAxis 
+                    width={80}
+                    tickFormatter={(value) => `₪${(value / 1000)}K`}
+                    dx={-10}
+                  />
+                  <Tooltip formatter={(value) => `₪${value.toLocaleString('he-IL', { maximumFractionDigits: 0 })}`} />
+                  <Line 
+                    type="monotone" 
+                    dataKey="totalAmount" 
+                    stroke="#2563eb"
+                    name="סך הכל"
+                  />
+                  <Line 
+                    type="monotone" 
+                    dataKey="totalDeposit" 
+                    stroke="#9ca3af"
+                    name="הפקדות"
+                  />
+                </LineChart>
+              </ResponsiveContainer>
+            </div>
 
-          <div className="mt-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
-            <p className="text-sm text-gray-600">
-              התוצאות מבוססות על הנחת תשואה קבועה לאורך זמן. במציאות, התשואות משתנות משנה לשנה.
-            </p>
-          </div>
-        </motion.div>
-      )}
-    </div>
+            <div className="mt-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+              <p className="text-sm text-gray-600">
+                התוצאות מבוססות על הנחת תשואה קבועה לאורך זמן. במציאות, התשואות משתנות משנה לשנה.
+              </p>
+            </div>
+          </motion.div>
+        )}
+      </div>
+    </>
   );
 };
