@@ -1,6 +1,7 @@
 import Head from 'next/head';
 import Link from 'next/link';
 import { Calculator, DollarSign, Home, TrendingUp, PlusCircle } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 const calculators = [
   {
@@ -38,6 +39,21 @@ const calculators = [
   }
 ];
 
+const container = {
+  hidden: { opacity: 0 },
+  show: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.1
+    }
+  }
+};
+
+const item = {
+  hidden: { opacity: 0, y: 20 },
+  show: { opacity: 1, y: 0 }
+};
+
 export default function Calculators() {
   return (
     <div className="min-h-screen bg-gray-50">
@@ -61,16 +77,22 @@ export default function Calculators() {
         </div>
 
         {/* Calculators Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <motion.div 
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+          variants={container}
+          initial="hidden"
+          animate="show"
+        >
           {calculators.map((calc) => (
-            <div
+            <motion.div
               key={calc.id}
+              variants={item}
+              whileHover={{ scale: 1.02 }}
               className={`
                 relative overflow-hidden
                 bg-white rounded-xl shadow-sm
                 border border-gray-100
                 transition-all duration-300
-                hover:shadow-lg hover:scale-[1.02]
                 ${calc.comingSoon ? 'opacity-75' : ''}
               `}
             >
@@ -103,16 +125,19 @@ export default function Calculators() {
                   בקרוב
                 </div>
               )}
-            </div>
+            </motion.div>
           ))}
 
           {/* Add New Calculator Card */}
-          <div className="
-            border-2 border-dashed border-gray-200 rounded-xl
-            flex items-center justify-center
-            p-6 text-center
-            bg-gray-50
-          ">
+          <motion.div
+            variants={item}
+            className="
+              border-2 border-dashed border-gray-200 rounded-xl
+              flex items-center justify-center
+              p-6 text-center
+              bg-gray-50
+            "
+          >
             <div className="space-y-2">
               <div className="mx-auto w-12 h-12 rounded-full bg-gray-100 flex items-center justify-center">
                 <PlusCircle className="text-gray-400" size={24} />
@@ -122,8 +147,8 @@ export default function Calculators() {
                 מחשבונים חדשים מתווספים בקביעות
               </p>
             </div>
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
       </main>
     </div>
   );

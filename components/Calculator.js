@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import { Info } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 
 const tooltips = {
   initialAmount: 'הסכום הראשוני שממנו תתחיל לצבור ריבית',
@@ -250,7 +251,12 @@ export const Calculator = () => {
       </div>
 
       {result && (
-        <div className="bg-white rounded-xl shadow-lg p-6">
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -20 }}
+          className="bg-white rounded-xl shadow-lg p-6"
+        >
           <h3 className="text-xl font-bold text-gray-900 mb-4">תוצאות החישוב</h3>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
@@ -328,7 +334,7 @@ export const Calculator = () => {
               התוצאות מבוססות על הנחת תשואה קבועה לאורך זמן. במציאות, התשואות משתנות משנה לשנה.
             </p>
           </div>
-          </div>
+        </motion.div>
       )}
     </div>
   );
