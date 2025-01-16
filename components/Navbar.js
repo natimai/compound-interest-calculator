@@ -54,6 +54,7 @@ export const Navbar = () => {
   const navigation = [
     { name: 'דף הבית', href: '/', icon: Home },
     { name: 'מחשבונים פיננסיים', href: '/calculators', icon: Calculator },
+    { name: 'קורס שוק ההון', href: '/course', icon: BookOpen },  // הוספנו את זה
     { name: 'מוצרי השקעה', href: '/investment-products', icon: TrendingUp },
     { name: 'מדריכים', href: '/guides', icon: BookOpen },
     { name: 'אודות', href: '/about', icon: Info },
@@ -69,8 +70,8 @@ export const Navbar = () => {
     }`}>
       <div className="max-w-7xl mx-auto px-4">
         <div className="relative flex items-center justify-between h-16">
-          {/* כפתור המבורגר למובייל */}
-          <div className="absolute right-0 inset-y-0 flex items-center md:hidden">
+          {/* כפתור המבורגר */}
+          <div className="md:hidden">
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
               className="inline-flex items-center justify-center p-2 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
@@ -84,7 +85,7 @@ export const Navbar = () => {
           </div>
 
           {/* לוגו */}
-          <div className="flex-1 flex items-center justify-center md:justify-start">
+          <div className="flex-1 flex items-center justify-center">
             <Link 
               href="/" 
               className="group flex items-center gap-2 text-2xl font-bold transition-transform hover:scale-105"
@@ -96,7 +97,7 @@ export const Navbar = () => {
           </div>
 
           {/* תפריט דסקטופ */}
-          <div className="hidden md:flex md:items-center md:space-x-1 absolute left-4">
+          <div className="hidden md:flex md:items-center md:space-x-1">
             {navigation.map((item) => (
               <Link
                 key={item.name}
