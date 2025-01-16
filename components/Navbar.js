@@ -29,6 +29,28 @@ export const Navbar = () => {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
+  // Close menu when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (isMenuOpen && !event.target.closest('nav')) {
+        setIsMenuOpen(false);
+      }
+    };
+
+    // Prevent scroll when menu is open
+    if (isMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+
+    document.addEventListener('click', handleClickOutside);
+    return () => {
+      document.removeEventListener('click', handleClickOutside);
+      document.body.style.overflow = 'unset';
+    };
+  }, [isMenuOpen]);
+
   const navigation = [
     { name: 'דף הבית', href: '/', icon: Home },
     { name: 'מחשבונים פיננסיים', href: '/calculators', icon: Calculator },
@@ -106,48 +128,84 @@ export const Navbar = () => {
           </div>
         </div>
 
-        {/* תפריט מובייל */}
-        <div className={`
-          md:hidden 
-          transition-all duration-300 ease-in-out
-          ${isMenuOpen ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-2 pointer-events-none'}
-        `}>
-          <div className="px-2 pt-2 pb-3 space-y-1">
-            {navigation.map((item) => (
-              <Link
-                key={item.name}
-                href={item.href}
+        {/* Mobile Menu - Updated with slide-down animation */}
+        <div 
+          className={`
+            md:hidden fixed inset-0 bg-gray-800/50 backdrop-blur-sm z-40
+            transition-opacity duration-300 ease-in-out
+            ${isMenuOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'}
+          `}
+          onClick={() => setIsMenuOpen(false)}
+        >
+          <div 
+            className={`
+              fixed top-0 right-0 w-full bg-white dark:bg-gray-900 shadow-xl z-50
+              transition-transform duration-300 ease-in-out
+              ${isMenuOpen ? 'translate-y-0' : '-translate-y-full'}
+            `}
+            onClick={e => e.stopPropagation()}
+          >
+            {/* Close button */}
+            <div className="p-4 flex justify-end">
+              <button
                 onClick={() => setIsMenuOpen(false)}
-                className={`flex items-center gap-2 px-4 py-3 rounded-lg text-base font-medium transition-all duration-200 ${
-                  isActive(item.href)
-                    ? 'bg-blue-100 dark:bg-blue-900 text-blue-600 dark:text-blue-400'
-                    : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800'
-                }`}
+                className="p-2 rounded-lg text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200
+                         transition-transform duration-200 hover:scale-110"
               >
-                <item.icon className="w-5 h-5" />
-                {item.name}
-              </Link>
-            ))}
-            
-            {/* כפתור החלפת מצב במובייל */}
-            <button
-              onClick={toggleDarkMode}
-              className="w-full flex items-center gap-2 px-4 py-3 rounded-lg text-base font-medium
-                       text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800
-                       transition-all duration-200"
-            >
-              {isDarkMode ? (
-                <>
-                  <Sun className="w-5 h-5" />
-                  <span>מצב בהיר</span>
-                </>
-              ) : (
-                <>
-                  <Moon className="w-5 h-5" />
-                  <span>מצב כהה</span>
-                </>
-              )}
-            </button>
+                <X className="h-6 w-6" />
+              </button>
+            </div>
+
+            {/* Mobile menu content with fade-in animation */}
+            <div className="px-4 pt-2 pb-3 space-y-1">
+              {navigation.map((item, index) => (
+                <Link
+                  key={item.name}
+                  href={item.href}
+                  className={`
+                    flex items-center gap-2 px-4 py-3 rounded-lg text-base font-medium
+                    transition-all duration-200 transform
+                    ${isMenuOpen ? 'translate-y-0 opacity-100' : '-translate-y-4 opacity-0'}
+                    ${isActive(item.href)
+                      ? 'bg-blue-100 dark:bg-blue-900 text-blue-600 dark:text-blue-400'
+                      : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800'
+                    }
+                  `}
+                  style={{ transitionDelay: `${index * 50}ms` }}
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  <item.icon className="w-5 h-5" />
+                  {item.name}
+                </Link>
+              ))}
+              
+              {/* Theme toggle with animation */}
+              <button
+                onClick={() => {
+                  toggleDarkMode();
+                  setIsMenuOpen(false);
+                }}
+                className={`
+                  w-full flex items-center gap-2 px-4 py-3 rounded-lg text-base font-medium
+                  text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800
+                  transition-all duration-200 transform
+                  ${isMenuOpen ? 'translate-y-0 opacity-100' : '-translate-y-4 opacity-0'}
+                `}
+                style={{ transitionDelay: `${navigation.length * 50}ms` }}
+              >
+                {isDarkMode ? (
+                  <>
+                    <Sun className="w-5 h-5" />
+                    <span>מצב בהיר</span>
+                  </>
+                ) : (
+                  <>
+                    <Moon className="w-5 h-5" />
+                    <span>מצב כהה</span>
+                  </>
+                )}
+              </button>
+            </div>
           </div>
         </div>
       </div>
