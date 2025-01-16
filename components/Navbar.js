@@ -77,10 +77,10 @@ export const Navbar = () => {
               מדריכים
             </Link>
             <Link 
-              href="/gross-to-net" 
+              href="/calculators" 
               className="text-gray-700 hover:text-blue-600 px-3 py-2 text-sm font-medium"
             >
-              מחשבון ברוטו לנטו
+              מחשבונים פיננסיים
             </Link>
           </div>
         </div>
@@ -110,11 +110,11 @@ export const Navbar = () => {
               מדריכים
             </Link>
             <Link 
-              href="/gross-to-net" 
+              href="/calculators" 
               className="text-gray-700 hover:text-blue-600 block px-3 py-2 rounded-md text-base font-medium"
               onClick={() => setIsMenuOpen(false)}
             >
-              מחשבון ברוטו לנטו
+              מחשבונים פיננסיים
             </Link>
           </div>
         </div>
