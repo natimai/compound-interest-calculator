@@ -1,6 +1,213 @@
-import React, { useState, useEffect } from 'react';
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, BarChart, Bar } from 'recharts';
-import { InfoIcon, PlusCircle, MinusCircle, HelpCircle } from 'lucide-react';
+import React, { useState } from 'react';
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, BarChart, Bar, AreaChart, Area } from 'recharts';
+import { Info, PlusCircle, MinusCircle, HelpCircle, LineChart as LineChartIcon, BarChart2, PieChart } from 'lucide-react';
+
+const tooltips = {
+  loanAmount: 'סכום ההלוואה המבוקש',
+  interestRate: 'שיעור הריבית השנתית על ההלוואה',
+  loanTerm: 'משך ההלוואה בשנים',
+  type: 'סוג המסלול - פריים, קבועה צמודה או קבועה לא צמודה',
+  monthlyPayment: 'התשלום החודשי הקבוע שתשלמו',
+  totalPayment: 'סך כל התשלומים לאורך כל תקופת ההלוואה',
+  totalInterest: 'סך כל הריבית שתשלמו על ההלוואה'
+};
+
+const chartTypes = {
+  balance: { icon: LineChartIcon, label: 'יתרת קרן' },
+  yearly: { icon: BarChart2, label: 'תשלומים שנתיים' },
+  breakdown: { icon: PieChart, label: 'התפלגות כללית' }
+};
+
+const InputWithTooltip = ({ id, label, value, onChange, error, tooltip }) => (
+  <div className="relative mb-4">
+    <div className="flex items-center mb-1">
+      <label htmlFor={id} className="text-sm font-medium text-gray-700">
+        {label}
+      </label>
+      <div className="group relative mr-2">
+        <Info size={16} className="text-gray-400 hover:text-gray-600 cursor-help" />
+        <div className="invisible group-hover:visible absolute z-10 w-64 p-2 bg-gray-800 text-white text-sm rounded-lg shadow-lg right-0 top-6">
+          {tooltip}
+        </div>
+      </div>
+    </div>
+    <input
+      id={id}
+      type="number"
+      value={value}
+      onChange={onChange}
+      className="w-full p-2 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none bg-white transition-all"
+    />
+  </div>
+);
+
+const RouteCard = ({ route, onUpdate, onRemove, isRemovable }) => {
+  const [showInfo, setShowInfo] = useState(false);
+  const handleChange = (field, value) => {
+    onUpdate(route.id, field, value);
+  };
+
+  const routeColors = {
+    'פריים': 'border-blue-500 bg-gradient-to-b from-[#eef2f3] to-[#e8f3ff]',
+    'קבועה צמודה': 'border-blue-500 bg-gradient-to-b from-[#eef2f3] to-[#e8fff0]',
+    'קבועה לא צמודה': 'border-blue-500 bg-gradient-to-b from-[#eef2f3] to-[#f0e8ff]'
+  };
+
+  const routeInfo = {
+    'פריים': {
+      description: 'מסלול עם ריבית משתנה הצמודה לריבית בנק ישראל',
+      advantages: ['ריבית נמוכה יחסית בתקופות של ריבית נמוכה במשק', 'גמישות ואפשרות למחזור קל', 'מתאים לתקופות של ריבית יורדת'],
+      disadvantages: ['חשיפה לשינויי ריבית', 'תשלום חודשי לא קבוע', 'סיכון בתקופות של עליית ריבית']
+    },
+    'קבועה צמודה': {
+      description: 'מסלול עם ריבית קבועה והצמדה למדד המחירים לצרכן',
+      advantages: ['ודאות בגובה הריבית', 'הגנה מפני אינפלציה', 'תכנון תקציבי ארוך טווח'],
+      disadvantages: ['ריבית גבוהה יחסית', 'חשיפה לעליית מדד', 'קנסות שבירה גבוהים']
+    },
+    'קבועה לא צמודה': {
+      description: 'מסלול עם ריבית קבועה ללא הצמדה למדד',
+      advantages: ['ודאות מוחלטת בתשלום החודשי', 'אין חשיפה למדד', 'מתאים לתקופות של אינפלציה גבוהה'],
+      disadvantages: ['ריבית גבוהה יחסית', 'אין הגנה מפני ירידת ריבית', 'קנסות שבירה גבוהים']
+    }
+  };
+
+  return (
+    <div className={`w-full rounded-xl shadow-lg p-6 mb-4 border-2 ${routeColors[route.type]}`}>
+      <div className="flex justify-between items-center mb-4">
+        <h3 className="text-lg font-semibold">מסלול {route.id}</h3>
+        {isRemovable && (
+          <button 
+            onClick={() => onRemove(route.id)}
+            className="text-red-500 hover:text-red-700 transition-colors"
+          >
+            <MinusCircle size={20} />
+          </button>
+        )}
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full">
+        <InputWithTooltip
+          id={`loanAmount-${route.id}`}
+          label="סכום הלוואה"
+          value={route.loanAmount}
+          onChange={(e) => handleChange('loanAmount', e.target.value)}
+          tooltip={tooltips.loanAmount}
+        />
+
+        <InputWithTooltip
+          id={`interestRate-${route.id}`}
+          label="ריבית שנתית (%)"
+          value={route.interestRate}
+          onChange={(e) => handleChange('interestRate', e.target.value)}
+          tooltip={tooltips.interestRate}
+        />
+
+        <InputWithTooltip
+          id={`loanTerm-${route.id}`}
+          label="תקופת הלוואה (שנים)"
+          value={route.loanTerm}
+          onChange={(e) => handleChange('loanTerm', e.target.value)}
+          tooltip={tooltips.loanTerm}
+        />
+
+        <div className="relative">
+          <label className="text-sm font-medium text-gray-700 mb-1 block">סוג מסלול</label>
+          <div className="relative">
+            <select
+              value={route.type}
+              onChange={(e) => handleChange('type', e.target.value)}
+              className="w-full p-2 border rounded-lg bg-white"
+            >
+              <option value="פריים">פריים</option>
+              <option value="קבועה צמודה">קבועה צמודה</option>
+              <option value="קבועה לא צמודה">קבועה לא צמודה</option>
+            </select>
+            <button
+              onClick={() => setShowInfo(!showInfo)}
+              className="absolute left-2 top-2 text-gray-500 hover:text-blue-600"
+            >
+              <HelpCircle size={16} />
+            </button>
+          </div>
+          
+          {showInfo && (
+            <div className="mt-4 p-4 bg-white rounded-lg shadow-sm">
+              <h4 className="font-medium text-lg mb-2">{route.type}</h4>
+              <p className="text-gray-600 mb-3">{routeInfo[route.type].description}</p>
+              
+              <div className="space-y-3">
+                <div>
+                  <h5 className="font-medium text-green-600 mb-1">יתרונות:</h5>
+                  <ul className="list-disc list-inside space-y-1">
+                    {routeInfo[route.type].advantages.map((adv, i) => (
+                      <li key={i} className="text-sm text-gray-600">{adv}</li>
+                    ))}
+                  </ul>
+                </div>
+                
+                <div>
+                  <h5 className="font-medium text-red-600 mb-1">חסרונות:</h5>
+                  <ul className="list-disc list-inside space-y-1">
+                    {routeInfo[route.type].disadvantages.map((dis, i) => (
+                      <li key={i} className="text-sm text-gray-600">{dis}</li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
+
+      {route.monthlyPayment > 0 && (
+        <div className="mt-4 grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div className="p-4 bg-white rounded-lg shadow-sm">
+            <p className="text-sm text-gray-600">תשלום חודשי</p>
+            <p className="text-xl font-bold text-gray-900">
+              ₪{route.monthlyPayment.toLocaleString('he-IL', { maximumFractionDigits: 0 })}
+            </p>
+          </div>
+          
+          <div className="p-4 bg-white rounded-lg shadow-sm">
+            <p className="text-sm text-gray-600">סך תשלומים</p>
+            <p className="text-xl font-bold text-gray-900">
+              ₪{route.totalPayment.toLocaleString('he-IL', { maximumFractionDigits: 0 })}
+            </p>
+          </div>
+          
+          <div className="p-4 bg-white rounded-lg shadow-sm">
+            <p className="text-sm text-gray-600">סך ריבית</p>
+            <p className="text-xl font-bold text-blue-600">
+              ₪{route.totalInterest.toLocaleString('he-IL', { maximumFractionDigits: 0 })}
+            </p>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};
+
+const calculateWithAdjustments = (route) => {
+  let adjustedInterestRate = route.interestRate;
+  
+  // התאמות לפי סוג המסלול
+  switch(route.type) {
+    case 'פריים':
+      // מוסיפים פרמיית סיכון לפריים
+      adjustedInterestRate += 0.5;
+      break;
+    case 'קבועה צמודה':
+      // מוסיפים הערכת אינפלציה ממוצעת
+      adjustedInterestRate += 2.0;
+      break;
+    case 'קבועה לא צמודה':
+      // מוסיפים פרמיה על חוסר הצמדה
+      adjustedInterestRate += 1.0;
+      break;
+  }
+  
+  return adjustedInterestRate;
+};
 
 const MortgageCalculator = () => {
   const [routes, setRoutes] = useState([
@@ -13,17 +220,14 @@ const MortgageCalculator = () => {
       monthlyPayment: 0,
       totalPayment: 0,
       totalInterest: 0,
-      paymentSchedule: [],
-      isNetSalary: true
+      paymentSchedule: []
     }
   ]);
   
-  const [activeTab, setActiveTab] = useState('single');
-  const [showTips, setShowTips] = useState(true);
-  const [hoveredTip, setHoveredTip] = useState(null);
-  const [chartType, setChartType] = useState('balance'); // 'balance' או 'breakdown'
+  const [chartType, setChartType] = useState('balance');
 
   const calculateMortgage = (route) => {
+    const adjustedInterestRate = calculateWithAdjustments(route);
     const monthlyRate = (route.interestRate / 100) / 12;
     const numberOfPayments = route.loanTerm * 12;
     
@@ -36,17 +240,18 @@ const MortgageCalculator = () => {
     let balance = route.loanAmount;
     const schedule = [];
     
-    for (let year = 1; year <= Math.min(route.loanTerm, 30); year++) {
+    for (let year = 1; year <= route.loanTerm; year++) {
+      const yearlyPayment = monthlyPayment * 12;
       const yearlyInterest = balance * (route.interestRate / 100);
-      const yearlyPrincipal = (monthlyPayment * 12) - yearlyInterest;
+      const yearlyPrincipal = yearlyPayment - yearlyInterest;
       balance -= yearlyPrincipal;
       
       schedule.push({
-        year: year,
+        year,
         remainingBalance: Math.max(0, balance),
         principalPaid: yearlyPrincipal,
         interestPaid: yearlyInterest,
-        totalYearlyPayment: yearlyPrincipal + yearlyInterest
+        totalYearlyPayment: yearlyPayment
       });
     }
     
@@ -59,15 +264,8 @@ const MortgageCalculator = () => {
     };
   };
 
-  const updateRoute = (id, field, value) => {
-    const newRoutes = routes.map(route => {
-      if (route.id === id) {
-        const updatedRoute = { ...route, [field]: value };
-        return calculateMortgage(updatedRoute);
-      }
-      return route;
-    });
-    setRoutes(newRoutes);
+  const handleCalculate = () => {
+    setRoutes(routes.map(route => calculateMortgage(route)));
   };
 
   const addRoute = () => {
@@ -83,7 +281,7 @@ const MortgageCalculator = () => {
         totalInterest: 0,
         paymentSchedule: []
       };
-      setRoutes([...routes, calculateMortgage(newRoute)]);
+      setRoutes([...routes, newRoute]);
     }
   };
 
@@ -93,348 +291,171 @@ const MortgageCalculator = () => {
     }
   };
 
-  useEffect(() => {
-    setRoutes(routes.map(route => calculateMortgage(route)));
-  }, []);
-
-  const formatCurrency = (value) => {
-    return new Intl.NumberFormat('he-IL', { style: 'currency', currency: 'ILS' }).format(value);
+  const updateRoute = (id, field, value) => {
+    setRoutes(routes.map(route => {
+      if (route.id === id) {
+        return { ...route, [field]: value };
+      }
+      return route;
+    }));
   };
 
-  const tooltips = {
-    loanAmount: 'סכום ההלוואה המבוקש',
-    interestRate: 'שיעור הריבית השנתית על ההלוואה',
-    loanTerm: 'משך ההלוואה בשנים',
-    monthlyPayment: 'התשלום החודשי הקבוע שתשלמו',
-    totalPayment: 'סך כל התשלומים לאורך כל תקופת ההלוואה',
-    totalInterest: 'סך כל הריבית שתשלמו על ההלוואה'
-  };
-
-  const MortgageForm = ({ route }) => (
-    <div className="space-y-6 bg-white rounded-xl p-6 shadow-sm border border-gray-100">
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-        <div className="space-y-2">
-          <label className="flex items-center gap-2 text-sm font-medium text-gray-700">
-            סוג מסלול
-            <div className="relative">
-              <HelpCircle 
-                className="h-4 w-4 text-gray-400 hover:text-gray-600 cursor-help transition-colors" 
-                onMouseEnter={() => setHoveredTip('type')}
-                onMouseLeave={() => setHoveredTip(null)}
-              />
-              {hoveredTip === 'type' && (
-                <div className="absolute z-10 top-6 right-0 w-48 p-2 text-sm bg-gray-800 text-white rounded shadow-lg animate-fade-in">
-                  בחרו את סוג המסלול המתאים לכם (פריים/קבועה/משתנה)
-                </div>
-              )}
-            </div>
-          </label>
-          <input
-            type="text"
-            value={route.type}
-            onChange={(e) => updateRoute(route.id, 'type', e.target.value)}
-            className="w-full p-3 border border-gray-200 rounded-lg text-right focus:outline-none focus:ring-2 focus:ring-blue-500 transition-shadow"
-          />
-        </div>
-        <div className="space-y-2">
-          <label className="flex items-center gap-2 text-sm font-medium text-gray-700">
-            סכום ההלוואה
-            <div className="relative">
-              <HelpCircle 
-                className="h-4 w-4 text-gray-400 hover:text-gray-600 cursor-help transition-colors"
-                onMouseEnter={() => setHoveredTip('loanAmount')}
-                onMouseLeave={() => setHoveredTip(null)}
-              />
-              {hoveredTip === 'loanAmount' && (
-                <div className="absolute z-10 top-6 right-0 w-48 p-2 text-sm bg-gray-800 text-white rounded shadow-lg animate-fade-in">
-                  {tooltips.loanAmount}
-                </div>
-              )}
-            </div>
-          </label>
-          <input
-            type="number"
-            min="0"
-            value={route.loanAmount}
-            onChange={(e) => updateRoute(route.id, 'loanAmount', Number(e.target.value))}
-            className="w-full p-3 border border-gray-200 rounded-lg text-left focus:outline-none focus:ring-2 focus:ring-blue-500 transition-shadow"
-          />
-        </div>
-        <div className="space-y-2">
-          <label className="flex items-center gap-2 text-sm font-medium text-gray-700">
-            ריבית שנתית (%)
-            <div className="relative">
-              <HelpCircle 
-                className="h-4 w-4 text-gray-400 hover:text-gray-600 cursor-help transition-colors"
-                onMouseEnter={() => setHoveredTip('interestRate')}
-                onMouseLeave={() => setHoveredTip(null)}
-              />
-              {hoveredTip === 'interestRate' && (
-                <div className="absolute z-10 top-6 right-0 w-48 p-2 text-sm bg-gray-800 text-white rounded shadow-lg animate-fade-in">
-                  {tooltips.interestRate}
-                </div>
-              )}
-            </div>
-          </label>
-          <input
-            type="number"
-            min="0"
-            step="0.1"
-            value={route.interestRate}
-            onChange={(e) => updateRoute(route.id, 'interestRate', Number(e.target.value))}
-            className="w-full p-3 border border-gray-200 rounded-lg text-left focus:outline-none focus:ring-2 focus:ring-blue-500 transition-shadow"
-          />
-        </div>
-        <div className="space-y-2">
-          <label className="flex items-center gap-2 text-sm font-medium text-gray-700">
-            תקופה (שנים)
-            <div className="relative">
-              <HelpCircle 
-                className="h-4 w-4 text-gray-400 hover:text-gray-600 cursor-help transition-colors"
-                onMouseEnter={() => setHoveredTip('loanTerm')}
-                onMouseLeave={() => setHoveredTip(null)}
-              />
-              {hoveredTip === 'loanTerm' && (
-                <div className="absolute z-10 top-6 right-0 w-48 p-2 text-sm bg-gray-800 text-white rounded shadow-lg animate-fade-in">
-                  {tooltips.loanTerm}
-                </div>
-              )}
-            </div>
-          </label>
-          <input
-            type="number"
-            min="1"
-            max="30"
-            value={route.loanTerm}
-            onChange={(e) => updateRoute(route.id, 'loanTerm', Number(e.target.value))}
-            className="w-full p-3 border border-gray-200 rounded-lg text-left focus:outline-none focus:ring-2 focus:ring-blue-500 transition-shadow"
-          />
-        </div>
-      </div>
-
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div className="relative group">
-          <div className="p-6 bg-gradient-to-br from-blue-50 to-blue-100 rounded-xl transition-transform hover:scale-105">
-            <div className="text-lg font-medium text-gray-600 mb-2">תשלום חודשי</div>
-            <div className="text-2xl font-bold text-blue-600">{formatCurrency(route.monthlyPayment)}</div>
-          </div>
-          <div className="hidden group-hover:block absolute top-full mt-2 left-0 right-0 p-2 text-sm bg-gray-800 text-white rounded animate-fade-in">
-            {tooltips.monthlyPayment}
-          </div>
-        </div>
-        <div className="relative group">
-          <div className="p-6 bg-gradient-to-br from-green-50 to-green-100 rounded-xl transition-transform hover:scale-105">
-            <div className="text-lg font-medium text-gray-600 mb-2">סה״כ תשלום</div>
-            <div className="text-2xl font-bold text-green-600">{formatCurrency(route.totalPayment)}</div>
-          </div>
-          <div className="hidden group-hover:block absolute top-full mt-2 left-0 right-0 p-2 text-sm bg-gray-800 text-white rounded animate-fade-in">
-            {tooltips.totalPayment}
-          </div>
-        </div>
-        <div className="relative group">
-          <div className="p-6 bg-gradient-to-br from-purple-50 to-purple-100 rounded-xl transition-transform hover:scale-105">
-            <div className="text-lg font-medium text-gray-600 mb-2">סה״כ ריבית</div>
-            <div className="text-2xl font-bold text-purple-600">{formatCurrency(route.totalInterest)}</div>
-          </div>
-          <div className="hidden group-hover:block absolute top-full mt-2 left-0 right-0 p-2 text-sm bg-gray-800 text-white rounded animate-fade-in">
-            {tooltips.totalInterest}
-          </div>
-        </div>
-      </div>
-    </div>
-  );
+  const routeColors = ['#2563eb', '#16a34a', '#dc2626'];
 
   return (
-    <div dir="rtl" className="w-full max-w-6xl mx-auto p-4 space-y-6">
-      {showTips && (
-        <div className="bg-gradient-to-r from-blue-500 to-blue-600 text-white p-6 rounded-xl shadow-lg">
-          <div className="flex items-start">
-            <InfoIcon className="h-6 w-6 text-blue-200 mt-1" />
-            <div className="mr-4">
-              <div className="font-bold text-xl mb-3">ברוכים הבאים למחשבון המשכנתא</div>
-              <ul className="space-y-2 text-blue-50">
-                <li className="flex items-center">
-                  <span className="w-2 h-2 bg-blue-200 rounded-full mr-2"></span>
-                  השתמשו בטאב ׳השוואת מסלולים׳ כדי להשוות עד 3 מסלולי משכנתא שונים
-                </li>
-                <li className="flex items-center">
-                  <span className="w-2 h-2 bg-blue-200 rounded-full mr-2"></span>
-                  שימו לב שריבית נמוכה יותר לא תמיד אומרת תשלום כולל נמוך יותר
-                </li>
-                <li className="flex items-center">
-                  <span className="w-2 h-2 bg-blue-200 rounded-full mr-2"></span>
-                  הגרף מציג את התפתחות ההלוואה לאורך זמן - שימו לב לקצב הירידה של הקרן
-                </li>
-                <li className="flex items-center">
-                  <span className="w-2 h-2 bg-blue-200 rounded-full mr-2"></span>
-                  מומלץ להתייעץ עם יועץ משכנתאות לפני קבלת החלטה סופית
-                </li>
-              </ul>
-              <button 
-                className="mt-4 px-6 py-2 bg-white text-blue-600 rounded-lg font-medium hover:bg-blue-50 transition-colors"
-                onClick={() => setShowTips(false)}
+    <div className="w-full max-w-none p-4">
+      <div className="mb-8 text-center">
+        <h1 className="text-4xl font-bold text-gray-900 mb-2">מחשבון משכנתא</h1>
+        <p className="text-xl text-gray-600">השווה מסלולי משכנתא שונים וקבל תמונה מלאה על העלויות</p>
+      </div>
+
+      <div className="mb-6 space-y-4 w-full">
+        {routes.map(route => (
+          <RouteCard
+            key={route.id}
+            route={route}
+            onUpdate={updateRoute}
+            onRemove={removeRoute}
+            isRemovable={routes.length > 1}
+          />
+        ))}
+       
+
+        {routes.length < 3 && (
+          <button
+            onClick={addRoute}
+            className="w-full p-4 border-2 border-dashed border-gray-300 rounded-lg text-gray-500 hover:border-blue-500 hover:text-blue-500 transition-all flex items-center justify-center bg-white hover:bg-blue-50"
+          >
+            <PlusCircle className="mr-2" />
+            הוסף מסלול להשוואה
+          </button>
+        )}
+      </div>
+
+      <button
+        onClick={handleCalculate}
+        className="w-full bg-blue-600 text-white py-4 rounded-xl hover:bg-blue-700 transition-colors mb-8 font-medium text-lg shadow-lg hover:shadow-xl"
+      >
+        חשב השוואה
+      </button>
+
+      {routes[0].monthlyPayment > 0 && (
+        <div className="bg-white rounded-xl shadow-lg p-6">
+          <h3 className="text-xl font-bold text-gray-900 mb-4 text-center">השוואה גרפית</h3>
+          <div className="flex flex-wrap justify-center gap-2 mb-6">
+            {Object.entries(chartTypes).map(([type, { icon: Icon, label }]) => (
+              <button
+                key={type}
+                onClick={() => setChartType(type)}
+                className={`px-4 py-2 rounded-lg flex items-center gap-2 transition-all whitespace-nowrap ${
+                  chartType === type 
+                    ? 'bg-blue-100 text-blue-600 shadow-sm' 
+                    : 'text-gray-600 hover:bg-gray-100'
+                }`}
               >
-                הבנתי, תודה
+                <Icon size={16} />
+                {label}
               </button>
+            ))}
+          </div>
+
+          <div className="h-96 w-full overflow-x-auto">
+            <ResponsiveContainer width="100%" height="100%" minWidth={600}>
+              {chartType === 'balance' ? (
+                <LineChart>
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis dataKey="year" allowDecimals={false} />
+                  <YAxis 
+                    width={80}
+                    tickFormatter={(value) => `₪${(value / 1000000).toFixed(1)}M`}
+                  />
+                  <Tooltip 
+                    formatter={(value) => `₪${value.toLocaleString()}`}
+                    labelFormatter={(year) => `שנה ${year}`}
+                  />
+                  <Legend />
+                  {routes.map((route, index) => (
+                    <Line
+                      key={route.id}
+                      type="monotone"
+                      data={route.paymentSchedule}
+                      dataKey="remainingBalance"
+                      name={`${route.type} - מסלול ${route.id}`}
+                      stroke={routeColors[index]}
+                      strokeWidth={2}
+                    />
+                  ))}
+                </LineChart>
+              ) : chartType === 'yearly' ? (
+                <BarChart 
+                  data={routes[0].paymentSchedule}
+                  margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
+                >
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis dataKey="year" allowDecimals={false} />
+                  <YAxis 
+                    width={80}
+                    tickFormatter={(value) => `₪${(value / 1000).toFixed(0)}K`}
+                  />
+                  <Tooltip 
+                    formatter={(value) => `₪${value.toLocaleString()}`}
+                    labelFormatter={(year) => `שנה ${year}`}
+                  />
+                  <Legend />
+                  <Bar dataKey="principalPaid" name="תשלום קרן" fill="#2563eb" stackId="a" />
+                  <Bar dataKey="interestPaid" name="תשלום ריבית" fill="#9ca3af" stackId="a" />
+                </BarChart>
+              ) : (
+                <BarChart data={routes} layout="vertical">
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis type="number" tickFormatter={(value) => `₪${(value / 1000000).toFixed(1)}M`} />
+                  <YAxis type="category" dataKey="type" width={120} />
+                  <Tooltip 
+                    formatter={(value) => `₪${value.toLocaleString()}`}
+                    labelFormatter={(type) => `מסלול ${type}`}
+                  />
+                  <Legend />
+                  <Bar dataKey="loanAmount" name="קרן" fill="#2563eb" stackId="a" />
+                  <Bar dataKey="totalInterest" name="ריבית" fill="#9ca3af" stackId="a" />
+                </BarChart>
+              )}
+            </ResponsiveContainer>
+          </div>
+
+          <div className="mt-6 grid grid-cols-1 md:grid-cols-3 gap-4">
+            {routes.map((route, index) => (
+              <div key={route.id} className="p-4 bg-gray-50 rounded-lg">
+                <div className="flex items-center gap-2">
+                  <div className="w-3 h-3 rounded-full" style={{ backgroundColor: routeColors[index] }} />
+                  <h4 className="font-medium">מסלול {route.id} - {route.type}</h4>
+                </div>
+                <div className="mt-2 space-y-1">
+                  <p className="text-sm text-gray-600">
+                    סך תשלומים: ₪{route.totalPayment.toLocaleString()}
+                  </p>
+                  <p className="text-sm text-gray-600">
+                    אחוז ריבית מסך התשלום: {((route.totalInterest / route.totalPayment) * 100).toFixed(1)}%
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div className="mt-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+            <div className="flex items-start gap-2">
+              <Info size={20} className="text-blue-500 mt-1" />
+              <div>
+                <p className="text-sm text-gray-600">
+                  * החישובים מבוססים על ריבית קבועה לאורך כל תקופת ההלוואה. במציאות, הריבית עשויה להשתנות, במיוחד במסלול פריים.
+                </p>
+                <p className="text-sm text-gray-600 mt-1">
+                  * התחשיב אינו לוקח בחשמון הצמדות למדד או שינויים בתנאי השוק.
+                </p>
+              </div>
             </div>
           </div>
         </div>
       )}
-   <div className="bg-white rounded-xl shadow-lg overflow-hidden">
-        <div className="p-6">
-          <div className="mb-6">
-            <div className="grid grid-cols-2 gap-1 bg-white p-1 rounded-xl border">
-              <button
-                className={`p-3 rounded-lg transition-all ${
-                  activeTab === 'single' 
-                    ? 'bg-blue-500 text-white' 
-                    : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
-                }`}
-                onClick={() => setActiveTab('single')}
-              >
-                מסלול בודד
-              </button>
-              <button
-                className={`p-3 rounded-lg transition-all ${
-                  activeTab === 'compare' 
-                    ? 'bg-blue-500 text-white' 
-                    : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
-                }`}
-                onClick={() => setActiveTab('compare')}
-              >
-                השוואת מסלולים
-              </button>
-            </div>
-          </div>
-
-          {/* תצוגת הטופס */}
-          <div className="space-y-6">
-            {activeTab === 'single' ? (
-              <div>
-                <div className="mb-4">
-                  <label className="inline-flex items-center">
-                    <input
-                      type="checkbox"
-                      checked={routes[0].isNetSalary}
-                      onChange={(e) => updateRoute(routes[0].id, 'isNetSalary', e.target.checked)}
-                      className="form-checkbox h-5 w-5 text-blue-500"
-                    />
-                    <span className="mr-2 text-gray-700">חישוב לפי שכר נטו</span>
-                  </label>
-                </div>
-                <MortgageForm route={routes[0]} />
-              </div>
-            ) : (
-              routes.map((route, index) => (
-                <div key={route.id} className="relative rounded-xl">
-                  <div className="absolute top-4 left-4 flex gap-2 z-10">
-                    {routes.length > 1 && (
-                      <button
-                        className="p-2 rounded-full hover:bg-red-50 text-red-500 transition-colors"
-                        onClick={() => removeRoute(route.id)}
-                      >
-                        <MinusCircle className="h-5 w-5" />
-                      </button>
-                    )}
-                    {index === routes.length - 1 && routes.length < 3 && (
-                      <button
-                        className="p-2 rounded-full hover:bg-green-50 text-green-500 transition-colors"
-                        onClick={addRoute}
-                      >
-                        <PlusCircle className="h-5 w-5" />
-                      </button>
-                    )}
-                  </div>
-                  <div className="mb-4">
-                    <label className="inline-flex items-center">
-                      <input
-                        type="checkbox"
-                        checked={route.isNetSalary}
-                        onChange={(e) => updateRoute(route.id, 'isNetSalary', e.target.checked)}
-                        className="form-checkbox h-5 w-5 text-blue-500"
-                      />
-                      <span className="mr-2 text-gray-700">חישוב לפי שכר נטו</span>
-                    </label>
-                  </div>
-                  <div className="text-xl font-bold text-gray-700 mb-4">מסלול {index + 1}</div>
-                  <MortgageForm route={route} />
-                </div>
-              ))
-            )}
-          </div>
-
-          {/* אזור הגרף */}
-          <div className="mt-8 bg-gray-50 p-6 rounded-xl">
-            <div className="flex justify-between items-center mb-4">
-              <div className="text-lg font-medium text-gray-700">תצוגת נתונים</div>
-              <div className="flex gap-2">
-                <button
-                  className={`px-4 py-2 rounded-lg transition-all ${
-                    chartType === 'balance' 
-                      ? 'bg-blue-500 text-white' 
-                      : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
-                  }`}
-                  onClick={() => setChartType('balance')}
-                >
-                  יתרת הלוואה
-                </button>
-                <button
-                  className={`px-4 py-2 rounded-lg transition-all ${
-                    chartType === 'breakdown' 
-                      ? 'bg-blue-500 text-white' 
-                      : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
-                  }`}
-                  onClick={() => setChartType('breakdown')}
-                >
-                  פילוח תשלומים
-                </button>
-              </div>
-            </div>
-
-            <div className="h-96">
-              <ResponsiveContainer width="100%" height="100%">
-                {chartType === 'balance' ? (
-                  <LineChart margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
-                    <CartesianGrid strokeDasharray="3 3" stroke="#E5E7EB" />
-                    <XAxis 
-                      dataKey="year" 
-                      label={{ value: 'שנה', position: 'bottom' }} 
-                      allowDuplicatedCategory={false}
-                    />
-                    <YAxis />
-                    <Tooltip formatter={(value) => formatCurrency(value)} />
-                    <Legend />
-                    {routes.map((route, index) => (
-                      <Line
-                        key={route.id}
-                        data={route.paymentSchedule}
-                        type="monotone"
-                        name={`יתרת הלוואה - מסלול ${index + 1}`}
-                        dataKey="remainingBalance"
-                        stroke={`hsl(${index * 120}, 70%, 50%)`}
-                        strokeWidth={2}
-                      />
-                    ))}
-                  </LineChart>
-                ) : (
-                  <BarChart
-                    data={routes[0].paymentSchedule}
-                    margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
-                  >
-                    <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis dataKey="year" />
-                    <YAxis />
-                    <Tooltip formatter={(value) => formatCurrency(value)} />
-                    <Legend />
-                    <Bar dataKey="principalPaid" name="תשלום קרן" fill="#3B82F6" stackId="a" />
-                    <Bar dataKey="interestPaid" name="תשלום ריבית" fill="#8B5CF6" stackId="a" />
-                  </BarChart>
-                )}
-              </ResponsiveContainer>
-            </div>
-          </div>
-        </div>
-      </div>
     </div>
   );
 };
