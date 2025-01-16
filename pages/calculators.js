@@ -4,12 +4,20 @@ import { Calculator, DollarSign, Home, TrendingUp, PlusCircle } from 'lucide-rea
 
 const calculators = [
   {
+    id: 'compound-interest',
+    title: 'מחשבון ריבית דריבית',
+    description: 'חישוב תשואה על השקעות וריבית דריבית כולל דמי ניהול ומס רווחי הון',
+    icon: Calculator,
+    href: '/compound-interest',
+    color: 'blue'
+  },
+  {
     id: 'mortgage',
     title: 'מחשבון משכנתא',
     description: 'השוואה בין מסלולי משכנתא שונים וחישוב החזרים חודשיים',
     icon: Home,
     href: '/mortgage-calculator',
-    color: 'blue'
+    color: 'green'
   },
   {
     id: 'salary',
@@ -17,15 +25,15 @@ const calculators = [
     description: 'חישוב שכר נטו מברוטו כולל כל הניכויים והזיכויים',
     icon: DollarSign,
     href: '/gross-to-net',
-    color: 'green'
+    color: 'purple'
   },
   {
     id: 'investment',
-    title: 'מחשבון השקעות',
-    description: 'חישוב תשואה על השקעות וריבית דריבית',
+    title: 'מחשבון השקעות מתקדם',
+    description: 'השוואת אפיקי השקעה שונים ובניית תיק השקעות מותאם אישית',
     icon: TrendingUp,
     href: '/investment-calculator',
-    color: 'purple',
+    color: 'orange',
     comingSoon: true
   }
 ];
