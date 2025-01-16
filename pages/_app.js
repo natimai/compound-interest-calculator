@@ -1,14 +1,15 @@
-import { Analytics } from '@vercel/analytics/react'
-import { SpeedInsights } from '@vercel/speed-insights/next'
-import { Layout } from '../components/Layout'
-import '../styles/globals.css'
+import { ThemeProvider } from '../contexts/ThemeContext';
+import { Layout } from '../components/Layout';
+import '../styles/globals.css';
 
-export default function App({ Component, pageProps }) {
+function MyApp({ Component, pageProps }) {
   return (
-    <Layout>
-      <Component {...pageProps} />
-      <Analytics />
-      <SpeedInsights />
-    </Layout>
-  )
+    <ThemeProvider>
+      <Layout>
+        <Component {...pageProps} />
+      </Layout>
+    </ThemeProvider>
+  );
 }
+
+export default MyApp;

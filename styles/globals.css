@@ -4,11 +4,17 @@
 @tailwind utilities;
 
 :root {
-  direction: rtl;
+  --foreground: #000000;
+  --background: #ffffff;
+}
+
+[data-theme='dark'] {
+  --foreground: #ffffff;
+  --background: #1a1a1a;
 }
 
 body {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  @apply bg-white dark:bg-gray-900 text-gray-900 dark:text-white transition-colors duration-200;
 }
 
 .calculator {
