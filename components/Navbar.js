@@ -67,7 +67,7 @@ export const Navbar = () => {
               href="/" 
               className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 px-3 py-2 text-sm font-medium"
             >
-              מחשבון ריבית דריבית
+              דף הבית
             </Link>
             <Link 
               href="/investment-products" 
@@ -113,7 +113,7 @@ export const Navbar = () => {
               className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 block px-3 py-2 rounded-md text-base font-medium"
               onClick={() => setIsMenuOpen(false)}
             >
-              מחשבון ריבית דריבית
+              דף הבית
             </Link>
             <Link 
               href="/investment-products" 
