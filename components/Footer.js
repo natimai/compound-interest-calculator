@@ -3,27 +3,26 @@ import Link from 'next/link';
 
 export const Footer = () => {
   return (
-    <footer className="bg-gradient-to-b from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800 py-8">
-      <div className="container mx-auto px-4">
-        {/* Logo Section */}
-        <div className="flex flex-col items-center mb-8">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-blue-400 bg-clip-text text-transparent">
-              דריבית
+    <footer className="bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm border-t border-gray-200/50 dark:border-gray-700/50">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+          {/* Logo Section */}
+          <div className="flex flex-col items-center mb-8">
+            <div className="flex items-center gap-3 mb-4">
+              <div className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-blue-400 bg-clip-text text-transparent">
+                דריבית
+              </div>
+              <span className="text-gray-300 dark:text-gray-600">|</span>
+              <div className="text-2xl font-bold bg-gradient-to-r from-blue-400 to-blue-600 bg-clip-text text-transparent">
+                DeRibit
+              </div>
             </div>
-            <span className="text-gray-300 dark:text-gray-600">|</span>
-            <div className="text-2xl font-bold bg-gradient-to-r from-blue-400 to-blue-600 bg-clip-text text-transparent">
-              DeRibit
-            </div>
+            <p className="text-sm text-gray-600 dark:text-gray-400 text-center max-w-md">
+              מחשבונים פיננסיים מתקדמים לקבלת החלטות חכמות יותר
+            </p>
           </div>
-          <p className="text-sm text-gray-600 dark:text-gray-400 text-center max-w-md">
-            מחשבונים פיננסיים מתקדמים לקבלת החלטות חכמות יותר
-          </p>
-        </div>
 
-        {/* Links Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
-          {/* Quick Links */}
+          {/* Links Grid */}
           <div className="text-center md:text-right">
             <h3 className="text-lg font-semibold mb-4 bg-gradient-to-r from-blue-600 to-blue-400 bg-clip-text text-transparent">
               קישורים מהירים
@@ -97,8 +96,10 @@ export const Footer = () => {
         </div>
 
         {/* Copyright */}
-        <div className="text-center text-sm text-gray-600 dark:text-gray-400">
-          © {new Date().getFullYear()} דריבית. כל הזכויות שמורות.
+        <div className="mt-8 pt-8 border-t border-gray-200/50 dark:border-gray-700/50">
+          <p className="text-center text-gray-600 dark:text-gray-400">
+            © {new Date().getFullYear()} דריבית. כל הזכויות שמורות.
+          </p>
         </div>
       </div>
     </footer>

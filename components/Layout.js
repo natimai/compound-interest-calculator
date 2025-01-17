@@ -6,7 +6,8 @@ import { useTheme } from '../contexts/ThemeContext';
 import { enable } from '../utils/darkreader';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useRouter } from 'next/router';
-import { Moon, Sun } from 'lucide-react';
+import { Moon, Sun, Menu, Calculator, BookOpen, GraduationCap, Info, DollarSign } from 'lucide-react';
+import Link from 'next/link';
 
 export default function Layout({ children }) {
   const { isDarkMode } = useTheme();
@@ -15,6 +16,7 @@ export default function Layout({ children }) {
   const [showScrollTop, setShowScrollTop] = useState(false);
   const [progress, setProgress] = useState(0);
   const [darkMode, setDarkMode] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -152,7 +154,127 @@ export default function Layout({ children }) {
 
       <div className="fixed inset-0 bg-gradient-to-br from-blue-50/50 via-transparent to-purple-50/50 dark:from-blue-900/10 dark:to-purple-900/10 pointer-events-none" />
       
-      <Navbar />
+      <nav className="sticky top-0 z-50 bg-white/80 dark:bg-gray-900/80 backdrop-blur-md border-b border-gray-200/50 dark:border-gray-700/50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-between items-center h-16">
+            <Link href="/" className="text-2xl font-bold bg-gradient-to-r from-primary-600 to-secondary bg-clip-text text-transparent">
+              דריבית
+            </Link>
+            
+            {/* תפריט ניווט */}
+            <div className="hidden md:flex items-center space-x-8 space-x-reverse">
+              <Link 
+                href="/calculators"
+                className="text-gray-700 dark:text-gray-200 hover:text-primary-600 dark:hover:text-primary-400 transition-colors flex items-center gap-2"
+              >
+                <Calculator className="w-4 h-4" />
+                מחשבונים
+              </Link>
+              <Link 
+                href="/guides"
+                className="text-gray-700 dark:text-gray-200 hover:text-primary-600 dark:hover:text-primary-400 transition-colors flex items-center gap-2"
+              >
+                <BookOpen className="w-4 h-4" />
+                מדריכים
+              </Link>
+              <Link 
+                href="/investment-products"
+                className="text-gray-700 dark:text-gray-200 hover:text-primary-600 dark:hover:text-primary-400 transition-colors flex items-center gap-2"
+              >
+                <DollarSign className="w-4 h-4" />
+                מוצרי השקעה
+              </Link>
+              <Link 
+                href="/course"
+                className="text-gray-700 dark:text-gray-200 hover:text-primary-600 dark:hover:text-primary-400 transition-colors flex items-center gap-2"
+              >
+                <GraduationCap className="w-4 h-4" />
+                קורסים
+              </Link>
+              <Link 
+                href="/about"
+                className="text-gray-700 dark:text-gray-200 hover:text-primary-600 dark:hover:text-primary-400 transition-colors flex items-center gap-2"
+              >
+                <Info className="w-4 h-4" />
+                אודות
+              </Link>
+            </div>
+
+            {/* כפתור תפריט נייד */}
+            <button 
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              className="md:hidden p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+            >
+              <Menu className="w-6 h-6 text-gray-700 dark:text-gray-200" />
+            </button>
+          </div>
+        </div>
+      </nav>
+      
+      {/* תפריט מובייל */}
+      <AnimatePresence>
+        {isMobileMenuOpen && (
+          <>
+            {/* רקע מטושטש */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="fixed inset-0 bg-gray-900/20 backdrop-blur-sm z-40"
+              onClick={() => setIsMobileMenuOpen(false)}
+            />
+            <motion.div
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              className="fixed top-16 inset-x-0 bg-white/95 dark:bg-gray-900/95 backdrop-blur-md border-b border-gray-200/50 dark:border-gray-700/50 z-50 md:hidden"
+            >
+              <div className="p-4 space-y-4 max-h-[calc(100vh-4rem)] overflow-y-auto">
+                <Link 
+                  href="/calculators"
+                  className="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-200"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  <Calculator className="w-5 h-5" />
+                  מחשבונים
+                </Link>
+                <Link 
+                  href="/guides"
+                  className="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-200"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  <BookOpen className="w-5 h-5" />
+                  מדריכים
+                </Link>
+                <Link 
+                  href="/investment-products"
+                  className="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-200"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  <DollarSign className="w-5 h-5" />
+                  מוצרי השקעה
+                </Link>
+                <Link 
+                  href="/course"
+                  className="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-200"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  <GraduationCap className="w-5 h-5" />
+                  קורסים
+                </Link>
+                <Link 
+                  href="/about"
+                  className="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-200"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  <Info className="w-5 h-5" />
+                  אודות
+                </Link>
+              </div>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
       
       <AnimatePresence mode="wait">
         <motion.main
@@ -185,7 +307,7 @@ export default function Layout({ children }) {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 10 }}
             onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-            className="fixed bottom-8 left-8 p-3 bg-blue-500 text-white rounded-full shadow-lg hover:bg-blue-600 transition-colors z-50"
+            className="fixed bottom-20 md:bottom-8 right-4 md:right-8 p-3 bg-primary-600 text-white rounded-full shadow-lg hover:bg-primary-700 transition-colors z-50 backdrop-blur-sm bg-opacity-90"
             aria-label="חזרה למעלה"
           >
             <svg 
@@ -199,7 +321,7 @@ export default function Layout({ children }) {
                 strokeLinecap="round" 
                 strokeLinejoin="round" 
                 strokeWidth={2} 
-                d="M5 10l7-7m0 0l7 7m-7-7v18"
+                d="M19 14l-7-7m0 0l-7 7m7-7v18"
               />
             </svg>
           </motion.button>

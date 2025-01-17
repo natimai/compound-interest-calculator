@@ -1,5 +1,6 @@
 import Head from 'next/head'
 import Link from 'next/link'
+import { BarChart2 } from 'lucide-react'
 
 export default function InvestmentProducts() {
   const products = [
@@ -54,46 +55,53 @@ export default function InvestmentProducts() {
   ]
 
   const colorClasses = {
-    blue: 'bg-blue-50 border-blue-500 hover:bg-blue-100',
-    green: 'bg-green-50 border-green-500 hover:bg-green-100',
-    purple: 'bg-purple-50 border-purple-500 hover:bg-purple-100',
-    yellow: 'bg-yellow-50 border-yellow-500 hover:bg-yellow-100',
-    gray: 'bg-gray-50 border-gray-500 hover:bg-gray-100',
-    indigo: 'bg-indigo-50 border-indigo-500 hover:bg-indigo-100'
+    blue: 'bg-white dark:bg-gray-800 border-primary-500 hover:bg-gray-50 dark:hover:bg-gray-700',
+    green: 'bg-white dark:bg-gray-800 border-green-500 hover:bg-gray-50 dark:hover:bg-gray-700',
+    purple: 'bg-white dark:bg-gray-800 border-purple-500 hover:bg-gray-50 dark:hover:bg-gray-700',
+    yellow: 'bg-white dark:bg-gray-800 border-yellow-500 hover:bg-gray-50 dark:hover:bg-gray-700',
+    gray: 'bg-white dark:bg-gray-800 border-gray-500 hover:bg-gray-50 dark:hover:bg-gray-700',
+    indigo: 'bg-white dark:bg-gray-800 border-indigo-500 hover:bg-gray-50 dark:hover:bg-gray-700'
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-[#eef2f3] to-[#8e9eab]">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-100 dark:from-gray-900 dark:via-gray-900 dark:to-gray-800">
       <Head>
         <title>מוצרי השקעה וחיסכון | DeRibit</title>
-        <meta name="description" content="מגוון מוצרי השקעה וחיסכון - השוואה מקיפה בין אפיקי השקעה שונים. כל המידע שצריך כדי לבחור את אפיק ההשקעה המתאים לך." />
+        <meta name="description" content="מגוון מוצרי השקעה וחיסכון - השוואה מקיפה בין אפיקי השקעה שונים" />
         <meta name="keywords" content="השקעות, חסכונות, קרן פנסיה, קרן השתלמות, קופת גמל להשקעה, קרן כספית, פיקדון בנקאי, פוליסת חיסכון" />
       </Head>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <header className="text-center mb-12">
-          <h1 className="text-4xl font-bold text-gray-900 mb-4">מוצרי השקעה וחיסכון</h1>
-          <p className="text-xl text-gray-600">השוואה מקיפה בין אפיקי ההשקעה המובילים בישראל</p>
-        </header>
+        <div className="relative mb-16">
+          <div className="absolute inset-0 bg-gradient-to-r from-primary-600/10 to-secondary/10 rounded-3xl" />
+          <div className="relative bg-white/40 dark:bg-gray-800/40 backdrop-blur-sm rounded-3xl p-8 md:p-12">
+            <h1 className="text-4xl md:text-5xl font-bold text-center mb-8 bg-gradient-to-r from-primary-600 to-secondary bg-clip-text text-transparent">
+              מוצרי השקעה וחיסכון
+            </h1>
+            <p className="text-xl text-center text-gray-600 dark:text-gray-300 mb-0 max-w-3xl mx-auto">
+              השוואה מקיפה בין אפיקי השקעה שונים לבחירת המסלול המתאים לך
+            </p>
+          </div>
+        </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {products.map((product) => (
             <Link 
               href={`/investment-products/${product.id}`}
               key={product.id}
-              className={`block border-r-4 rounded-lg shadow-lg transition-all duration-300 ${colorClasses[product.color]}`}
+              className={`group block border-r-4 rounded-xl shadow-lg transition-all duration-300 hover:scale-[1.02] bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm ${colorClasses[product.color]}`}
             >
               <div className="p-6">
                 <div className="flex items-center mb-4">
-                  <span className="text-3xl mr-3">{product.icon}</span>
-                  <h2 className="text-2xl font-bold text-gray-900">{product.title}</h2>
+                  <span className="text-3xl mr-3 group-hover:scale-110 transition-transform">{product.icon}</span>
+                  <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100">{product.title}</h2>
                 </div>
-                <p className="text-gray-600 mb-4">{product.description}</p>
+                <p className="text-gray-600 dark:text-gray-300 mb-4">{product.description}</p>
                 <div>
-                  <h3 className="font-semibold text-gray-900 mb-2">מאפיינים עיקריים:</h3>
+                  <h3 className="font-semibold text-gray-900 dark:text-gray-100 mb-2">מאפיינים עיקריים:</h3>
                   <ul className="list-disc list-inside space-y-1">
                     {product.features.map((feature, index) => (
-                      <li key={index} className="text-gray-600">{feature}</li>
+                      <li key={index} className="text-gray-600 dark:text-gray-300">{feature}</li>
                     ))}
                   </ul>
                 </div>
@@ -102,8 +110,10 @@ export default function InvestmentProducts() {
           ))}
         </div>
 
-        <div className="mt-12 bg-white border-r-4 border-blue-500 p-6 rounded-lg shadow-lg">
-          <h2 className="text-2xl font-bold text-gray-900 mb-4">איך לבחור את אפיק ההשקעה המתאים?</h2>
+        <div className="mt-16 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm border-r-4 border-primary-500 p-8 rounded-xl shadow-lg">
+          <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-6">
+            איך לבחור את אפיק ההשקעה המתאים?
+          </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             <div>
               <h3 className="font-bold mb-2">טווח זמן</h3>
@@ -122,6 +132,16 @@ export default function InvestmentProducts() {
               <p className="text-gray-600">שקלו את היכולת למשוך את הכסף כשתזדקקו לו</p>
             </div>
           </div>
+        </div>
+
+        <div className="mt-16 text-center">
+          <Link 
+            href="/investment-products/compare"
+            className="button inline-flex items-center gap-2 px-8 py-4 text-lg"
+          >
+            <BarChart2 className="w-5 h-5" />
+            השוואת מוצרי השקעה
+          </Link>
         </div>
       </div>
     </div>
