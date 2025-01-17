@@ -16,8 +16,8 @@ export default function Lesson1() {
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
-      <div className="max-w-4xl mx-auto px-4 py-8">
-        <div className="mb-12">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
+        <div className="mb-8 sm:mb-12">
           <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400 mb-4">
             <Link href="/course" className="hover:text-blue-600 flex items-center gap-1">
               <ChevronRight className="w-4 h-4" />
@@ -27,9 +27,9 @@ export default function Lesson1() {
             <span>שיעור 1</span>
           </div>
           
-          <h1 className="text-3xl font-bold mb-4">מבוא להשקעות - למה בכלל להשקיע?</h1>
+          <h1 className="text-2xl sm:text-3xl font-bold mb-4">מבוא להשקעות - למה בכלל להשקיע?</h1>
           
-          <div className="flex flex-wrap items-center gap-6 text-gray-600 dark:text-gray-400">
+          <div className="flex flex-wrap items-center gap-4 sm:gap-6 text-gray-600 dark:text-gray-400 text-sm sm:text-base">
             <span className="flex items-center gap-2">
               <Clock className="w-5 h-5" />
               15 דקות קריאה
@@ -46,18 +46,18 @@ export default function Lesson1() {
         </div>
 
         {/* תוכן השיעור */}
-        <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-sm p-8">
+        <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-sm p-4 sm:p-8">
           <div className="prose dark:prose-invert max-w-none">
             {/* מבוא */}
-            <div className="bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-900/30 dark:to-blue-800/30 p-8 rounded-xl mb-8">
+            <div className="bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-900/30 dark:to-blue-800/30 p-4 sm:p-8 rounded-xl mb-6 sm:mb-8">
               <h4 className="text-blue-800 dark:text-blue-300 text-xl m-0 mb-4">ברוכים הבאים לעולם ההשקעות!</h4>
-              <p className="text-gray-700 dark:text-gray-300 mb-6">
+              <p className="text-gray-700 dark:text-gray-300 mb-4 sm:mb-6 text-base sm:text-lg leading-relaxed">
                 בשיעור הראשון נלמד את היסודות החשובים ביותר בעולם ההשקעות. נבין למה חשוב להשקיע, 
                 איך הכסף שלנו יכול לעבוד בשבילנו, ומה ההבדל בין חיסכון להשקעה.
               </p>
-              <div className="bg-white/50 dark:bg-gray-800/50 p-6 rounded-xl">
+              <div className="bg-white/50 dark:bg-gray-800/50 p-4 sm:p-6 rounded-xl">
                 <h5 className="font-bold mb-3">בשיעור זה נלמד:</h5>
-                <ul className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-0 mb-0">
+                <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 mt-0 mb-0 text-base">
                   <li>למה חשוב להשקיע את הכסף שלנו</li>
                   <li>ההבדל המהותי בין חיסכון להשקעה</li>
                   <li>השפעת האינפלציה על החסכונות</li>
@@ -181,15 +181,32 @@ export default function Lesson1() {
           </div>
         </div>
 
+        {/* סרגל התקדמות נייד */}
+        <div className="fixed bottom-0 left-0 right-0 bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 p-4 md:hidden">
+          <div className="flex justify-between items-center max-w-4xl mx-auto">
+            <div className="flex items-center gap-2">
+              <div className="w-2 h-2 rounded-full bg-primary-500"></div>
+              <span className="text-sm text-gray-600 dark:text-gray-400">שיעור 1 מתוך 10</span>
+            </div>
+            <Link 
+              href="/course/stock-market/lesson2"
+              className="button-secondary text-sm py-2"
+            >
+              לשיעור הבא
+              <ChevronLeft className="w-4 h-4" />
+            </Link>
+          </div>
+        </div>
+
         {/* ניווט בין שיעורים */}
-        <div className="flex justify-between items-center mt-8">
+        <div className="flex justify-between items-center mt-8 mb-20 md:mb-8">
           <div></div>
           <Link 
             href="/course/stock-market/lesson2"
-            className="flex items-center gap-2 text-blue-600 hover:text-blue-700 font-medium bg-blue-50 dark:bg-blue-900/30 px-4 py-2 rounded-lg"
+            className="button-secondary hidden md:flex items-center gap-2"
           >
-            לשיעור הבא: הכנה להשקעה ראשונה
-            <ChevronLeft className="w-4 h-4" />
+            לשיעור הבא
+            <ChevronLeft className="w-5 h-5" />
           </Link>
         </div>
       </div>
