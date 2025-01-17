@@ -2,6 +2,7 @@ import { BookOpen, Clock, Target, CheckCircle, Lock, Play, Award, Brain, Chevron
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
 import { useCourseProgress } from '../../contexts/CourseProgressContext';
+import Head from 'next/head';
 
 // קומפוננטת כרטיס שיעור
 const LessonCard = ({ number, title, description, duration, href }) => {
@@ -168,157 +169,169 @@ export default function CoursePage() {
   ];
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <header className="text-center mb-12">
-          <h1 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-            קורס שוק ההון למתחילים
-          </h1>
-          <p className="text-xl text-gray-600 dark:text-gray-300">
-            מדריך מקיף להבנת עולם ההשקעות וניהול תיק השקעות חכם
-          </p>
-        </header>
+    <>
+      <Head>
+        <title>קורס שוק ההון למתחילים | דריבית</title>
+        <meta name="description" content="קורס שוק ההון חינמי למתחילים - למדו על מניות, אגרות חוב, קרנות נאמנות, ניהול תיק השקעות וניתוח טכני. התחילו עכשיו!" />
+        <meta name="keywords" content="קורס שוק ההון, לימודי שוק ההון, השקעות למתחילים, ניהול תיק השקעות, מניות למתחילים, בורסה למתחילים" />
+        <meta property="og:title" content="קורס שוק ההון למתחילים | דריבית" />
+        <meta property="og:description" content="קורס שוק ההון חינמי למתחילים - למדו על מניות, אגרות חוב, קרנות נאמנות ועוד" />
+        <meta property="og:type" content="article" />
+        <meta property="og:url" content="https://www.deribit.co.il/course" />
+        <link rel="canonical" href="https://www.deribit.co.il/course" />
+      </Head>
+      <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+          <header className="text-center mb-12">
+            <h1 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+              קורס שוק ההון למתחילים
+            </h1>
+            <p className="text-xl text-gray-600 dark:text-gray-300">
+              מדריך מקיף להבנת עולם ההשקעות וניהול תיק השקעות חכם
+            </p>
+          </header>
 
-        {/* חלק ראשון - יסודות שוק ההון */}
-        <section className="mb-12">
-          <h2 className="text-2xl font-bold mb-6 flex items-center gap-3 text-gray-900 dark:text-white">
-            <BookOpen className="w-6 h-6 text-blue-600 dark:text-blue-400" />
-            חלק ראשון: יסודות שוק ההון
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <LessonCard
-              number="1"
-              title="מבוא לשוק ההון"
-              description="הכרות עם מושגי יסוד, מבנה הבורסה ואיך היא פועלת"
-              duration="20 דקות"
-              href="/course/stock-market/lesson1"
-            />
-            <LessonCard
-              number="2"
-              title="סוגי ניירות ערך"
-              description="מניות, אגרות חוב וקרנות נאמנות - הכרות מעמיקה"
-              duration="25 דקות"
-              href="/course/stock-market/lesson2"
-            />
-            <LessonCard
-              number="3"
-              title="ניתוח בסיסי"
-              description="הבנת דוחות כספיים ומכפילים פיננסיים"
-              duration="30 דקות"
-              href="/course/stock-market/lesson3"
-            />
-            <LessonCard
-              number="4"
-              title="אסטרטגיות השקעה"
-              description="אסטרטגיות השקעה מובילות ובניית תיק מאוזן"
-              duration="30 דקות"
-              href="/course/stock-market/lesson4"
-            />
-            <QuizCard
-              title="בוחן - חלק ראשון"
-              description="בוחן על שיעורים 1-4"
-              href="/course/stock-market/quiz1"
-            />
-          </div>
-        </section>
+          {/* חלק ראשון - יסודות שוק ההון */}
+          <section className="mb-12">
+            <h2 className="text-2xl font-bold mb-6 flex items-center gap-3 text-gray-900 dark:text-white">
+              <BookOpen className="w-6 h-6 text-blue-600 dark:text-blue-400" />
+              חלק ראשון: יסודות שוק ההון
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              <LessonCard
+                number="1"
+                title="מבוא לשוק ההון"
+                description="הכרות עם מושגי יסוד, מבנה הבורסה ואיך היא פועלת"
+                duration="20 דקות"
+                href="/course/stock-market/lesson1"
+              />
+              <LessonCard
+                number="2"
+                title="סוגי ניירות ערך"
+                description="מניות, אגרות חוב וקרנות נאמנות - הכרות מעמיקה"
+                duration="25 דקות"
+                href="/course/stock-market/lesson2"
+              />
+              <LessonCard
+                number="3"
+                title="ניתוח בסיסי"
+                description="הבנת דוחות כספיים ומכפילים פיננסיים"
+                duration="30 דקות"
+                href="/course/stock-market/lesson3"
+              />
+              <LessonCard
+                number="4"
+                title="אסטרטגיות השקעה"
+                description="אסטרטגיות השקעה מובילות ובניית תיק מאוזן"
+                duration="30 דקות"
+                href="/course/stock-market/lesson4"
+              />
+              <QuizCard
+                title="בוחן - חלק ראשון"
+                description="בוחן על שיעורים 1-4"
+                href="/course/stock-market/quiz1"
+              />
+            </div>
+          </section>
 
-        {/* חלק שני - ניהול סיכונים ופסיכולוגיה */}
-        <section className="mb-12">
-          <h2 className="text-2xl font-bold mb-6 flex items-center gap-3 text-gray-900 dark:text-white">
-            <Brain className="w-6 h-6 text-purple-600 dark:text-purple-400" />
-            חלק שני: ניהול סיכונים ופסיכולוגיה
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <LessonCard
-              number="5"
-              title="ניהול סיכונים"
-              description="עקרונות ניהול סיכונים וכלים מעשיים"
-              duration="25 דקות"
-              href="/course/stock-market/lesson5"
-            />
-            <LessonCard
-              number="6"
-              title="מיסוי וחוקים"
-              description="היבטי מיסוי והיבטים חוקיים בהשקעות"
-              duration="20 דקות"
-              href="/course/stock-market/lesson6"
-            />
-            <LessonCard
-              number="7"
-              title="פסיכולוגיה של המשקיע"
-              description="הטיות פסיכולוגיות וקבלת החלטות"
-              duration="25 דקות"
-              href="/course/stock-market/lesson7"
-            />
-            <QuizCard
-              title="בוחן - חלק שני"
-              description="בוחן על שיעורים 5-7"
-              href="/course/stock-market/quiz2"
-            />
-          </div>
-        </section>
+          {/* חלק שני - ניהול סיכונים ופסיכולוגיה */}
+          <section className="mb-12">
+            <h2 className="text-2xl font-bold mb-6 flex items-center gap-3 text-gray-900 dark:text-white">
+              <Brain className="w-6 h-6 text-purple-600 dark:text-purple-400" />
+              חלק שני: ניהול סיכונים ופסיכולוגיה
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              <LessonCard
+                number="5"
+                title="ניהול סיכונים"
+                description="עקרונות ניהול סיכונים וכלים מעשיים"
+                duration="25 דקות"
+                href="/course/stock-market/lesson5"
+              />
+              <LessonCard
+                number="6"
+                title="מיסוי וחוקים"
+                description="היבטי מיסוי והיבטים חוקיים בהשקעות"
+                duration="20 דקות"
+                href="/course/stock-market/lesson6"
+              />
+              <LessonCard
+                number="7"
+                title="פסיכולוגיה של המשקיע"
+                description="הטיות פסיכולוגיות וקבלת החלטות"
+                duration="25 דקות"
+                href="/course/stock-market/lesson7"
+              />
+              <QuizCard
+                title="בוחן - חלק שני"
+                description="בוחן על שיעורים 5-7"
+                href="/course/stock-market/quiz2"
+              />
+            </div>
+          </section>
 
-        {/* חלק שלישי - מתקדמים */}
-        <section className="mb-12">
-          <h2 className="text-2xl font-bold mb-6 flex items-center gap-3 text-gray-900 dark:text-white">
-            <Target className="w-6 h-6 text-green-600 dark:text-green-400" />
-            חלק שלישי: נושאים מתקדמים
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <LessonCard
-              number="8"
-              title="בניית תיק השקעות"
-              description="עקרונות לבניית תיק השקעות מאוזן"
-              duration="30 דקות"
-              href="/course/stock-market/lesson8"
-            />
-            <LessonCard
-              number="9"
-              title="מעקב וניהול תיק"
-              description="כלים למעקב וניהול תיק ההשקעות"
-              duration="25 דקות"
-              href="/course/stock-market/lesson9"
-            />
-            <LessonCard
-              number="10"
-              title="השקעות מתקדמות"
-              description="אפיקי השקעה מתקדמים ושיטות מסחר"
-              duration="30 דקות"
-              href="/course/stock-market/lesson10"
-            />
-          </div>
-        </section>
+          {/* חלק שלישי - מתקדמים */}
+          <section className="mb-12">
+            <h2 className="text-2xl font-bold mb-6 flex items-center gap-3 text-gray-900 dark:text-white">
+              <Target className="w-6 h-6 text-green-600 dark:text-green-400" />
+              חלק שלישי: נושאים מתקדמים
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              <LessonCard
+                number="8"
+                title="בניית תיק השקעות"
+                description="עקרונות לבניית תיק השקעות מאוזן"
+                duration="30 דקות"
+                href="/course/stock-market/lesson8"
+              />
+              <LessonCard
+                number="9"
+                title="מעקב וניהול תיק"
+                description="כלים למעקב וניהול תיק ההשקעות"
+                duration="25 דקות"
+                href="/course/stock-market/lesson9"
+              />
+              <LessonCard
+                number="10"
+                title="השקעות מתקדמות"
+                description="אפיקי השקעה מתקדמים ושיטות מסחר"
+                duration="30 דקות"
+                href="/course/stock-market/lesson10"
+              />
+            </div>
+          </section>
 
-        {/* סיכום ובוחן מסכם */}
-        <section>
-          <h2 className="text-2xl font-bold mb-6 flex items-center gap-3 text-gray-900 dark:text-white">
-            <Rocket className="w-6 h-6 text-red-600 dark:text-red-400" />
-            סיכום ובוחן מסכם
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <LessonCard
-              number="11"
-              title="סיכום הקורס"
-              description="סיכום הנושאים העיקריים וצעדים להמשך"
-              duration="15 דקות"
-              href="/course/stock-market/summary"
-            />
-            <QuizCard
-              title="בוחן מסכם"
-              description="בוחן מקיף על כל חומר הקורס"
-              href="/course/stock-market/final-quiz"
-            />
-          </div>
-        </section>
+          {/* סיכום ובוחן מסכם */}
+          <section>
+            <h2 className="text-2xl font-bold mb-6 flex items-center gap-3 text-gray-900 dark:text-white">
+              <Rocket className="w-6 h-6 text-red-600 dark:text-red-400" />
+              סיכום ובוחן מסכם
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              <LessonCard
+                number="11"
+                title="סיכום הקורס"
+                description="סיכום הנושאים העיקריים וצעדים להמשך"
+                duration="15 דקות"
+                href="/course/stock-market/summary"
+              />
+              <QuizCard
+                title="בוחן מסכם"
+                description="בוחן מקיף על כל חומר הקורס"
+                href="/course/stock-market/final-quiz"
+              />
+            </div>
+          </section>
+        </div>
+        <div className="mt-8 text-center">
+          <button
+            onClick={resetProgress}
+            className="text-sm text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300"
+          >
+            איפוס התקדמות
+          </button>
+        </div>
       </div>
-      <div className="mt-8 text-center">
-        <button
-          onClick={resetProgress}
-          className="text-sm text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300"
-        >
-          איפוס התקדמות
-        </button>
-      </div>
-    </div>
+    </>
   );
 } 
