@@ -1,5 +1,5 @@
 import Layout from '../../../components/Layout';
-import { Clock, ChevronLeft, ChevronRight, CheckCircle, AlertCircle, Brain, BookOpen, Target } from 'lucide-react';
+import { Clock, ChevronLeft, ChevronRight, CheckCircle, AlertCircle, Brain, BookOpen, Target, Check, X } from 'lucide-react';
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
 import confetti from 'canvas-confetti';
@@ -7,21 +7,6 @@ import { useCourseProgress } from '../../../contexts/CourseProgressContext';
 
 export default function Quiz1() {
   const { markAsCompleted } = useCourseProgress();
-  const [currentQuestion, setCurrentQuestion] = useState(0);
-  const [score, setScore] = useState(0);
-  const [showResults, setShowResults] = useState(false);
-  const [answers, setAnswers] = useState([]);
-  const [selectedQuestions, setSelectedQuestions] = useState(null);
-
-  useEffect(() => {
-    if (showResults && score >= selectedQuestions.length / 2) {
-      const timer = setTimeout(() => {
-        markAsCompleted('quiz1');
-      }, 1000);
-      return () => clearTimeout(timer);
-    }
-  }, [showResults, score, markAsCompleted, selectedQuestions?.length]);
-
   const questions = [
     {
       question: "מהי אסטרטגיית השקעת ערך (Value Investing)?",
@@ -57,6 +42,21 @@ export default function Quiz1() {
       explanation: "קרן חירום היא סכום כסף נזיל שנשמר למצבי חירום, והגודל המומלץ הוא בין 3 ל-6 חודשי הוצאות."
     }
   ];
+
+  const [currentQuestion, setCurrentQuestion] = useState(0);
+  const [score, setScore] = useState(0);
+  const [showResults, setShowResults] = useState(false);
+  const [answers, setAnswers] = useState([]);
+  const [selectedQuestions, setSelectedQuestions] = useState(questions);
+
+  useEffect(() => {
+    if (showResults && score >= selectedQuestions.length / 2) {
+      const timer = setTimeout(() => {
+        markAsCompleted('quiz1');
+      }, 1000);
+      return () => clearTimeout(timer);
+    }
+  }, [showResults, score, markAsCompleted, selectedQuestions?.length]);
 
   const handleAnswer = (answerIndex) => {
     setAnswers({

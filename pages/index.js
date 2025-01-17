@@ -2,10 +2,22 @@ import { NextSeo } from 'next-seo';
 import Link from 'next/link';
 import { Calculator, Clock, TrendingUp, DollarSign, BookOpen, ArrowRight, Users, ThumbsUp, BarChart2, Target, Lightbulb, Star } from 'lucide-react';
 import { StatisticCounter } from '../components/StatisticCounter';
+import Head from 'next/head';
 
 export default function Home() {
   return (
     <>
+      <Head>
+        <title>דריבית | מחשבונים פיננסיים ולימודי שוק ההון</title>
+        <meta name="description" content="הפלטפורמה המובילה בישראל ללימוד שוק ההון, כלים פיננסיים ומחשבונים חכמים. התחילו ללמוד על השקעות בחינם עוד היום!" />
+        <meta name="keywords" content="שוק ההון, השקעות, מחשבון ריבית דריבית, לימודי שוק ההון, קורס שוק ההון, מחשבונים פיננסיים, השקעות למתחילים" />
+        <meta property="og:title" content="דריבית | מחשבונים פיננסיים ולימודי שוק ההון" />
+        <meta property="og:description" content="הפלטפורמה המובילה בישראל ללימוד שוק ההון, כלים פיננסיים ומחשבונים חכמים" />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://www.deribit.co.il" />
+        <link rel="canonical" href="https://www.deribit.co.il" />
+      </Head>
+
       <NextSeo
         title="דריבית - מחשבונים פיננסיים חכמים"
         description="קורס שוק ההון למתחילים בחינם! בנוסף, כלים פיננסיים חכמים לניהול כספים, תכנון משכנתא וחישוב השקעות"
