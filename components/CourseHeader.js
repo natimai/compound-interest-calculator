@@ -1,3 +1,4 @@
+import Layout from './Layout';
 import { BookOpen, Clock } from 'lucide-react';
 
 export default function CourseHeader({ title, courseTitle, lessonNumber }) {

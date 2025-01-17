@@ -1,221 +1,212 @@
+import { BookOpen, Clock, Target, CheckCircle, Lock, Play, Award, Brain, ChevronLeft } from 'lucide-react';
 import Link from 'next/link';
-import { BookOpen, Clock, ChevronLeft, Star, Shield, TrendingUp, Check, Users, Award } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { useState, useEffect } from 'react';
+import { useCourseProgress } from '../../contexts/CourseProgressContext';
 
-export default function CourseIndex() {
-  const lessons = [
+export default function CoursePage() {
+  const { progress, resetProgress } = useCourseProgress();
+
+  // חישוב אחוז ההתקדמות הכללי
+  const calculateTotalProgress = () => {
+    if (!progress) return 0;
+    const totalItems = courseContent.reduce((acc, section) => acc + section.lessons.length, 0);
+    const completedItems = Object.values(progress).filter(val => val).length;
+    return Math.round((completedItems / totalItems) * 100);
+  };
+
+  const courseContent = [
     {
-      id: 1,
-      title: "מבוא להשקעות - למה בכלל להשקיע?",
-      duration: "5 דקות",
-      path: "/course/stock-market/lesson1",
-      description: "נלמד על חשיבות ההשקעות ומושגי היסוד בשוק ההון"
+      id: 'intro',
+      title: 'מבוא לשוק ההון',
+      lessons: [
+        {
+          id: 'lesson1',
+          title: 'מהו שוק ההון?',
+          duration: '15 דקות',
+          path: '/course/stock-market/lesson1'
+        },
+        {
+          id: 'lesson2',
+          title: 'מושגי יסוד',
+          duration: '20 דקות',
+          path: '/course/stock-market/lesson2'
+        },
+        {
+          id: 'lesson3',
+          title: 'סוגי ניירות ערך',
+          duration: '25 דקות',
+          path: '/course/stock-market/lesson3'
+        },
+        {
+          id: 'quiz1',
+          title: 'בוחן - מבוא ומושגים',
+          type: 'quiz',
+          path: '/course/stock-market/quiz1'
+        }
+      ]
     },
     {
-      id: 2,
-      title: "הכנה להשקעה ראשונה",
-      duration: "8 דקות",
-      path: "/course/stock-market/lesson2",
-      description: "צעדים מעשיים להכנת תשתית פיננסית נכונה לפני תחילת ההשקעות"
+      id: 'analysis',
+      title: 'ניתוח והערכת שווי',
+      lessons: [
+        {
+          id: 'lesson4',
+          title: 'ניתוח בסיסי',
+          duration: '30 דקות',
+          path: '/course/stock-market/lesson4'
+        },
+        {
+          id: 'lesson5',
+          title: 'קריאת דוחות כספיים',
+          duration: '35 דקות',
+          path: '/course/stock-market/lesson5'
+        },
+        {
+          id: 'quiz2',
+          title: 'בוחן - ניתוח כספי',
+          type: 'quiz',
+          path: '/course/stock-market/quiz2'
+        }
+      ]
+    },
+    {
+      id: 'practice',
+      title: 'מסחר בפועל',
+      lessons: [
+        {
+          id: 'lesson8',
+          title: 'בניית תיק השקעות',
+          duration: '25 דקות',
+          path: '/course/stock-market/lesson8'
+        },
+        {
+          id: 'lesson9',
+          title: 'אסטרטגיות מסחר',
+          duration: '30 דקות',
+          path: '/course/stock-market/lesson9'
+        },
+        {
+          id: 'lesson10',
+          title: 'פקודות מסחר וביצוע עסקאות',
+          duration: '20 דקות',
+          path: '/course/stock-market/lesson10'
+        },
+        {
+          id: 'final-quiz',
+          title: 'בוחן מסכם',
+          type: 'quiz',
+          path: '/course/stock-market/final-quiz'
+        },
+        {
+          id: 'summary',
+          title: 'סיכום הקורס',
+          type: 'summary',
+          path: '/course/stock-market/summary'
+        }
+      ]
     }
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white dark:from-gray-900 dark:to-gray-800">
-      {/* Hero Section - משופר */}
-      <div className="relative pt-24 pb-20 overflow-hidden">
-        <div className="absolute inset-0 z-0">
-          <div className="absolute inset-0 bg-gradient-to-r from-blue-500/10 to-purple-500/10 dark:from-blue-500/20 dark:to-purple-500/20" />
-          <div className="absolute inset-y-0 right-0 w-1/2 bg-gradient-to-l from-transparent to-white/90 dark:to-gray-900/90" />
-        </div>
-        
-        <div className="relative z-10 max-w-6xl mx-auto px-4">
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="text-center"
-          >
-            <span className="inline-block px-4 py-1.5 mb-6 text-sm font-medium text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/30 rounded-full">
-              קורס חדש
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+      <div className="max-w-4xl mx-auto px-4 py-8">
+        <div className="mb-8 sm:mb-12">
+          <h1 className="text-3xl sm:text-4xl font-bold mb-4">קורס שוק ההון למתחילים</h1>
+          <div className="grid grid-cols-2 sm:flex flex-wrap items-center gap-4 sm:gap-6 text-gray-600 dark:text-gray-400 text-sm sm:text-base">
+            <span className="flex items-center gap-2">
+              <Clock className="w-4 h-4 sm:w-5 sm:h-5" />
+              3 שעות לימוד
             </span>
-            <h1 className="text-5xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-              קורס שוק ההון למתחילים
-            </h1>
-            <p className="text-xl md:text-2xl text-gray-600 dark:text-gray-300 mb-8 max-w-3xl mx-auto">
-              למדו איך להשקיע בשוק ההון בצורה חכמה ואחראית, 
-              <br className="hidden md:block" />
-              עם כלים מעשיים והסברים פשוטים
-            </p>
-            
-            <div className="flex flex-wrap justify-center gap-4 mb-12">
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="px-8 py-4 bg-blue-600 hover:bg-blue-700 text-white rounded-xl font-medium text-lg shadow-lg shadow-blue-500/25"
-              >
-                התחל ללמוד עכשיו
-              </motion.button>
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="px-8 py-4 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-200 rounded-xl font-medium text-lg shadow-lg"
-              >
-                קרא עוד
-              </motion.button>
-            </div>
-
-            {/* Stats */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-3xl mx-auto">
-              <div className="flex flex-col items-center">
-                <Users className="w-8 h-8 text-blue-500 mb-2" />
-                <span className="text-3xl font-bold">1,000+</span>
-                <span className="text-gray-600 dark:text-gray-400">תלמידים</span>
-              </div>
-              <div className="flex flex-col items-center">
-                <Clock className="w-8 h-8 text-blue-500 mb-2" />
-                <span className="text-3xl font-bold">10</span>
-                <span className="text-gray-600 dark:text-gray-400">שעות תוכן</span>
-              </div>
-              <div className="flex flex-col items-center">
-                <Award className="w-8 h-8 text-blue-500 mb-2" />
-                <span className="text-3xl font-bold">4.9/5</span>
-                <span className="text-gray-600 dark:text-gray-400">דירוג ממוצע</span>
-              </div>
-            </div>
-          </motion.div>
-        </div>
-      </div>
-
-      {/* Features Section - משופר */}
-      <div className="py-20 bg-gray-50 dark:bg-gray-800/50">
-        <div className="max-w-6xl mx-auto px-4">
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            viewport={{ once: true }}
-            className="text-center mb-16"
-          >
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">למה ללמוד אצלנו?</h2>
-            <p className="text-xl text-gray-600 dark:text-gray-400">הקורס שלנו מציע חווית למידה ייחודית</p>
-          </motion.div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {[
-              {
-                icon: <Star className="w-8 h-8" />,
-                title: "מותאם למתחילים",
-                description: "הסברים פשוטים וברורים, ללא מושגים מורכבים",
-                color: "blue"
-              },
-              {
-                icon: <Shield className="w-8 h-8" />,
-                title: "ידע פרקטי",
-                description: "כלים מעשיים שתוכלו ליישם מיד",
-                color: "purple"
-              },
-              {
-                icon: <TrendingUp className="w-8 h-8" />,
-                title: "מסלול מובנה",
-                description: "למידה הדרגתית מהבסיס ועד להשקעות מתקדמות",
-                color: "indigo"
-              }
-            ].map((feature, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.2 }}
-                viewport={{ once: true }}
-                className="bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-xl hover:shadow-2xl transition-shadow"
-              >
-                <div className={`text-${feature.color}-500 mb-6`}>
-                  {feature.icon}
-                </div>
-                <h3 className="text-xl font-bold mb-3">{feature.title}</h3>
-                <p className="text-gray-600 dark:text-gray-400">
-                  {feature.description}
-                </p>
-              </motion.div>
-            ))}
+            <span className="flex items-center gap-2">
+              <BookOpen className="w-4 h-4 sm:w-5 sm:h-5" />
+              10 שיעורים
+            </span>
+            <span className="flex items-center gap-2">
+              <Brain className="w-4 h-4 sm:w-5 sm:h-5" />
+              3 בחני תרגול
+            </span>
+            <span className="flex items-center gap-2">
+              <Target className="w-4 h-4 sm:w-5 sm:h-5" />
+              מתאים למתחילים
+            </span>
           </div>
         </div>
-      </div>
 
-      {/* Course Content Section - משופר */}
-      <div className="py-20">
-        <div className="max-w-4xl mx-auto px-4">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            viewport={{ once: true }}
-          >
-            <h2 className="text-3xl font-bold mb-12 flex items-center gap-3 justify-center">
-              <BookOpen className="w-8 h-8 text-blue-500" />
-              תוכן הקורס
-            </h2>
-            <div className="space-y-6">
-              {lessons.map((lesson, index) => (
-                <motion.div
-                  key={lesson.id}
-                  initial={{ opacity: 0, x: -20 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.6, delay: index * 0.1 }}
-                  viewport={{ once: true }}
-                >
-                  <Link 
-                    href={lesson.path}
-                    className="block p-6 bg-white dark:bg-gray-800 rounded-xl hover:shadow-xl transition-all border border-gray-100 dark:border-gray-700"
-                  >
-                    <div className="flex justify-between items-start">
-                      <div>
-                        <span className="text-blue-600 dark:text-blue-400 text-sm font-medium">
-                          שיעור {lesson.id}
-                        </span>
-                        <h3 className="text-xl font-bold mt-1">{lesson.title}</h3>
-                        <p className="text-gray-600 dark:text-gray-400 mt-2">
-                          {lesson.description}
-                        </p>
+        <div className="bg-white dark:bg-gray-800 rounded-xl sm:rounded-2xl shadow-sm p-4 sm:p-6 mb-6 sm:mb-8">
+          <div className="flex items-center justify-between mb-4">
+            <h2 className="text-lg sm:text-xl font-bold">התקדמות בקורס</h2>
+            <span className="text-xl sm:text-2xl font-bold text-blue-600">{calculateTotalProgress()}%</span>
+          </div>
+          <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+            <div 
+              className="bg-blue-600 h-2 rounded-full transition-all duration-500"
+              style={{ width: `${calculateTotalProgress()}%` }}
+            ></div>
+          </div>
+        </div>
+
+        <div className="space-y-6 sm:space-y-8">
+          {courseContent.map((section, sectionIndex) => (
+            <div key={section.id} className="bg-white dark:bg-gray-800 rounded-xl sm:rounded-2xl shadow-sm p-4 sm:p-6">
+              <h2 className="text-xl sm:text-2xl font-bold mb-4 sm:mb-6 flex items-center gap-3">
+                <span className="bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 w-6 h-6 sm:w-8 sm:h-8 rounded-full flex items-center justify-center text-sm">
+                  {sectionIndex + 1}
+                </span>
+                {section.title}
+              </h2>
+              
+              <div className="space-y-3 sm:space-y-4">
+                {section.lessons.map((lesson) => {
+                  const isCompleted = progress[lesson.id];
+                  return (
+                    <Link 
+                      key={lesson.id}
+                      href={lesson.path}
+                      className={`block p-3 sm:p-4 rounded-lg sm:rounded-xl transition-all duration-200 ${
+                        isCompleted 
+                          ? 'bg-green-50 dark:bg-green-900/30 border border-green-200 dark:border-green-800'
+                          : 'bg-gray-50 dark:bg-gray-700/50 hover:bg-gray-100 dark:hover:bg-gray-700'
+                      }`}
+                    >
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-3 sm:gap-4">
+                          {isCompleted ? (
+                            <CheckCircle className="w-4 h-4 sm:w-5 sm:h-5 text-green-500 flex-shrink-0" />
+                          ) : lesson.type === 'quiz' ? (
+                            <Brain className="w-4 h-4 sm:w-5 sm:h-5 text-blue-500 flex-shrink-0" />
+                          ) : lesson.type === 'summary' ? (
+                            <Award className="w-4 h-4 sm:w-5 sm:h-5 text-purple-500 flex-shrink-0" />
+                          ) : (
+                            <Play className="w-4 h-4 sm:w-5 sm:h-5 text-blue-500 flex-shrink-0" />
+                          )}
+                          <div className="min-w-0">
+                            <h3 className="font-medium text-sm sm:text-base truncate">{lesson.title}</h3>
+                            {lesson.duration && (
+                              <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400">
+                                {lesson.duration}
+                              </p>
+                            )}
+                          </div>
+                        </div>
+                        <div className="text-gray-400 flex-shrink-0">
+                          <ChevronLeft className="w-4 h-4 sm:w-5 sm:h-5" />
+                        </div>
                       </div>
-                      <div className="flex items-center gap-2 text-gray-500 dark:text-gray-400">
-                        <Clock className="w-4 h-4" />
-                        <span>{lesson.duration}</span>
-                      </div>
-                    </div>
-                  </Link>
-                </motion.div>
-              ))}
+                    </Link>
+                  );
+                })}
+              </div>
             </div>
-          </motion.div>
+          ))}
         </div>
       </div>
-
-      {/* CTA Section */}
-      <div className="py-20 bg-gradient-to-r from-blue-600 to-purple-600 text-white">
-        <div className="max-w-4xl mx-auto px-4 text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            viewport={{ once: true }}
-          >
-            <h2 className="text-3xl md:text-4xl font-bold mb-6">
-              מוכנים להתחיל?
-            </h2>
-            <p className="text-xl mb-8 text-blue-100">
-              הצטרפו לאלפי התלמידים שכבר לומדים איתנו
-            </p>
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="px-8 py-4 bg-white text-blue-600 rounded-xl font-medium text-lg shadow-xl"
-            >
-              התחל ללמוד עכשיו
-            </motion.button>
-          </motion.div>
-        </div>
+      <div className="mt-8 text-center">
+        <button
+          onClick={resetProgress}
+          className="text-sm text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300"
+        >
+          איפוס התקדמות
+        </button>
       </div>
     </div>
   );

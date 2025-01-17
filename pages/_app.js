@@ -1,16 +1,16 @@
-import { DefaultSeo } from 'next-seo';
-import SEO from '../next-seo.config';
-import { Layout } from '../components/Layout';
+import Layout from '../components/Layout';
 import { ThemeProvider } from '../contexts/ThemeContext';
 import '../styles/globals.css';
+import { CourseProgressProvider } from '../contexts/CourseProgressContext';
 
 function MyApp({ Component, pageProps }) {
   return (
     <ThemeProvider>
-      <DefaultSeo {...SEO} />
-      <Layout>
-        <Component {...pageProps} />
-      </Layout>
+      <CourseProgressProvider>
+        <Layout>
+          <Component {...pageProps} />
+        </Layout>
+      </CourseProgressProvider>
     </ThemeProvider>
   );
 }

@@ -102,3 +102,14 @@ button {
   .nav-link-active {
     @apply text-blue-600;
   }
+
+/* Add these styles */
+#__next {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  flex: 1;
+}

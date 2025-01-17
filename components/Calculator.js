@@ -3,6 +3,7 @@ import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContai
 import { Info } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Head from 'next/head';
+import Layout from './Layout';
 
 const tooltips = {
   initialAmount: 'הסכום הראשוני שממנו תתחיל לצבור ריבית',
@@ -11,7 +12,9 @@ const tooltips = {
   managementFeeDeposit: 'אחוז דמי הניהול שנגבים מכל הפקדה חדשה',
   managementFeeAccumulation: 'אחוז דמי הניהול השנתיים שנגבים מסך החיסכון',
   years: 'מספר השנים שבהן יימשך החיסכון',
-  capitalGainsTax: 'הפחתת מס בשיעור 25% מהרווחים (לא מהקרן)'
+  capitalGainsTax: 'הפחתת מס בשיעור 25% מהרווחים (לא מהקרן)',
+  inflationRate: 'שיעור האינפלציה השנתי הצפוי באחוזים',
+  monthlyWithdrawal: 'סכום משיכה חודשי קבוע (אופציונלי)'
 };
 
 const InputWithTooltip = ({ id, label, value, onChange, error, tooltip }) => (
@@ -57,7 +60,10 @@ export const Calculator = () => {
     managementFeeDeposit: '0',
     managementFeeAccumulation: '0',
     years: '',
-    capitalGainsTax: false
+    capitalGainsTax: false,
+    inflationRate: '2',
+    monthlyWithdrawal: '0',
+    showAdvancedOptions: false
   });
 
   const [errors, setErrors] = useState({});
@@ -94,13 +100,12 @@ export const Calculator = () => {
   };
 
   const calculateResults = () => {
-    // בדיקת ולידציה לפני החישוב
+    // בדיקת ולידציה רק לשדות החובה
     const newErrors = {};
-    Object.keys(formData).forEach(key => {
-      if (key !== 'capitalGainsTax' && 
-          key !== 'managementFeeDeposit' && 
-          key !== 'managementFeeAccumulation' && 
-          !formData[key]) {
+    const requiredFields = ['initialAmount', 'monthlyDeposit', 'interestRate', 'years'];
+    
+    requiredFields.forEach(key => {
+      if (!formData[key]) {
         newErrors[key] = 'שדה חובה';
       } else {
         const error = validate(key, formData[key]);
@@ -116,15 +121,19 @@ export const Calculator = () => {
     // המרת ערכים למספרים
     const initialAmount = parseFloat(formData.initialAmount);
     const monthlyDeposit = parseFloat(formData.monthlyDeposit);
+    const monthlyWithdrawal = parseFloat(formData.monthlyWithdrawal) || 0;
     const interestRate = parseFloat(formData.interestRate) / 100;
+    const inflationRate = parseFloat(formData.inflationRate) / 100;
     const managementFeeDeposit = parseFloat(formData.managementFeeDeposit) / 100 || 0;
     const managementFeeAccumulation = parseFloat(formData.managementFeeAccumulation) / 100 || 0;
     const years = parseInt(formData.years);
     
     let totalDeposit = initialAmount;
     let totalAmount = initialAmount;
+    let realTotalAmount = initialAmount;
     let accumulatedFees = 0;
     let accumulatedInterest = 0;
+    let monthlyIncome = 0;
     const yearlyResults = [];
 
     for (let year = 1; year <= years; year++) {
@@ -139,9 +148,11 @@ export const Calculator = () => {
         accumulatedFees += depositFee + accumulationFee;
         
         totalDeposit += monthlyDeposit;
-        totalAmount += monthlyDeposit - depositFee;
+        totalAmount += monthlyDeposit - depositFee - monthlyWithdrawal;
         totalAmount *= (1 + interestRate / 12);
         totalAmount -= accumulationFee;
+        
+        realTotalAmount = totalAmount / Math.pow(1 + inflationRate, year);
       }
 
       accumulatedInterest = totalAmount - totalDeposit + accumulatedFees;
@@ -149,6 +160,7 @@ export const Calculator = () => {
       yearlyResults.push({
         year,
         totalAmount,
+        realTotalAmount,
         accumulatedInterest,
         totalDeposit,
         accumulatedFees
@@ -157,15 +169,19 @@ export const Calculator = () => {
 
     setYearlyData(yearlyResults);
 
-    // חישוב מס רווחי הון אם נבחר
     const totalCapitalGainsTax = formData.capitalGainsTax ? accumulatedInterest * 0.25 : 0;
+    const finalRealAmount = totalAmount / Math.pow(1 + inflationRate, years);
+
+    monthlyIncome = (totalAmount * (interestRate / 12)).toFixed(0);
 
     setResult({
       totalDeposit,
       totalInterest: accumulatedInterest,
       totalFees: accumulatedFees,
       totalCapitalGainsTax,
-      finalAmount: totalAmount - totalCapitalGainsTax
+      finalAmount: totalAmount - totalCapitalGainsTax,
+      finalRealAmount: finalRealAmount - totalCapitalGainsTax,
+      monthlyIncome
     });
   };
 
@@ -244,6 +260,50 @@ export const Calculator = () => {
               error={errors.managementFeeAccumulation}
               tooltip={tooltips.managementFeeAccumulation}
             />
+
+            <div className="md:col-span-2 mt-2">
+              <button
+                onClick={() => setFormData(prev => ({ ...prev, showAdvancedOptions: !prev.showAdvancedOptions }))}
+                className="text-gray-600 hover:text-gray-800 text-sm flex items-center gap-1 bg-gray-100 hover:bg-gray-200 px-4 py-2 rounded-lg transition-colors"
+              >
+                {formData.showAdvancedOptions ? '⌃ הסתר' : '⌄ הצג'} אפשרויות מתקדמות
+              </button>
+            </div>
+
+            {formData.showAdvancedOptions && (
+              <>
+                <InputWithTooltip
+                  id="inflationRate"
+                  label="שיעור אינפלציה שנתי (%)"
+                  value={formData.inflationRate}
+                  onChange={(e) => handleInputChange({ target: { name: 'inflationRate', value: e.target.value } })}
+                  error={errors.inflationRate}
+                  tooltip={tooltips.inflationRate}
+                />
+
+                <InputWithTooltip
+                  id="monthlyWithdrawal"
+                  label="משיכה חודשית"
+                  value={formData.monthlyWithdrawal}
+                  onChange={(e) => handleInputChange({ target: { name: 'monthlyWithdrawal', value: e.target.value } })}
+                  error={errors.monthlyWithdrawal}
+                  tooltip={tooltips.monthlyWithdrawal}
+                />
+
+                <div className="md:col-span-2">
+                  <label className="flex items-center space-x-2 space-x-reverse cursor-pointer">
+                    <input
+                      type="checkbox"
+                      name="showInflationAdjusted"
+                      checked={formData.showInflationAdjusted}
+                      onChange={handleInputChange}
+                      className="w-4 h-4 text-blue-600 rounded border-gray-300 focus:ring-blue-500"
+                    />
+                    <span className="text-sm text-gray-700">הצג ערכים מותאמי אינפלציה</span>
+                  </label>
+                </div>
+              </>
+            )}
           </div>
 
           <div className="mt-4 mb-6">
@@ -261,7 +321,8 @@ export const Calculator = () => {
 
           <button
             onClick={calculateResults}
-            className="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition-colors"
+            className="w-full bg-blue-500 hover:bg-blue-600 text-white py-3 rounded-lg 
+                     transition-colors duration-200 font-medium text-lg"
           >
             חשב תוצאות
           </button>
@@ -313,7 +374,41 @@ export const Calculator = () => {
       ₪{result.finalAmount.toLocaleString('he-IL', { maximumFractionDigits: 0 })}
     </p>
   </div>
+
+  {formData.showAdvancedOptions && (
+    <>
+      {parseFloat(formData.monthlyWithdrawal) > 0 && (
+        <div className="p-4 bg-green-100 rounded-lg">
+          <p className="text-sm text-gray-600">הכנסה חודשית פוטנציאלית</p>
+          <p className="text-lg font-bold text-green-700">
+            ₪{result.monthlyIncome.toLocaleString('he-IL')}
+          </p>
+          <p className="text-xs text-gray-500 mt-1">
+            *מבוסס על משיכת הרווחים החודשיים בלבד
+          </p>
+        </div>
+      )}
+
+      {parseFloat(formData.inflationRate) > 0 && (
+        <div className="p-4 bg-purple-50 rounded-lg">
+          <p className="text-sm text-gray-600">סכום סופי (מותאם לאינפלציה)</p>
+          <p className="text-lg font-bold text-purple-600">
+            ₪{result.finalRealAmount.toLocaleString('he-IL', { maximumFractionDigits: 0 })}
+          </p>
+        </div>
+      )}
+    </>
+  )}
 </div>
+
+            {formData.showInflationAdjusted && (
+              <div className="mt-4 p-4 bg-purple-50 rounded-lg">
+                <p className="text-sm text-gray-600">סכום סופי (מותאם לאינפלציה)</p>
+                <p className="text-lg font-bold text-purple-600">
+                  ₪{result.finalRealAmount.toLocaleString('he-IL', { maximumFractionDigits: 0 })}
+                </p>
+              </div>
+            )}
 
             {/* גרף התפתחות החיסכון */}
             <div className="h-64 mt-8">
@@ -334,13 +429,21 @@ export const Calculator = () => {
                     type="monotone" 
                     dataKey="totalAmount" 
                     stroke="#2563eb"
-                    name="סך הכל"
+                    name="סכום נומינלי"
                   />
+                  {formData.showAdvancedOptions && parseFloat(formData.inflationRate) > 0 && (
+                    <Line 
+                      type="monotone" 
+                      dataKey="realTotalAmount" 
+                      stroke="#7c3aed"
+                      name="סכום ריאלי"
+                    />
+                  )}
                   <Line 
                     type="monotone" 
                     dataKey="totalDeposit" 
                     stroke="#9ca3af"
-                    name="הפקדות"
+                    name="סך הפקדות"
                   />
                 </LineChart>
               </ResponsiveContainer>
@@ -350,6 +453,17 @@ export const Calculator = () => {
               <p className="text-sm text-gray-600">
                 התוצאות מבוססות על הנחת תשואה קבועה לאורך זמן. במציאות, התשואות משתנות משנה לשנה.
               </p>
+            </div>
+
+            <div className="mt-6 space-y-4">
+              <div className="p-4 bg-blue-50 border border-blue-200 rounded-lg">
+                <h4 className="font-semibold mb-2">טיפים להשקעה:</h4>
+                <ul className="text-sm text-gray-600 space-y-2 list-disc pr-4">
+                  <li>השקעה לטווח ארוך מאפשרת לריבית דריבית לעבוד לטובתך</li>
+                  <li>דמי ניהול נמוכים משפיעים משמעותית על התשואה הסופית</li>
+                  <li>חשוב להתחשב באינפלציה בתכנון פיננסי ארוך טווח</li>
+                </ul>
+              </div>
             </div>
           </motion.div>
         )}

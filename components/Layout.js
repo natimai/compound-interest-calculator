@@ -6,14 +6,33 @@ import { useTheme } from '../contexts/ThemeContext';
 import { enable } from '../utils/darkreader';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useRouter } from 'next/router';
+import { Moon, Sun } from 'lucide-react';
 
-function Layout({ children }) {
+export default function Layout({ children }) {
   const { isDarkMode } = useTheme();
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const [showScrollTop, setShowScrollTop] = useState(false);
   const [progress, setProgress] = useState(0);
-  
+  const [darkMode, setDarkMode] = useState(false);
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const isDark = localStorage.getItem('darkMode') === 'true';
+      setDarkMode(isDark);
+      if (isDark) {
+        document.documentElement.classList.add('dark');
+      }
+    }
+  }, []);
+
+  const toggleDarkMode = () => {
+    const newMode = !darkMode;
+    setDarkMode(newMode);
+    localStorage.setItem('darkMode', newMode);
+    document.documentElement.classList.toggle('dark');
+  };
+
   // מעקב אחרי גלילה
   useEffect(() => {
     const updateScroll = () => {
@@ -94,7 +113,7 @@ function Layout({ children }) {
         bg-gradient-to-b from-white to-gray-50
         dark:from-gray-900 dark:to-gray-800
         transition-all duration-200 ease-in-out
-        ${isDarkMode ? 'dark' : ''}
+        ${darkMode ? 'dark' : ''}
       `}
     >
       <Head>
@@ -102,7 +121,10 @@ function Layout({ children }) {
           src="https://cdn.enable.co.il/licenses/enable-L36349gamb6znuqv-0125-67519/init.js"
           async
         ></script>
-        <meta name="theme-color" content={isDarkMode ? '#111827' : '#ffffff'} />
+        <meta name="theme-color" content={darkMode ? '#111827' : '#ffffff'} />
+        <title>קורס שוק ההון למתחילים</title>
+        <meta name="description" content="לומדים להשקיע בצורה חכמה ואחראית" />
+        <link rel="icon" href="/favicon.ico" />
       </Head>
 
       {/* Progress Bar - מחוץ לדיב הראשי */}
@@ -183,6 +205,21 @@ function Layout({ children }) {
           </motion.button>
         )}
       </AnimatePresence>
+
+      <header className="bg-white dark:bg-gray-800 shadow-sm">
+        <div className="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
+          <div className="text-xl font-bold">
+            <span className="text-blue-600 dark:text-blue-400">Invest</span>
+            <span className="text-gray-600 dark:text-gray-300">Academy</span>
+          </div>
+          <button
+            onClick={toggleDarkMode}
+            className="p-2 rounded-lg bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300"
+          >
+            {darkMode ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
+          </button>
+        </div>
+      </header>
     </div>
   );
 }
@@ -190,6 +227,3 @@ function Layout({ children }) {
 Layout.getInitialProps = async () => {
   return {};
 };
-
-export { Layout };
-export default Layout;

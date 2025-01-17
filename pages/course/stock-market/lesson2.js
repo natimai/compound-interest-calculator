@@ -1,152 +1,244 @@
-import Layout from '../../../components/Layout'
-import CourseHeader from '../../../components/CourseHeader'
+import Layout from '../../../components/Layout';
+import { Clock, ChevronLeft, ChevronRight, Star, Shield, Wallet, LineChart, Target } from 'lucide-react';
+import Link from 'next/link';
+import { useCourseProgress } from '../../../contexts/CourseProgressContext';
+import { useEffect } from 'react';
 
 export default function Lesson2() {
+  const { markAsCompleted } = useCourseProgress();
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      markAsCompleted('lesson2');
+    }, 1000);
+
+    return () => clearTimeout(timer);
+  }, [markAsCompleted]);
+
   return (
     <Layout>
-      <CourseHeader 
-        title="הכנה להשקעה ראשונה" 
-        courseTitle="קורס שוק ההון למתחילים"
-        lessonNumber="2"
-      />
-
-      <div className="lesson-content">
-        <section className="intro">
-          <h2>מה נלמד בשיעור זה?</h2>
-          <ul className="lesson-goals">
-            <li>איך לבדוק את המצב הפיננסי שלנו לפני שמתחילים להשקיע</li>
-            <li>למה חשוב להקים קרן חירום ואיך עושים זאת</li>
-            <li>כיצד מגדירים מטרות השקעה אישיות</li>
-            <li>איך בוחרים אסטרטגיית השקעה מתאימה</li>
-          </ul>
-        </section>
-
-        <section className="main-content">
-          <h2>בדיקת המצב הפיננסי</h2>
-          <p>
-            לפני שמתחילים להשקיע, חשוב לוודא שאנחנו במצב פיננסי יציב. 
-            נעבור על הצעדים החשובים שצריך לבצע:
-          </p>
-
-          <div className="checklist-box">
-            <h3>רשימת בדיקה לפני השקעה:</h3>
-            <ul>
-              <li>✓ אין חובות בריבית גבוהה (כרטיסי אשראי, הלוואות צרכניות)</li>
-              <li>✓ יש הכנסה קבועה ויציבה</li>
-              <li>✓ קיימת תכנית פנסיונית בסיסית</li>
-              <li>✓ יש תקציב חודשי מסודר</li>
-            </ul>
+      {/* כותרת ופרטי השיעור */}
+      <div className="max-w-4xl mx-auto px-4 py-8">
+        <div className="mb-12">
+          <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400 mb-4">
+            <Link href="/course" className="hover:text-blue-600 flex items-center gap-1">
+              <ChevronRight className="w-4 h-4" />
+              חזרה לקורס
+            </Link>
+            <span>•</span>
+            <span>שיעור 2</span>
           </div>
-
-          <h2>בניית קרן חירום</h2>
-          <div className="important-box">
-            <p>
-              <strong>מהי קרן חירום?</strong> סכום כסף נזיל שיספיק ל-3-6 חודשי הוצאות, 
-              למקרה של אובדן הכנסה או הוצאה גדולה בלתי צפויה.
-            </p>
+          
+          <h1 className="text-3xl font-bold mb-4">הכנה להשקעה ראשונה - בניית תשתית פיננסית</h1>
+          
+          <div className="flex flex-wrap items-center gap-6 text-gray-600 dark:text-gray-400">
+            <span className="flex items-center gap-2">
+              <Clock className="w-5 h-5" />
+              20 דקות קריאה
+            </span>
+            <span className="flex items-center gap-2">
+              <Shield className="w-5 h-5" />
+              שיעור חיוני
+            </span>
+            <span className="flex items-center gap-2">
+              <Target className="w-5 h-5" />
+              מעשי
+            </span>
           </div>
+        </div>
 
-          <div className="calculation-box">
-            <h3>איך מחשבים את גודל קרן החירום?</h3>
-            <p>הוצאות חודשיות קבועות × 6 חודשים = גודל קרן החירום המומלץ</p>
-            <div className="example">
-              <p>לדוגמה: 8,000 ₪ הוצאות × 6 = 48,000 ₪ קרן חירום</p>
-            </div>
-          </div>
-
-          <h2>הגדרת מטרות השקעה</h2>
-          <div className="terms-grid">
-            <div className="term-card">
-              <h3>טווח קצר</h3>
-              <p>עד שנתיים</p>
-              <p>למשל: חתונה, רכב</p>
-            </div>
-            <div className="term-card">
-              <h3>טווח בינוני</h3>
-              <p>2-5 שנים</p>
-              <p>למשל: מקדמה לדירה</p>
-            </div>
-            <div className="term-card">
-              <h3>טווח ארוך</h3>
-              <p>מעל 5 שנים</p>
-              <p>למשל: פנסיה, חיסכון לילדים</p>
-            </div>
-          </div>
-
-          <h2>בחירת אסטרטגיית השקעה</h2>
-          <p>
-            אסטרטגיית ההשקעה צריכה להתאים למטרות שלנו, לטווח הזמן, 
-            ולרמת הסיכון שאנחנו מוכנים לקחת.
-          </p>
-
-          <div className="risk-profile-box">
-            <h3>פרופילי סיכון נפוצים:</h3>
-            <div className="profile-grid">
-              <div>
-                <h4>שמרני</h4>
-                <p>20% מניות, 80% אג"ח</p>
-              </div>
-              <div>
-                <h4>מאוזן</h4>
-                <p>50% מניות, 50% אג"ח</p>
-              </div>
-              <div>
-                <h4>אגרסיבי</h4>
-                <p>80% מניות, 20% אג"ח</p>
+        {/* תוכן השיעור */}
+        <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-sm p-8">
+          <div className="prose dark:prose-invert max-w-none">
+            {/* מבוא */}
+            <div className="bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-900/30 dark:to-blue-800/30 p-8 rounded-xl mb-8">
+              <h4 className="text-blue-800 dark:text-blue-300 text-xl m-0 mb-4">לפני שמתחילים להשקיע</h4>
+              <p className="text-gray-700 dark:text-gray-300 mb-6">
+                בשיעור זה נלמד איך להכין את התשתית הפיננסית הנכונה לפני שמתחילים להשקיע. 
+                נבין איך לבנות בסיס כלכלי יציב שיאפשר לנו להשקיע בביטחון ובחוכמה.
+              </p>
+              <div className="bg-white/50 dark:bg-gray-800/50 p-6 rounded-xl">
+                <h5 className="font-bold mb-3">בשיעור זה נלמד:</h5>
+                <ul className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-0 mb-0">
+                  <li>איך לבנות תקציב חכם</li>
+                  <li>יצירת קרן חירום</li>
+                  <li>טיפול נכון בחובות</li>
+                  <li>הגדרת יעדים פיננסיים</li>
+                  <li>בניית תוכנית חיסכון</li>
+                  <li>ניהול תזרים מזומנים</li>
+                </ul>
               </div>
             </div>
-          </div>
-        </section>
 
-        <section className="summary">
-          <h2>סיכום</h2>
-          <ul>
-            <li>וודאו שאתם במצב פיננסי יציב לפני תחילת ההשקעות</li>
-            <li>בנו קרן חירום מספקת</li>
-            <li>הגדירו מטרות ברורות</li>
-            <li>בחרו אסטרטגיה שמתאימה למטרות ולאופי שלכם</li>
-          </ul>
-        </section>
+            <h2 className="text-2xl font-bold mb-6">בניית תקציב חכם</h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 my-8">
+              <div className="bg-green-50 dark:bg-green-900/30 p-6 rounded-xl">
+                <Wallet className="w-8 h-8 text-green-600 dark:text-green-400 mb-4" />
+                <h4 className="text-green-800 dark:text-green-300 m-0 mb-3">הכנסות</h4>
+                <ul className="mt-0 mb-0 text-sm space-y-2">
+                  <li>משכורת קבועה</li>
+                  <li>הכנסות נוספות</li>
+                  <li>בונוסים ומענקים</li>
+                </ul>
+              </div>
+              
+              <div className="bg-blue-50 dark:bg-blue-900/30 p-6 rounded-xl">
+                <LineChart className="w-8 h-8 text-blue-600 dark:text-blue-400 mb-4" />
+                <h4 className="text-blue-800 dark:text-blue-300 m-0 mb-3">הוצאות</h4>
+                <ul className="mt-0 mb-0 text-sm space-y-2">
+                  <li>הוצאות קבועות</li>
+                  <li>הוצאות משתנות</li>
+                  <li>הוצאות חד פעמיות</li>
+                </ul>
+              </div>
+              
+              <div className="bg-purple-50 dark:bg-purple-900/30 p-6 rounded-xl">
+                <Shield className="w-8 h-8 text-purple-600 dark:text-purple-400 mb-4" />
+                <h4 className="text-purple-800 dark:text-purple-300 m-0 mb-3">חיסכון</h4>
+                <ul className="mt-0 mb-0 text-sm space-y-2">
+                  <li>קרן חירום</li>
+                  <li>חיסכון להשקעות</li>
+                  <li>חיסכון ליעדים</li>
+                </ul>
+              </div>
+            </div>
+
+            <div className="bg-yellow-50 dark:bg-yellow-900/30 p-6 rounded-xl my-8">
+              <h4 className="text-yellow-800 dark:text-yellow-400 m-0 mb-4 flex items-center gap-2">
+                <span className="text-2xl">💡</span>
+                כלל 50/30/20 לתקציב חכם
+              </h4>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div className="bg-white/50 dark:bg-gray-800/50 p-4 rounded-lg">
+                  <h5 className="font-bold mb-2">50% - הוצאות הכרחיות</h5>
+                  <ul className="text-sm space-y-1">
+                    <li>שכר דירה/משכנתא</li>
+                    <li>חשבונות שוטפים</li>
+                    <li>מזון ותחבורה</li>
+                  </ul>
+                </div>
+                <div className="bg-white/50 dark:bg-gray-800/50 p-4 rounded-lg">
+                  <h5 className="font-bold mb-2">30% - הוצאות גמישות</h5>
+                  <ul className="text-sm space-y-1">
+                    <li>בילויים ופנאי</li>
+                    <li>קניות ומותרות</li>
+                    <li>חופשות</li>
+                  </ul>
+                </div>
+                <div className="bg-white/50 dark:bg-gray-800/50 p-4 rounded-lg">
+                  <h5 className="font-bold mb-2">20% - חיסכון והשקעות</h5>
+                  <ul className="text-sm space-y-1">
+                    <li>קרן חירום</li>
+                    <li>השקעות</li>
+                    <li>חיסכון פנסיוני</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <h2 className="text-2xl font-bold mb-6">קרן חירום - הביטוח הכלכלי שלכם</h2>
+            <div className="bg-blue-50 dark:bg-blue-900/30 p-6 rounded-xl my-8">
+              <div className="space-y-6">
+                <div>
+                  <h4 className="text-blue-800 dark:text-blue-300 text-xl mb-4">מהי קרן חירום?</h4>
+                  <p className="text-gray-700 dark:text-gray-300">
+                    קרן חירום היא סכום כסף נזיל שנשמר במיוחד למצבי חירום בלתי צפויים. זהו למעשה 
+                    "כרית ביטחון" כלכלית שמגנה עלינו במקרים של אובדן הכנסה, הוצאות רפואיות פתאומיות, 
+                    תיקונים דחופים וכדומה.
+                  </p>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="bg-white/50 dark:bg-gray-800/50 p-6 rounded-xl">
+                    <h5 className="font-bold mb-3">כמה כסף צריך בקרן?</h5>
+                    <ul className="text-sm space-y-2">
+                      <li>מינימום: 3 חודשי הוצאות</li>
+                      <li>מומלץ: 6 חודשי הוצאות</li>
+                      <li>אידיאלי: 12 חודשי הוצאות</li>
+                      <li>תלוי ביציבות התעסוקתית שלכם</li>
+                    </ul>
+                  </div>
+
+                  <div className="bg-white/50 dark:bg-gray-800/50 p-6 rounded-xl">
+                    <h5 className="font-bold mb-3">איפה לשמור את הקרן?</h5>
+                    <ul className="text-sm space-y-2">
+                      <li>חשבון עו"ש נפרד</li>
+                      <li>חסכון נזיל ללא סיכון</li>
+                      <li>פק"מ קצר טווח</li>
+                      <li>חשבון שניתן למשוך ממנו מיידית</li>
+                    </ul>
+                  </div>
+                </div>
+
+                <div className="bg-yellow-50 dark:bg-yellow-900/30 p-4 rounded-lg">
+                  <h5 className="font-bold flex items-center gap-2 mb-3">
+                    <span className="text-xl">💡</span>
+                    דוגמה מספרית
+                  </h5>
+                  <p className="text-sm">
+                    משפחה עם הוצאות חודשיות של 12,000 ₪ צריכה קרן חירום של:
+                  </p>
+                  <ul className="text-sm mt-2">
+                    <li>מינימום: 36,000 ₪ (3 חודשים)</li>
+                    <li>מומלץ: 72,000 ₪ (6 חודשים)</li>
+                    <li>אידיאלי: 144,000 ₪ (12 חודשים)</li>
+                  </ul>
+                </div>
+
+                <div className="bg-red-50 dark:bg-red-900/30 p-4 rounded-lg">
+                  <h5 className="font-bold flex items-center gap-2 mb-3">
+                    <span className="text-xl">⚠️</span>
+                    חשוב לזכור
+                  </h5>
+                  <ul className="text-sm space-y-2">
+                    <li>אל תשקיעו את כספי קרן החירום בשוק ההון</li>
+                    <li>שמרו על נגישות מיידית לכסף</li>
+                    <li>הפרידו את הקרן מחשבון העו"ש הרגיל</li>
+                    <li>חדשו את הקרן מיד לאחר שימוש בה</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <div className="bg-green-50 dark:bg-green-900/30 p-6 rounded-xl">
+              <h4 className="text-green-800 dark:text-green-400 m-0 mb-4">סיכום השיעור</h4>
+              <div className="space-y-4">
+                <p>
+                  למדנו איך לבנות תשתית פיננסית יציבה שתאפשר לנו להתחיל להשקיע בצורה נכונה ובטוחה.
+                  זכרו: השקעה מוצלחת מתחילה בניהול פיננסי נכון.
+                </p>
+                <div className="bg-white/50 dark:bg-gray-800/50 p-4 rounded-lg">
+                  <h5 className="font-bold mb-2">משימות לביצוע:</h5>
+                  <ul className="text-sm space-y-1">
+                    <li>בנו תקציב חודשי מסודר</li>
+                    <li>התחילו לבנות קרן חירום</li>
+                    <li>מפו את כל החובות שלכם</li>
+                    <li>הגדירו יעדים פיננסיים ברורים</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* ניווט בין שיעורים */}
+        <div className="flex justify-between items-center mt-8">
+          <Link 
+            href="/course/stock-market/lesson1"
+            className="flex items-center gap-2 text-blue-600 hover:text-blue-700 font-medium bg-blue-50 dark:bg-blue-900/30 px-4 py-2 rounded-lg"
+          >
+            <ChevronRight className="w-4 h-4" />
+            לשיעור הקודם
+          </Link>
+          <Link 
+            href="/course/stock-market/lesson3"
+            className="flex items-center gap-2 text-blue-600 hover:text-blue-700 font-medium bg-blue-50 dark:bg-blue-900/30 px-4 py-2 rounded-lg"
+          >
+            לשיעור הבא: מושגי יסוד בשוק ההון
+            <ChevronLeft className="w-4 h-4" />
+          </Link>
+        </div>
       </div>
-
-      <style jsx>{`
-        .lesson-content {
-          max-width: 800px;
-          margin: 0 auto;
-          padding: 20px;
-        }
-
-        .checklist-box, .important-box, .calculation-box {
-          background: #f8f9fa;
-          border-radius: 8px;
-          padding: 20px;
-          margin: 20px 0;
-        }
-
-        .important-box {
-          background: #fff3cd;
-          border-left: 4px solid #ffc107;
-        }
-
-        .calculation-box {
-          background: #e3f2fd;
-          border-left: 4px solid #2196f3;
-        }
-
-        .profile-grid {
-          display: grid;
-          grid-template-columns: repeat(3, 1fr);
-          gap: 20px;
-          margin-top: 15px;
-        }
-
-        .risk-profile-box {
-          background: #f5f5f5;
-          padding: 20px;
-          border-radius: 8px;
-          margin: 20px 0;
-        }
-      `}</style>
     </Layout>
-  )
+  );
 } 

@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
+import Layout from './Layout';
 
 export default function LessonNavigation({ currentLesson }) {
   const lessons = [
