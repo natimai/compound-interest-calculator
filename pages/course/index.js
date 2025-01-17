@@ -1,7 +1,67 @@
-import { BookOpen, Clock, Target, CheckCircle, Lock, Play, Award, Brain, ChevronLeft } from 'lucide-react';
+import { BookOpen, Clock, Target, CheckCircle, Lock, Play, Award, Brain, ChevronLeft, Rocket } from 'lucide-react';
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
 import { useCourseProgress } from '../../contexts/CourseProgressContext';
+
+// קומפוננטת כרטיס שיעור
+const LessonCard = ({ number, title, description, duration, href }) => {
+  const { progress } = useCourseProgress();
+  const isCompleted = progress[`lesson${number}`];
+
+  return (
+    <Link href={href}>
+      <div className={`bg-white dark:bg-gray-800 rounded-xl p-6 transition-all duration-200 
+        border border-gray-100 dark:border-gray-700
+        ${isCompleted ? 'border-green-500 dark:border-green-500' : 'hover:border-blue-500 dark:hover:border-blue-500'}`}
+      >
+        <div className="flex items-center gap-3 mb-4">
+          <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm
+            ${isCompleted 
+              ? 'bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400'
+              : 'bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400'
+            }`}
+          >
+            {isCompleted ? <CheckCircle className="w-5 h-5" /> : number}
+          </div>
+          <h3 className="text-lg font-bold text-gray-900 dark:text-white">{title}</h3>
+        </div>
+        <p className="text-gray-600 dark:text-gray-300 text-sm mb-4">{description}</p>
+        <div className="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400">
+          <Clock className="w-4 h-4" />
+          {duration}
+        </div>
+      </div>
+    </Link>
+  );
+};
+
+// קומפוננטת כרטיס בוחן
+const QuizCard = ({ title, description, href }) => {
+  const { progress } = useCourseProgress();
+  const isCompleted = progress[href.split('/').pop()];
+
+  return (
+    <Link href={href}>
+      <div className={`bg-gradient-to-br from-purple-50 to-blue-50 dark:from-purple-900/30 dark:to-blue-900/30 
+        rounded-xl p-6 transition-all duration-200 border-2
+        ${isCompleted 
+          ? 'border-green-500 dark:border-green-500' 
+          : 'border-purple-200 dark:border-purple-800 hover:border-purple-300 dark:hover:border-purple-700'
+        }`}
+      >
+        <div className="flex items-center gap-3 mb-4">
+          {isCompleted ? (
+            <CheckCircle className="w-6 h-6 text-green-500" />
+          ) : (
+            <Brain className="w-6 h-6 text-purple-500" />
+          )}
+          <h3 className="text-lg font-bold text-gray-900 dark:text-white">{title}</h3>
+        </div>
+        <p className="text-gray-600 dark:text-gray-300 text-sm">{description}</p>
+      </div>
+    </Link>
+  );
+};
 
 export default function CoursePage() {
   const { progress, resetProgress } = useCourseProgress();
@@ -109,96 +169,147 @@ export default function CoursePage() {
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
-      <div className="max-w-4xl mx-auto px-4 py-8">
-        <div className="mb-8 sm:mb-12">
-          <h1 className="text-3xl sm:text-4xl font-bold mb-4">קורס שוק ההון למתחילים</h1>
-          <div className="grid grid-cols-2 sm:flex flex-wrap items-center gap-4 sm:gap-6 text-gray-600 dark:text-gray-400 text-sm sm:text-base">
-            <span className="flex items-center gap-2">
-              <Clock className="w-4 h-4 sm:w-5 sm:h-5" />
-              3 שעות לימוד
-            </span>
-            <span className="flex items-center gap-2">
-              <BookOpen className="w-4 h-4 sm:w-5 sm:h-5" />
-              10 שיעורים
-            </span>
-            <span className="flex items-center gap-2">
-              <Brain className="w-4 h-4 sm:w-5 sm:h-5" />
-              3 בחני תרגול
-            </span>
-            <span className="flex items-center gap-2">
-              <Target className="w-4 h-4 sm:w-5 sm:h-5" />
-              מתאים למתחילים
-            </span>
-          </div>
-        </div>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <header className="text-center mb-12">
+          <h1 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+            קורס שוק ההון למתחילים
+          </h1>
+          <p className="text-xl text-gray-600 dark:text-gray-300">
+            מדריך מקיף להבנת עולם ההשקעות וניהול תיק השקעות חכם
+          </p>
+        </header>
 
-        <div className="bg-white dark:bg-gray-800 rounded-xl sm:rounded-2xl shadow-sm p-4 sm:p-6 mb-6 sm:mb-8">
-          <div className="flex items-center justify-between mb-4">
-            <h2 className="text-lg sm:text-xl font-bold">התקדמות בקורס</h2>
-            <span className="text-xl sm:text-2xl font-bold text-blue-600">{calculateTotalProgress()}%</span>
+        {/* חלק ראשון - יסודות שוק ההון */}
+        <section className="mb-12">
+          <h2 className="text-2xl font-bold mb-6 flex items-center gap-3 text-gray-900 dark:text-white">
+            <BookOpen className="w-6 h-6 text-blue-600 dark:text-blue-400" />
+            חלק ראשון: יסודות שוק ההון
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <LessonCard
+              number="1"
+              title="מבוא לשוק ההון"
+              description="הכרות עם מושגי יסוד, מבנה הבורסה ואיך היא פועלת"
+              duration="20 דקות"
+              href="/course/stock-market/lesson1"
+            />
+            <LessonCard
+              number="2"
+              title="סוגי ניירות ערך"
+              description="מניות, אגרות חוב וקרנות נאמנות - הכרות מעמיקה"
+              duration="25 דקות"
+              href="/course/stock-market/lesson2"
+            />
+            <LessonCard
+              number="3"
+              title="ניתוח בסיסי"
+              description="הבנת דוחות כספיים ומכפילים פיננסיים"
+              duration="30 דקות"
+              href="/course/stock-market/lesson3"
+            />
+            <LessonCard
+              number="4"
+              title="אסטרטגיות השקעה"
+              description="אסטרטגיות השקעה מובילות ובניית תיק מאוזן"
+              duration="30 דקות"
+              href="/course/stock-market/lesson4"
+            />
+            <QuizCard
+              title="בוחן - חלק ראשון"
+              description="בוחן על שיעורים 1-4"
+              href="/course/stock-market/quiz1"
+            />
           </div>
-          <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
-            <div 
-              className="bg-blue-600 h-2 rounded-full transition-all duration-500"
-              style={{ width: `${calculateTotalProgress()}%` }}
-            ></div>
-          </div>
-        </div>
+        </section>
 
-        <div className="space-y-6 sm:space-y-8">
-          {courseContent.map((section, sectionIndex) => (
-            <div key={section.id} className="bg-white dark:bg-gray-800 rounded-xl sm:rounded-2xl shadow-sm p-4 sm:p-6">
-              <h2 className="text-xl sm:text-2xl font-bold mb-4 sm:mb-6 flex items-center gap-3">
-                <span className="bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 w-6 h-6 sm:w-8 sm:h-8 rounded-full flex items-center justify-center text-sm">
-                  {sectionIndex + 1}
-                </span>
-                {section.title}
-              </h2>
-              
-              <div className="space-y-3 sm:space-y-4">
-                {section.lessons.map((lesson) => {
-                  const isCompleted = progress[lesson.id];
-                  return (
-                    <Link 
-                      key={lesson.id}
-                      href={lesson.path}
-                      className={`block p-3 sm:p-4 rounded-lg sm:rounded-xl transition-all duration-200 ${
-                        isCompleted 
-                          ? 'bg-green-50 dark:bg-green-900/30 border border-green-200 dark:border-green-800'
-                          : 'bg-gray-50 dark:bg-gray-700/50 hover:bg-gray-100 dark:hover:bg-gray-700'
-                      }`}
-                    >
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-3 sm:gap-4">
-                          {isCompleted ? (
-                            <CheckCircle className="w-4 h-4 sm:w-5 sm:h-5 text-green-500 flex-shrink-0" />
-                          ) : lesson.type === 'quiz' ? (
-                            <Brain className="w-4 h-4 sm:w-5 sm:h-5 text-blue-500 flex-shrink-0" />
-                          ) : lesson.type === 'summary' ? (
-                            <Award className="w-4 h-4 sm:w-5 sm:h-5 text-purple-500 flex-shrink-0" />
-                          ) : (
-                            <Play className="w-4 h-4 sm:w-5 sm:h-5 text-blue-500 flex-shrink-0" />
-                          )}
-                          <div className="min-w-0">
-                            <h3 className="font-medium text-sm sm:text-base truncate">{lesson.title}</h3>
-                            {lesson.duration && (
-                              <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400">
-                                {lesson.duration}
-                              </p>
-                            )}
-                          </div>
-                        </div>
-                        <div className="text-gray-400 flex-shrink-0">
-                          <ChevronLeft className="w-4 h-4 sm:w-5 sm:h-5" />
-                        </div>
-                      </div>
-                    </Link>
-                  );
-                })}
-              </div>
-            </div>
-          ))}
-        </div>
+        {/* חלק שני - ניהול סיכונים ופסיכולוגיה */}
+        <section className="mb-12">
+          <h2 className="text-2xl font-bold mb-6 flex items-center gap-3 text-gray-900 dark:text-white">
+            <Brain className="w-6 h-6 text-purple-600 dark:text-purple-400" />
+            חלק שני: ניהול סיכונים ופסיכולוגיה
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <LessonCard
+              number="5"
+              title="ניהול סיכונים"
+              description="עקרונות ניהול סיכונים וכלים מעשיים"
+              duration="25 דקות"
+              href="/course/stock-market/lesson5"
+            />
+            <LessonCard
+              number="6"
+              title="מיסוי וחוקים"
+              description="היבטי מיסוי והיבטים חוקיים בהשקעות"
+              duration="20 דקות"
+              href="/course/stock-market/lesson6"
+            />
+            <LessonCard
+              number="7"
+              title="פסיכולוגיה של המשקיע"
+              description="הטיות פסיכולוגיות וקבלת החלטות"
+              duration="25 דקות"
+              href="/course/stock-market/lesson7"
+            />
+            <QuizCard
+              title="בוחן - חלק שני"
+              description="בוחן על שיעורים 5-7"
+              href="/course/stock-market/quiz2"
+            />
+          </div>
+        </section>
+
+        {/* חלק שלישי - מתקדמים */}
+        <section className="mb-12">
+          <h2 className="text-2xl font-bold mb-6 flex items-center gap-3 text-gray-900 dark:text-white">
+            <Target className="w-6 h-6 text-green-600 dark:text-green-400" />
+            חלק שלישי: נושאים מתקדמים
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <LessonCard
+              number="8"
+              title="בניית תיק השקעות"
+              description="עקרונות לבניית תיק השקעות מאוזן"
+              duration="30 דקות"
+              href="/course/stock-market/lesson8"
+            />
+            <LessonCard
+              number="9"
+              title="מעקב וניהול תיק"
+              description="כלים למעקב וניהול תיק ההשקעות"
+              duration="25 דקות"
+              href="/course/stock-market/lesson9"
+            />
+            <LessonCard
+              number="10"
+              title="השקעות מתקדמות"
+              description="אפיקי השקעה מתקדמים ושיטות מסחר"
+              duration="30 דקות"
+              href="/course/stock-market/lesson10"
+            />
+          </div>
+        </section>
+
+        {/* סיכום ובוחן מסכם */}
+        <section>
+          <h2 className="text-2xl font-bold mb-6 flex items-center gap-3 text-gray-900 dark:text-white">
+            <Rocket className="w-6 h-6 text-red-600 dark:text-red-400" />
+            סיכום ובוחן מסכם
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <LessonCard
+              number="11"
+              title="סיכום הקורס"
+              description="סיכום הנושאים העיקריים וצעדים להמשך"
+              duration="15 דקות"
+              href="/course/stock-market/summary"
+            />
+            <QuizCard
+              title="בוחן מסכם"
+              description="בוחן מקיף על כל חומר הקורס"
+              href="/course/stock-market/final-quiz"
+            />
+          </div>
+        </section>
       </div>
       <div className="mt-8 text-center">
         <button

@@ -3,6 +3,7 @@ import { ChevronRight, BookOpen, Target, AlertTriangle, Rocket, Brain, ChevronLe
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
 import dynamic from 'next/dynamic';
+import confetti from 'canvas-confetti';
 import { useCourseProgress } from '../../../contexts/CourseProgressContext';
 
 // טעינה דינמית של הקונפטי כדי למנוע בעיות SSR
@@ -16,7 +17,7 @@ export default function Summary() {
     width: undefined,
     height: undefined
   });
-  const [showConfetti, setShowConfetti] = useState(true);
+  const [showConfetti, setShowConfetti] = useState(false);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -39,19 +40,44 @@ export default function Summary() {
     handleResize();
     window.addEventListener('resize', handleResize);
 
-    // הפסקת הקונפטי אחרי 5 שניות
+    // הפעלת הקונפטי בכניסה לדף
+    setShowConfetti(true);
+    
+    // הפעלת אנימציית קונפטי מתמשכת
+    const confettiInterval = setInterval(() => {
+      confetti({
+        particleCount: 50,
+        spread: 70,
+        origin: { y: 0.6 },
+        colors: ['#FF6B6B', '#4ECB71', '#FFD93D', '#FF9F43', '#6C5CE7', '#FF78C4']
+      });
+    }, 3000);
+
+    // הפסקת הקונפטי אחרי 8 שניות
     const timer = setTimeout(() => {
       setShowConfetti(false);
-    }, 5000);
+      clearInterval(confettiInterval);
+    }, 2500);
 
     return () => {
       window.removeEventListener('resize', handleResize);
       clearTimeout(timer);
+      clearInterval(confettiInterval);
     };
   }, []);
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+      {showConfetti && (
+        <Confetti
+          width={windowSize.width}
+          height={windowSize.height}
+          recycle={true}
+          numberOfPieces={150}
+          gravity={0.2}
+          colors={['#FF6B6B', '#4ECB71', '#FFD93D', '#FF9F43', '#6C5CE7', '#FF78C4']}
+        />
+      )}
       <div className="max-w-4xl mx-auto px-4 py-8">
         <div className="mb-12">
           <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400 mb-4">
@@ -216,7 +242,7 @@ export default function Summary() {
                 </p>
                 <div className="flex justify-center">
                   <Link 
-                    href="/course/stock-market/quiz3"
+                    href="/course/stock-market/final-quiz"
                     className="flex items-center gap-2 text-white bg-blue-600 hover:bg-blue-700 
                     dark:bg-blue-500 dark:hover:bg-blue-400 px-6 py-3 rounded-xl font-medium
                     transition-all duration-200 transform hover:scale-105"
@@ -252,7 +278,7 @@ export default function Summary() {
 
         <div className="flex justify-between items-center mt-8">
           <Link 
-            href="/course/stock-market/quiz3"
+            href="/course/stock-market/final-quiz"
             className="flex items-center gap-2 text-blue-600 hover:text-blue-700 font-medium bg-blue-50 dark:bg-blue-900/30 px-4 py-2 rounded-lg"
           >
             <ChevronRight className="w-4 h-4" />

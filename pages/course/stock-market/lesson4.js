@@ -16,7 +16,7 @@ export default function Lesson4() {
   }, [markAsCompleted]);
 
   return (
-    <Layout>
+    <div>
       <div className="max-w-4xl mx-auto px-4 py-8">
         {/* כותרת ופרטי השיעור */}
         <div className="mb-12">
@@ -242,6 +242,6 @@ export default function Lesson4() {
           </div>
         </div>
       </div>
-    </Layout>
+    </div>
   );
 } 
