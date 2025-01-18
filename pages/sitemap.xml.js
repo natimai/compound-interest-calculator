@@ -1,81 +1,106 @@
 // pages/sitemap.xml.js
-import { readdirSync } from 'fs';
-import { join } from 'path';
+const EXTERNAL_DATA_URL = 'https://deribit.co.il';
 
-const DOMAIN = 'https://deribit.co.il';
+function generateSiteMap() {
+  return `<?xml version="1.0" encoding="UTF-8"?>
+   <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+     <!-- דף הבית -->
+     <url>
+       <loc>${EXTERNAL_DATA_URL}</loc>
+       <lastmod>${new Date().toISOString()}</lastmod>
+       <changefreq>daily</changefreq>
+       <priority>1.0</priority>
+     </url>
 
-// פונקציה שמוצאת את כל הדפים בתיקיית pages
-function getAllPages(dirPath = 'pages', pages = []) {
-  const files = readdirSync(join(process.cwd(), dirPath), { withFileTypes: true });
+     <!-- מחשבונים -->
+     <url>
+       <loc>${EXTERNAL_DATA_URL}/calculators</loc>
+       <lastmod>${new Date().toISOString()}</lastmod>
+       <changefreq>weekly</changefreq>
+       <priority>0.9</priority>
+     </url>
+     <url>
+       <loc>${EXTERNAL_DATA_URL}/calculators/compound-interest</loc>
+       <lastmod>${new Date().toISOString()}</lastmod>
+       <changefreq>monthly</changefreq>
+       <priority>0.8</priority>
+     </url>
+     <url>
+       <loc>${EXTERNAL_DATA_URL}/calculators/mortgage</loc>
+       <lastmod>${new Date().toISOString()}</lastmod>
+       <changefreq>monthly</changefreq>
+       <priority>0.8</priority>
+     </url>
+     <url>
+       <loc>${EXTERNAL_DATA_URL}/calculators/salary</loc>
+       <lastmod>${new Date().toISOString()}</lastmod>
+       <changefreq>monthly</changefreq>
+       <priority>0.8</priority>
+     </url>
+     <url>
+       <loc>${EXTERNAL_DATA_URL}/mortgage-calculator</loc>
+       <lastmod>${new Date().toISOString()}</lastmod>
+       <changefreq>monthly</changefreq>
+       <priority>0.8</priority>
+     </url>
 
-  for (const file of files) {
-    if (file.isDirectory()) {
-      // אם זו תיקייה, נכנס אליה רקורסיבית
-      getAllPages(join(dirPath, file.name), pages);
-    } else {
-      // מוסיף רק קבצי js/tsx ומתעלם מקבצים מיוחדים
-      if (
-        (file.name.endsWith('.js') || file.name.endsWith('.tsx')) &&
-        !file.name.startsWith('_') &&
-        !file.name.startsWith('[') &&
-        file.name !== 'sitemap.xml.js'
-      ) {
-        const path = join(dirPath, file.name)
-          .replace('pages', '')
-          .replace(/\.js$|\.tsx$/, '')
-          .replace(/\/index$/, '');
-        
-        // מגדיר עדיפויות לפי סוג הדף
-        let priority = '0.7';
-        let changefreq = 'monthly';
+     <!-- מדריכים -->
+     <url>
+       <loc>${EXTERNAL_DATA_URL}/guides/compound-interest</loc>
+       <lastmod>${new Date().toISOString()}</lastmod>
+       <changefreq>monthly</changefreq>
+       <priority>0.7</priority>
+     </url>
+     <url>
+       <loc>${EXTERNAL_DATA_URL}/guides/mortgage</loc>
+       <lastmod>${new Date().toISOString()}</lastmod>
+       <changefreq>monthly</changefreq>
+       <priority>0.7</priority>
+     </url>
+     <url>
+       <loc>${EXTERNAL_DATA_URL}/guides/salary</loc>
+       <lastmod>${new Date().toISOString()}</lastmod>
+       <changefreq>monthly</changefreq>
+       <priority>0.7</priority>
+     </url>
+     <url>
+       <loc>${EXTERNAL_DATA_URL}/guides/mortgage-calculator</loc>
+       <lastmod>${new Date().toISOString()}</lastmod>
+       <changefreq>monthly</changefreq>
+       <priority>0.7</priority>
+     </url>
 
-        if (path === '') {
-          priority = '1.0';
-          changefreq = 'daily';
-        } else if (path.includes('/calculators')) {
-          priority = '0.8';
-          changefreq = 'weekly';
-        } else if (path.includes('/guides')) {
-          priority = '0.8';
-          changefreq = 'weekly';
-        } else if (path.includes('/course')) {
-          priority = '0.7';
-          changefreq = 'monthly';
-        }
+     <!-- קורס -->
+     <url>
+       <loc>${EXTERNAL_DATA_URL}/course</loc>
+       <lastmod>${new Date().toISOString()}</lastmod>
+       <changefreq>weekly</changefreq>
+       <priority>0.9</priority>
+     </url>
 
-        pages.push({
-          path,
-          priority,
-          changefreq
-        });
-      }
-    }
-  }
-
-  return pages;
+     <!-- עמודי מידע -->
+     <url>
+       <loc>${EXTERNAL_DATA_URL}/privacy</loc>
+       <lastmod>${new Date().toISOString()}</lastmod>
+       <changefreq>yearly</changefreq>
+       <priority>0.5</priority>
+     </url>
+     <url>
+       <loc>${EXTERNAL_DATA_URL}/terms</loc>
+       <lastmod>${new Date().toISOString()}</lastmod>
+       <changefreq>yearly</changefreq>
+       <priority>0.5</priority>
+     </url>
+   </urlset>
+ `;
 }
 
-function generateSiteMap(pages) {
-  return `<?xml version="1.0" encoding="UTF-8"?>
-    <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-      ${pages
-        .map(({ path, priority, changefreq }) => {
-          return `
-            <url>
-              <loc>${DOMAIN}${path}</loc>
-              <lastmod>${new Date().toISOString()}</lastmod>
-              <changefreq>${changefreq}</changefreq>
-              <priority>${priority}</priority>
-            </url>`;
-        })
-        .join('')}
-    </urlset>`;
+function SiteMap() {
+  // getServerSideProps will do the heavy lifting
 }
 
 export async function getServerSideProps({ res }) {
-  // מוצא את כל הדפים באופן אוטומטי
-  const pages = getAllPages();
-  const sitemap = generateSiteMap(pages);
+  const sitemap = generateSiteMap();
 
   res.setHeader('Content-Type', 'text/xml');
   res.write(sitemap);
@@ -86,6 +111,4 @@ export async function getServerSideProps({ res }) {
   };
 }
 
-export default function SiteMap() {
-  return null;
-}
+export default SiteMap;
