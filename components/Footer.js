@@ -128,6 +128,12 @@ export const Footer = () => {
               </Link>
             </div>
           </div>
+          
+          <div className="mt-4 text-center">
+            <p className="text-red-600 dark:text-red-400 text-sm font-medium bg-red-50 dark:bg-red-900/10 py-2 px-4 rounded-lg inline-block">
+              התוכן באתר הינו מידע כללי בלבד ואינו מהווה המלצה פיננסית. יש להתייעץ עם אנשי מקצוע לפני ביצוע כל פעולה!
+            </p>
+          </div>
         </div>
       </div>
     </footer>

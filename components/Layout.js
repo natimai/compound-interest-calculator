@@ -327,21 +327,6 @@ export default function Layout({ children }) {
           </motion.button>
         )}
       </AnimatePresence>
-
-      <header className="bg-white dark:bg-gray-800 shadow-sm">
-        <div className="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
-          <div className="text-xl font-bold">
-            <span className="text-blue-600 dark:text-blue-400">Invest</span>
-            <span className="text-gray-600 dark:text-gray-300">Academy</span>
-          </div>
-          <button
-            onClick={toggleDarkMode}
-            className="p-2 rounded-lg bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300"
-          >
-            {darkMode ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
-          </button>
-        </div>
-      </header>
     </div>
   );
 }
