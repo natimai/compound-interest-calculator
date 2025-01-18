@@ -26,7 +26,7 @@ const ROUTE_COLORS = {
     gradient: 'from-[#eef2f3] to-[#e8f3ff]',
     accent: '#2563eb'
   },
-  'קבועה צמודה': {
+  'קבועה צמודה למדד': {
     border: 'border-green-500',
     gradient: 'from-[#eef2f3] to-[#e8fff0]',
     accent: '#16a34a'
@@ -66,7 +66,7 @@ const formatCurrency = (amount) =>
 const calculateAdjustedRate = (route) => {
   const ADJUSTMENTS = {
     'פריים': 0.5,
-    'קבועה צמודה': 2.0,
+    'קבועה צמודה למדד': 2.0,
     'קבועה לא צמודה': 1.0
   };
   return route.interestRate + (ADJUSTMENTS[route.type] || 0);
@@ -125,30 +125,59 @@ const InputError = ({ message }) => (
   </div>
 );
 
+const getRouteColors = (type) => {
+  const colors = ROUTE_COLORS[type];
+  if (!colors) {
+    console.error(`No colors found for type: ${type}`);
+    return {
+      border: 'border-gray-500',
+      gradient: 'from-[#eef2f3] to-[#e8f3ff]',
+      accent: '#6B7280'
+    };
+  }
+  return colors;
+};
+
+const ROUTE_INFO = {
+  'פריים': {
+    description: 'מסלול עם ריבית משתנה הצמודה לריבית בנק ישראל',
+    advantages: ['ריבית נמוכה יחסית בתקופות של ריבית נמוכה במשק', 'גמישות ואפשרות למחזור קל', 'מתאים לתקופות של ריבית יורדת'],
+    disadvantages: ['חשיפה לשינויי ריבית', 'תשלום חודשי לא קבוע', 'סיכון בתקופות של עליית ריבית']
+  },
+  'קבועה צמודה למדד': {
+    description: 'מסלול עם ריבית קבועה והצמדה למדד המחירים לצרכן',
+    advantages: ['ודאות בגובה הריבית', 'הגנה מפני אינפלציה', 'תכנון תקציבי ארוך טווח'],
+    disadvantages: ['ריבית גבוהה יחסית', 'חשיפה לעליית מדד', 'קנסות שבירה גבוהים']
+  },
+  'קבועה לא צמודה': {
+    description: 'מסלול עם ריבית קבועה ללא הצמדה למדד',
+    advantages: ['ודאות מוחלטת בתשלום החודשי', 'אין חשיפה למדד', 'מתאים לתקופות של אינפלציה גבוהה'],
+    disadvantages: ['ריבית גבוהה יחסית', 'אין הגנה מפני ירידת ריבית', 'קנסות שבירה גבוהים']
+  }
+};
+
 const RouteCard = ({ route, onUpdate, onRemove, isRemovable }) => {
   const [showInfo, setShowInfo] = useState(false);
-  const colors = ROUTE_COLORS[route.type];
+  const colors = getRouteColors(route.type);
   const [showAdvancedOptions, setShowAdvancedOptions] = useState(false);
 
-  const handleChange = (field, value) => {
-    onUpdate(route.id, field, value);
+  const getRouteInfo = (type) => {
+    const info = ROUTE_INFO[type];
+    if (!info) {
+      return {
+        description: 'מידע לא זמין',
+        advantages: [],
+        disadvantages: []
+      };
+    }
+    return info;
   };
 
-  const routeInfo = {
-    'פריים': {
-      description: 'מסלול עם ריבית משתנה הצמודה לריבית בנק ישראל',
-      advantages: ['ריבית נמוכה יחסית בתקופות של ריבית נמוכה במשק', 'גמישות ואפשרות למחזור קל', 'מתאים לתקופות של ריבית יורדת'],
-      disadvantages: ['חשיפה לשינויי ריבית', 'תשלום חודשי לא קבוע', 'סיכון בתקופות של עליית ריבית']
-    },
-    'קבועה צמודה': {
-      description: 'מסלול עם ריבית קבועה והצמדה למדד המחירים לצרכן',
-      advantages: ['ודאות בגובה הריבית', 'הגנה מפני אינפלציה', 'תכנון תקציבי ארוך טווח'],
-      disadvantages: ['ריבית גבוהה יחסית', 'חשיפה לעליית מדד', 'קנסות שבירה גבוהים']
-    },
-    'קבועה לא צמודה': {
-      description: 'מסלול עם ריבית קבועה ללא הצמדה למדד',
-      advantages: ['ודאות מוחלטת בתשלום החודשי', 'אין חשיפה למדד', 'מתאים לתקופות של אינפלציה גבוהה'],
-      disadvantages: ['ריבית גבוהה יחסית', 'אין הגנה מפני ירידת ריבית', 'קנסות שבירה גבוהים']
+  const handleChange = (field, value) => {
+    if (field === 'type') {
+      onUpdate(route.id, field, value);
+    } else {
+      onUpdate(route.id, field, Number(value));
     }
   };
 
@@ -206,7 +235,7 @@ const RouteCard = ({ route, onUpdate, onRemove, isRemovable }) => {
               className="w-full p-2 border rounded-lg bg-white"
             >
               <option value="פריים">פריים</option>
-              <option value="קבועה צמודה">קבועה צמודה</option>
+              <option value="קבועה צמודה למדד">קבועה צמודה למדד</option>
               <option value="קבועה לא צמודה">קבועה לא צמודה</option>
             </select>
             <button
@@ -220,13 +249,13 @@ const RouteCard = ({ route, onUpdate, onRemove, isRemovable }) => {
           {showInfo && (
             <div className="mt-4 p-4 bg-white rounded-lg shadow-sm">
               <h4 className="font-medium text-lg mb-2">{route.type}</h4>
-              <p className="text-gray-600 mb-3">{routeInfo[route.type].description}</p>
+              <p className="text-gray-600 mb-3">{getRouteInfo(route.type).description}</p>
               
               <div className="space-y-3">
                 <div>
                   <h5 className="font-medium text-green-600 mb-1">יתרונות:</h5>
                   <ul className="list-disc list-inside space-y-1">
-                    {routeInfo[route.type].advantages.map((adv, i) => (
+                    {getRouteInfo(route.type).advantages.map((adv, i) => (
                       <li key={i} className="text-sm text-gray-600">{adv}</li>
                     ))}
                   </ul>
@@ -235,7 +264,7 @@ const RouteCard = ({ route, onUpdate, onRemove, isRemovable }) => {
                 <div>
                   <h5 className="font-medium text-red-600 mb-1">חסרונות:</h5>
                   <ul className="list-disc list-inside space-y-1">
-                    {routeInfo[route.type].disadvantages.map((dis, i) => (
+                    {getRouteInfo(route.type).disadvantages.map((dis, i) => (
                       <li key={i} className="text-sm text-gray-600">{dis}</li>
                     ))}
                   </ul>
@@ -267,7 +296,7 @@ const RouteCard = ({ route, onUpdate, onRemove, isRemovable }) => {
       
       <button
         onClick={() => setShowAdvancedOptions(!showAdvancedOptions)}
-        className="mt-4 text-blue-600 hover:text-blue-800 text-sm flex items-center"
+        className="mt-4 text-white bg-blue-600 hover:bg-blue-700 text-sm flex items-center gap-2 px-4 py-2 rounded-lg transition-colors"
       >
         {showAdvancedOptions ? 'הסתר' : 'הצג'} אפשרויות מתקדמות
       </button>
@@ -362,7 +391,7 @@ const BalanceChart = ({ routes }) => (
           dataKey="remainingBalance"
           data={route.paymentSchedule}
           name={`${route.type} - מסלול ${route.id}`}
-          stroke={ROUTE_COLORS[route.type].accent}
+          stroke={getRouteColors(route.type).accent}
           strokeWidth={2}
           dot={false}
         />
@@ -402,7 +431,7 @@ const YearlyPaymentsChart = ({ routes }) => (
           key={`${route.id}-principal`}
           dataKey="principalPaid"
           name={`קרן - מסלול ${route.id}`}
-          fill={ROUTE_COLORS[route.type].accent}
+          fill={getRouteColors(route.type).accent}
           opacity={0.8}
           stackId={route.id}
         />
@@ -412,7 +441,7 @@ const YearlyPaymentsChart = ({ routes }) => (
           key={`${route.id}-interest`}
           dataKey="interestPaid"
           name={`ריבית - מסלול ${route.id}`}
-          fill={ROUTE_COLORS[route.type].accent}
+          fill={getRouteColors(route.type).accent}
           opacity={0.4}
           stackId={route.id}
         />
@@ -472,14 +501,14 @@ const BreakdownChart = ({ routes }) => (
   </ResponsiveContainer>
 );
 
-const MortgageCalculator = () => {
+export const MortgageCalculator = () => {
   const [routes, setRoutes] = useState([
     {
       id: 1,
       loanAmount: 1000000,
       interestRate: 4,
       loanTerm: 30,
-      type: 'פריים',
+      type: 'קבועה צמודה למדד',
       monthlyPayment: 0,
       totalPayment: 0,
       totalInterest: 0,
@@ -550,7 +579,7 @@ const MortgageCalculator = () => {
         loanAmount: 1000000,
         interestRate: 4,
         loanTerm: 30,
-        type: 'פריים',
+        type: 'קבועה צמודה למדד',
         monthlyPayment: 0,
         totalPayment: 0,
         totalInterest: 0,
@@ -563,9 +592,10 @@ const MortgageCalculator = () => {
   const updateRoute = (id, field, value) => {
     setRoutes(routes.map(route => {
       if (route.id === id) {
+        const newValue = field === 'type' ? value : Number(value);
         return {
           ...route,
-          [field]: Number(value),
+          [field]: newValue,
           monthlyPayment: 0,
           totalPayment: 0,
           totalInterest: 0,
@@ -593,9 +623,9 @@ const MortgageCalculator = () => {
           <button
             onClick={addRoute}
             className="w-full sm:w-auto mx-auto flex items-center justify-center gap-2 
-                     px-6 py-3 rounded-xl bg-blue-50 text-blue-600 
+                     px-6 py-3 rounded-xl bg-blue-600 text-white
                      hover:bg-blue-100 transition-all duration-300
-                     border-2 border-dashed border-blue-200"
+                     border-2 border-dashed border-blue-300 hover:bg-blue-700"
           >
             <PlusCircle size={20} />
             <span>הוסף מסלול להשוואה</span>
@@ -650,7 +680,7 @@ const MortgageCalculator = () => {
                          transition-all duration-300"
               >
                 <div className="flex items-center gap-3 mb-4">
-                  <div className={`w-2 h-12 rounded-full bg-${ROUTE_COLORS[route.type].accent}`} />
+                  <div className={`w-2 h-12 rounded-full bg-${getRouteColors(route.type).accent}`} />
                   <div>
                     <h4 className="font-bold">מסלול {route.id}</h4>
                     <p className="text-sm text-gray-600">{route.type}</p>
@@ -671,7 +701,7 @@ const MortgageCalculator = () => {
                     </div>
                     <div className="h-2 rounded-full bg-gray-100">
                       <div 
-                        className={`h-full rounded-full bg-${ROUTE_COLORS[route.type].accent}`}
+                        className={`h-full rounded-full bg-${getRouteColors(route.type).accent}`}
                         style={{ 
                           width: `${(route.totalInterest / route.totalPayment) * 100}%`,
                           transition: 'width 1s ease-in-out'
