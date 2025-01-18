@@ -8,11 +8,9 @@ export default function KupatGemel() {
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
       <Head>
-        <title>קופת גמל להשקעה - מדריך מקיף {currentYear} | דריבית</title>
-        <meta name="description" content={`מדריך מקיף לקופת גמל להשקעה - תקרת הפקדה ${currentYear}, יתרונות, הטבות מס, מסלולי השקעה ודמי ניהול. כל המידע שצריך לדעת לפני שפותחים קופת גמל להשקעה`} />
-        <meta name="keywords" content={`קופת גמל להשקעה, תקרת הפקדה קופת גמל להשקעה ${currentYear}, דמי ניהול קופת גמל להשקעה, מסלולי השקעה, חיסכון פיננסי, השקעות`} />
-        <meta property="og:title" content={`קופת גמל להשקעה - מדריך מקיף ${currentYear} | דריבית`} />
-        <meta property="og:description" content={`כל מה שצריך לדעת על קופת גמל להשקעה - תקרות, יתרונות, מיסוי ומסלולי השקעה. מידע מקיף ומעודכן ל-${currentYear}`} />
+        <title>מדריך קופת גמל להשקעה 2024 | השוואת קופות גמל - דריבית</title>
+        <meta name="description" content="המדריך המקיף לקופת גמל להשקעה: נזילות מלאה, השוואת דמי ניהול ותשואות, יתרונות וחסרונות, מסלולי השקעה והטבות מס. כל מה שצריך לדעת לפני שבוחרים קופת גמל." />
+        <meta name="keywords" content="קופת גמל להשקעה, השוואת קופות גמל, דמי ניהול קופת גמל, מסלולי השקעה, נזילות מלאה" />
         <link rel="canonical" href="https://www.deribit.co.il/investment-products/kupat-gemel" />
       </Head>
 

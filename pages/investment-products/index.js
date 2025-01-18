@@ -66,9 +66,10 @@ export default function InvestmentProducts() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-100 dark:from-gray-900 dark:via-gray-900 dark:to-gray-800">
       <Head>
-        <title>מוצרי השקעה וחיסכון | DeRibit</title>
-        <meta name="description" content="מגוון מוצרי השקעה וחיסכון - השוואה מקיפה בין אפיקי השקעה שונים" />
-        <meta name="keywords" content="השקעות, חסכונות, קרן פנסיה, קרן השתלמות, קופת גמל להשקעה, קרן כספית, פיקדון בנקאי, פוליסת חיסכון" />
+        <title>השוואת מוצרי השקעה 2024 | קרנות השתלמות וקופות גמל - דריבית</title>
+        <meta name="description" content="השוואה מקיפה של מוצרי השקעה בישראל - קרנות השתלמות, קופות גמל להשקעה, קופות גמל לחיסכון. השוואת דמי ניהול, תשואות ומסלולי השקעה." />
+        <meta name="keywords" content="השוואת קרנות השתלמות, השוואת קופות גמל, דמי ניהול, תשואות, מסלולי השקעה" />
+        <link rel="canonical" href="https://www.deribit.co.il/investment-products" />
       </Head>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">

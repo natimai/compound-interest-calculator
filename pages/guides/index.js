@@ -100,9 +100,10 @@ const GuidesPage = () => {
   return (
     <>
       <Head>
-        <title>מדריכים פיננסיים | DeRibit</title>
-        <meta name="description" content="מדריכים מקיפים להבנת עולם ההשקעות והחיסכון - ריבית דריבית, השקעות, תכנון מס ועוד" />
-        <meta name="keywords" content="מדריכים פיננסיים, ריבית דריבית, משכנתא, השקעות, תכנון מס, חיסכון" />
+        <title>מדריכים פיננסיים | השקעות וניהול כספים - דריבית</title>
+        <meta name="description" content="מדריכים פיננסיים מקיפים בעברית פשוטה: ריבית דריבית, קרנות השתלמות, קופות גמל, משכנתאות וחסכונות. מידע מקצועי ומדויק ללא עלות." />
+        <meta name="keywords" content="מדריכים פיננסיים, השקעות למתחילים, ניהול כספים, חסכונות והשקעות" />
+        <link rel="canonical" href="https://www.deribit.co.il/guides" />
       </Head>
 
       <div className="min-h-screen bg-gray-50 dark:bg-gray-900 py-12">

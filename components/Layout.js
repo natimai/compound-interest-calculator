@@ -127,6 +127,37 @@ export default function Layout({ children }) {
         <title>קורס שוק ההון למתחילים</title>
         <meta name="description" content="לומדים להשקיע בצורה חכמה ואחראית" />
         <link rel="icon" href="/favicon.ico" />
+
+        {/* Schema.org markup */}
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "WebSite",
+            "name": "דריבית",
+            "description": "מחשבונים פיננסיים והשוואת מוצרי השקעה",
+            "url": "https://www.deribit.co.il",
+            "potentialAction": {
+              "@type": "SearchAction",
+              "target": "https://www.deribit.co.il/search?q={search_term_string}",
+              "query-input": "required name=search_term_string"
+            }
+          })}
+        </script>
+
+        {/* Open Graph / Facebook */}
+        <meta property="og:type" content="website" />
+        <meta property="og:site_name" content="דריבית" />
+        <meta property="og:image" content="https://www.deribit.co.il/images/og-image.jpg" />
+        <meta property="og:locale" content="he_IL" />
+
+        {/* Twitter */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:image" content="https://www.deribit.co.il/images/twitter-image.jpg" />
+        
+        {/* General SEO */}
+        <meta name="robots" content="index, follow" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="language" content="Hebrew" />
       </Head>
 
       {/* Progress Bar - מחוץ לדיב הראשי */}

@@ -12,9 +12,10 @@ export default function KerenHishtalmut() {
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
       <Head>
-        <title>{pageTitle}</title>
-        <meta name="description" content={pageDescription} />
-        <meta name="keywords" content={pageKeywords} />
+        <title>מדריך קרן השתלמות 2024 | הטבת המס הטובה בישראל - דריבית</title>
+        <meta name="description" content="המדריך המקיף לקרן השתלמות: הטבת המס המשתלמת ביותר בישראל, פטור ממס רווחי הון, השוואת דמי ניהול ותשואות, מסלולי השקעה ומשיכה מקרן השתלמות." />
+        <meta name="keywords" content="קרן השתלמות, השוואת קרנות השתלמות, דמי ניהול קרן השתלמות, מסלולי השקעה, הטבות מס" />
+        <link rel="canonical" href="https://www.deribit.co.il/investment-products/keren-hishtalmut" />
         
         {/* Open Graph / Facebook */}
         <meta property="og:type" content="article" />

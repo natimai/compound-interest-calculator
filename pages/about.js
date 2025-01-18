@@ -5,8 +5,10 @@ export default function About() {
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
       <Head>
-        <title>אודות דריבית | החזון שלנו להנגשת ידע פיננסי</title>
-        <meta name="description" content="החזון שלנו הוא להנגיש ידע פיננסי איכותי לכולם, בחינם ובעברית פשוטה. מתמקדים במידע הקריטי שכל אחד צריך לדעת כדי להתחיל להשקיע נכון." />
+        <title>אודות דריבית | מידע פיננסי חינמי בעברית פשוטה</title>
+        <meta name="description" content="החזון שלנו הוא להנגיש מידע פיננסי איכותי בחינם ובעברית פשוטה. מחשבונים פיננסיים, השוואת מוצרי השקעה וקורס שוק ההון למתחילים - הכל ללא עלות." />
+        <meta name="keywords" content="דריבית, מידע פיננסי, השקעות למתחילים, מחשבונים פיננסיים, קורס שוק ההון חינם" />
+        <link rel="canonical" href="https://www.deribit.co.il/about" />
       </Head>
 
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
