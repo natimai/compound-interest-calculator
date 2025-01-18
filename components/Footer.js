@@ -1,105 +1,133 @@
 import { useTheme } from '../contexts/ThemeContext';
 import Link from 'next/link';
+import { Facebook, Twitter, Instagram, Calculator, BookOpen, Home, Mail, Sparkles } from 'lucide-react';
 
 export const Footer = () => {
   return (
     <footer className="bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm border-t border-gray-200/50 dark:border-gray-700/50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-          {/* Logo Section */}
-          <div className="flex flex-col items-center mb-8">
-            <div className="flex items-center gap-3 mb-4">
-              <div className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-blue-400 bg-clip-text text-transparent">
-                דריבית
-              </div>
-              <span className="text-gray-300 dark:text-gray-600">|</span>
-              <div className="text-2xl font-bold bg-gradient-to-r from-blue-400 to-blue-600 bg-clip-text text-transparent">
-                DeRibit
-              </div>
-            </div>
-            <p className="text-sm text-gray-600 dark:text-gray-400 text-center max-w-md">
-              מחשבונים פיננסיים מתקדמים לקבלת החלטות חכמות יותר
-            </p>
-          </div>
-
-          {/* Links Grid */}
-          <div className="text-center md:text-right">
-            <h3 className="text-lg font-semibold mb-4 bg-gradient-to-r from-blue-600 to-blue-400 bg-clip-text text-transparent">
-              קישורים מהירים
+          <div>
+            <h3 className="text-lg font-bold mb-4 flex items-center gap-2 bg-gradient-to-r from-blue-600 to-blue-400 bg-clip-text text-transparent">
+              <Home className="w-5 h-5 text-blue-400" />
+              דריבית
             </h3>
-            <ul className="space-y-2">
+            <p className="text-gray-600 dark:text-gray-400 text-sm mb-4">
+              כלים פיננסיים חינמיים לניהול כספים חכם
+            </p>
+            <div className="relative">
+              <div className="absolute -top-2 -right-2">
+                <span className="bg-gradient-to-r from-pink-500 to-purple-500 text-white text-xs px-2 py-1 rounded-full animate-pulse">
+                  חדש! 🎉
+                </span>
+              </div>
+              <Link 
+                href="/course"
+                className="group block p-4 rounded-xl bg-gradient-to-r from-blue-500/10 to-purple-500/10 hover:from-blue-500/20 hover:to-purple-500/20 border border-blue-200 dark:border-blue-800 transition-all duration-300 hover:shadow-lg hover:shadow-blue-500/10"
+              >
+                <div className="flex items-center gap-3">
+                  <Sparkles className="w-5 h-5 text-yellow-400 animate-pulse" />
+                  <div>
+                    <h4 className="font-semibold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">
+                      קורס שוק ההון למתחילים
+                    </h4>
+                    <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
+                      למד איך להשקיע נכון בבורסה
+                    </p>
+                  </div>
+                </div>
+              </Link>
+            </div>
+          </div>
+          
+          <div>
+            <h3 className="text-lg font-bold mb-4 flex items-center gap-2 bg-gradient-to-r from-blue-600 to-blue-400 bg-clip-text text-transparent">
+              <Calculator className="w-5 h-5 text-green-400" />
+              מחשבונים
+            </h3>
+            <ul className="space-y-2 text-gray-600 dark:text-gray-400">
               <li>
-                <Link href="/about" className="text-sm text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
-                  אודות
+                <Link href="/calculators/compound-interest" className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+                  מחשבון ריבית דריבית
                 </Link>
               </li>
               <li>
-                <Link href="/calculators" className="text-sm text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
-                  מחשבונים
+                <Link href="/calculators/mortgage" className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+                  מחשבון משכנתא
                 </Link>
               </li>
               <li>
-                <Link href="/guides" className="text-sm text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
-                  מדריכים
+                <Link href="/calculators/salary" className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+                  מחשבון שכר
                 </Link>
               </li>
             </ul>
           </div>
-
-          {/* Contact */}
-          <div className="text-center">
-            <h3 className="text-lg font-semibold mb-4 bg-gradient-to-r from-blue-600 to-blue-400 bg-clip-text text-transparent">
+          
+          <div>
+            <h3 className="text-lg font-bold mb-4 flex items-center gap-2 bg-gradient-to-r from-blue-600 to-blue-400 bg-clip-text text-transparent">
+              <BookOpen className="w-5 h-5 text-yellow-400" />
+              מדריכים
+            </h3>
+            <ul className="space-y-2 text-gray-600 dark:text-gray-400">
+              <li>
+                <Link href="/guides/compound-interest" className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+                  מדריך ריבית דריבית
+                </Link>
+              </li>
+              <li>
+                <Link href="/guides/mortgage" className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+                  מדריך משכנתאות
+                </Link>
+              </li>
+              <li>
+                <Link href="/guides/salary" className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+                  מדריך חישובי שכר
+                </Link>
+              </li>
+            </ul>
+          </div>
+          
+          <div>
+            <h3 className="text-lg font-bold mb-4 flex items-center gap-2 bg-gradient-to-r from-blue-600 to-blue-400 bg-clip-text text-transparent">
+              <Mail className="w-5 h-5 text-purple-400" />
               צור קשר
             </h3>
-            <a 
-              href="mailto:netanel18999@gmail.com"
-              className="text-sm text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
-            >
-              netanel18999@gmail.com
-            </a>
-          </div>
-
-          {/* Social Links - אם יהיו בעתיד */}
-          <div className="text-center md:text-left">
-            <h3 className="text-lg font-semibold mb-4 bg-gradient-to-r from-blue-600 to-blue-400 bg-clip-text text-transparent">
-              עקבו אחרינו
-            </h3>
-            <div className="space-y-2 text-sm text-gray-600 dark:text-gray-400">
-              בקרוב...
-            </div>
-          </div>
-        </div>
-
-        {/* Legal Disclaimer - עיצוב מחדש בצבעי אזהרה */}
-        <div className="border-t border-gray-200 dark:border-gray-700 pt-6 mb-6">
-          <div className="bg-yellow-50 dark:bg-yellow-900/20 border-2 border-red-200 dark:border-red-800 rounded-xl p-6 shadow-md">
-            <h4 className="text-base font-bold text-red-600 dark:text-red-400 mb-4 text-center flex items-center justify-center gap-2">
-              <span className="text-xl">⚠️</span>
-              הצהרה משפטית חשובה
-              <span className="text-xl">⚠️</span>
-            </h4>
-            <div className="space-y-4">
-              <p className="text-sm text-red-700 dark:text-red-300 text-center leading-relaxed">
-                המידע המוצג באתר זה הינו למטרות אינפורמטיביות בלבד ואינו מהווה המלצה, ייעוץ פיננסי, 
-                ייעוץ השקעות, שיווק השקעות או חוות דעת מקצועית. 
-                <span className="font-bold text-red-800 dark:text-red-400 block mt-1">
-                  אין להסתמך על המידע לצורך קבלת החלטות פיננסיות או השקעה ללא התייעצות עם איש מקצוע מוסמך.
-                </span>
-              </p>
-              <p className="text-sm text-red-700 dark:text-red-300 text-center leading-relaxed">
-                השימוש במחשבונים ובכלים באתר הינו 
-                <span className="font-bold text-red-800 dark:text-red-400"> באחריות המשתמש בלבד</span>. 
-                התוצאות המתקבלות הן הערכות בלבד ועשויות להשתנות בהתאם לתנאי השוק ומשתנים נוספים.
-              </p>
-            </div>
+            <ul className="space-y-2 text-gray-600 dark:text-gray-400">
+              <li>
+                <a href="mailto:contact@deribit.co.il" className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+                  contact@deribit.co.il
+                </a>
+              </li>
+              <li className="flex items-center gap-4 mt-4">
+                <a href="#" className="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+                  <Facebook className="w-5 h-5" />
+                </a>
+                <a href="#" className="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+                  <Twitter className="w-5 h-5" />
+                </a>
+                <a href="#" className="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+                  <Instagram className="w-5 h-5" />
+                </a>
+              </li>
+            </ul>
           </div>
         </div>
-
-        {/* Copyright */}
-        <div className="mt-8 pt-8 border-t border-gray-200/50 dark:border-gray-700/50">
-          <p className="text-center text-gray-600 dark:text-gray-400">
-            © {new Date().getFullYear()} דריבית. כל הזכויות שמורות.
-          </p>
+        
+        <div className="mt-12 pt-8 border-t border-gray-200/50 dark:border-gray-700/50">
+          <div className="flex flex-col md:flex-row justify-between items-center">
+            <p className="text-gray-600 dark:text-gray-400 text-sm">
+              © {new Date().getFullYear()} דריבית. כל הזכויות שמורות.
+            </p>
+            <div className="flex items-center gap-4 mt-4 md:mt-0">
+              <Link href="/privacy" className="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors text-sm">
+                מדיניות פרטיות
+              </Link>
+              <Link href="/terms" className="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors text-sm">
+                תנאי שימוש
+              </Link>
+            </div>
+          </div>
         </div>
       </div>
     </footer>
