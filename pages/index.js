@@ -5,33 +5,53 @@ import { StatisticCounter } from '../components/StatisticCounter';
 import Meta from '../components/Meta';
 
 export default function Home() {
+  const ogImage = "https://opengraph.b-cdn.net/production/images/013da920-f264-4d22-9e72-65f7b250c52f.png?token=RszsNJDQmC993YpTOgvnz6Q12OjN_QbM-uyISwhQsrQ&height=1024&width=1024&expires=33273284450";
+  
   return (
     <>
       <NextSeo
         title="דריבית - מחשבונים פיננסיים וקורס שוק ההון חינם"
         description="מחשבונים פיננסיים חינמיים, קורס שוק ההון למתחילים, והשוואת מוצרי השקעה בעברית פשוטה. מחשבון ריבית דריבית, קרנות השתלמות, קופות גמל ועוד - הכל בחינם."
-        canonical="https://www.deribit.co.il"
+        canonical="https://deribit.co.il"
         openGraph={{
+          url: 'https://deribit.co.il',
           type: 'website',
-          locale: 'he_IL',
-          url: 'https://www.deribit.co.il',
-          siteName: 'דריבית',
           title: 'דריבית - מחשבונים פיננסיים וקורס שוק ההון חינם',
-          description: 'מחשבונים פיננסיים חינמיים, קורס שוק ההון למתחילים, והשוואת מוצרי השקעה בעברית פשוטה.',
+          description: 'מחשבונים פיננסיים חינמיים, קורס שוק ההון למתחילים, והשוואת מוצרי השקעה בעברית פשוטה. מחשבון ריבית דריבית, קרנות השתלמות, קופות גמל ועוד - הכל בחינם.',
           images: [
             {
-              url: 'https://www.deribit.co.il/og-preview.jpg',
-              width: 1200,
-              height: 630,
+              url: ogImage,
+              width: 1024,
+              height: 1024,
               alt: 'דריבית - מחשבונים פיננסיים וקורס שוק ההון',
-              type: 'image/jpeg',
             },
           ],
         }}
+        twitter={{
+          handle: '@deribit',
+          site: '@deribit',
+          cardType: 'summary_large_image',
+        }}
         additionalMetaTags={[
           {
-            name: 'keywords',
-            content: 'מחשבון ריבית דריבית, קורס שוק ההון, קרן השתלמות, קופת גמל, מחשבונים פיננסיים, השקעות למתחילים'
+            property: 'twitter:domain',
+            content: 'deribit.co.il'
+          },
+          {
+            property: 'twitter:url',
+            content: 'https://deribit.co.il'
+          },
+          {
+            name: 'twitter:title',
+            content: 'דריבית - מחשבונים פיננסיים וקורס שוק ההון חינם'
+          },
+          {
+            name: 'twitter:description',
+            content: 'מחשבונים פיננסיים חינמיים, קורס שוק ההון למתחילים, והשוואת מוצרי השקעה בעברית פשוטה. מחשבון ריבית דריבית, קרנות השתלמות, קופות גמל ועוד - הכל בחינם.'
+          },
+          {
+            name: 'twitter:image',
+            content: ogImage
           }
         ]}
       />
@@ -39,7 +59,7 @@ export default function Home() {
         <Meta 
           title="דריבית - מחשבונים פיננסיים וקורס שוק ההון חינם"
           description="מחשבונים פיננסיים חינמיים, קורס שוק ההון למתחילים, והשוואת מוצרי השקעה בעברית פשוטה. מחשבון ריבית דריבית, קרנות השתלמות, קופות גמל ועוד - הכל בחינם."
-          url="https://www.deribit.co.il"
+          url="https://deribit.co.il"
         />
 
         {/* Hero Section */}
