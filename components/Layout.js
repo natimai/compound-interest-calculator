@@ -144,16 +144,27 @@ export default function Layout({ children }) {
           })}
         </script>
 
-        {/* Open Graph / Facebook */}
+        {/* Essential Open Graph Tags */}
         <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://www.deribit.co.il" />
+        <meta property="og:title" content="דריבית - מחשבונים פיננסיים וקורס שוק ההון חינם" />
+        <meta property="og:description" content="האתר המקיף בישראל להשוואת מוצרי השקעה ומחשבונים פיננסיים. קורס שוק ההון למתחילים בחינם." />
         <meta property="og:site_name" content="דריבית" />
-        <meta property="og:image" content="https://www.deribit.co.il/images/og-image.jpg" />
+        
+        {/* Open Graph Image - חשוב מאוד לתצוגה מקדימה */}
+        <meta property="og:image" content="https://www.deribit.co.il/og-image.png" />
+        <meta property="og:image:secure_url" content="https://www.deribit.co.il/og-image.png" />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+        <meta property="og:image:alt" content="דריבית - מחשבונים פיננסיים וקורס שוק ההון" />
         <meta property="og:locale" content="he_IL" />
 
-        {/* Twitter */}
+        {/* Twitter Card Tags */}
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:image" content="https://www.deribit.co.il/images/twitter-image.jpg" />
-        
+        <meta name="twitter:title" content="דריבית - מחשבונים פיננסיים וקורס שוק ההון חינם" />
+        <meta name="twitter:description" content="האתר המקיף בישראל להשוואת מוצרי השקעה ומחשבונים פיננסיים. קורס שוק ההון למתחילים בחינם." />
+        <meta name="twitter:image" content="https://www.deribit.co.il/og-image.png" />
+
         {/* General SEO */}
         <meta name="robots" content="index, follow" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
