@@ -144,16 +144,17 @@ export default function Layout({ children }) {
           })}
         </script>
 
-        {/* Essential Open Graph Tags */}
+        {/* Essential Open Graph Tags - עדכון סדר התגיות חשוב */}
         <meta property="og:type" content="website" />
+        <meta property="og:site_name" content="דריבית" />
         <meta property="og:url" content="https://www.deribit.co.il" />
         <meta property="og:title" content="דריבית - מחשבונים פיננסיים וקורס שוק ההון חינם" />
         <meta property="og:description" content="האתר המקיף בישראל להשוואת מוצרי השקעה ומחשבונים פיננסיים. קורס שוק ההון למתחילים בחינם." />
-        <meta property="og:site_name" content="דריבית" />
         
-        {/* Open Graph Image - חשוב מאוד לתצוגה מקדימה */}
+        {/* Open Graph Image */}
         <meta property="og:image" content="https://www.deribit.co.il/og-image.png" />
         <meta property="og:image:secure_url" content="https://www.deribit.co.il/og-image.png" />
+        <meta property="og:image:type" content="image/png" />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
         <meta property="og:image:alt" content="דריבית - מחשבונים פיננסיים וקורס שוק ההון" />
@@ -161,6 +162,8 @@ export default function Layout({ children }) {
 
         {/* Twitter Card Tags */}
         <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:domain" content="deribit.co.il" />
+        <meta name="twitter:url" content="https://www.deribit.co.il" />
         <meta name="twitter:title" content="דריבית - מחשבונים פיננסיים וקורס שוק ההון חינם" />
         <meta name="twitter:description" content="האתר המקיף בישראל להשוואת מוצרי השקעה ומחשבונים פיננסיים. קורס שוק ההון למתחילים בחינם." />
         <meta name="twitter:image" content="https://www.deribit.co.il/og-image.png" />

@@ -8,11 +8,12 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
       <Head>
-        <title>דריבית - מחשבונים פיננסיים וקורס שוק ההון חינם | השוואת מוצרי השקעה</title>
+        <title>דריבית - מחשבונים פיננסיים וקורס שוק ההון חינם</title>
         <meta name="description" content="מחשבונים פיננסיים חינמיים, קורס שוק ההון למתחילים, והשוואת מוצרי השקעה בעברית פשוטה. מחשבון ריבית דריבית, קרנות השתלמות, קופות גמל ועוד - הכל בחינם." />
         <meta name="keywords" content="מחשבון ריבית דריבית, קורס שוק ההון, קרן השתלמות, קופת גמל, מחשבונים פיננסיים, השקעות למתחילים" />
-        <meta property="og:title" content="דריבית - מחשבונים פיננסיים והשוואת מוצרי השקעה" />
-        <meta property="og:description" content="האתר המקיף בישראל להשוואת מוצרי השקעה ומחשבונים פיננסיים. קורס שוק ההון למתחילים בחינם." />
+        <meta property="og:title" content="דריבית - מחשבונים פיננסיים וקורס שוק ההון חינם" />
+        <meta property="og:description" content="מחשבונים פיננסיים חינמיים, קורס שוק ההון למתחילים, והשוואת מוצרי השקעה בעברית פשוטה." />
+        <meta property="og:url" content="https://www.deribit.co.il" />
         <link rel="canonical" href="https://www.deribit.co.il" />
       </Head>
 
