@@ -124,8 +124,9 @@ export default function Layout({ children }) {
           async
         ></script>
         <meta name="theme-color" content={darkMode ? '#111827' : '#ffffff'} />
-        <title>קורס שוק ההון למתחילים</title>
-        <meta name="description" content="לומדים להשקיע בצורה חכמה ואחראית" />
+        <title>דריבית - מחשבונים פיננסיים וקורס שוק ההון חינם</title>
+        <meta name="title" content="דריבית - מחשבונים פיננסיים וקורס שוק ההון חינם" />
+        <meta name="description" content="האתר המקיף בישראל להשוואת מוצרי השקעה ומחשבונים פיננסיים. קורס שוק ההון למתחילים בחינם." />
         <link rel="icon" href="/favicon.ico" />
 
         {/* Schema.org markup */}
@@ -144,12 +145,13 @@ export default function Layout({ children }) {
           })}
         </script>
 
-        {/* Essential Open Graph Tags - עדכון סדר התגיות חשוב */}
+        {/* Primary Meta Tags */}
         <meta property="og:type" content="website" />
-        <meta property="og:site_name" content="דריבית" />
         <meta property="og:url" content="https://www.deribit.co.il" />
+        <meta property="og:site_name" content="דריבית" />
         <meta property="og:title" content="דריבית - מחשבונים פיננסיים וקורס שוק ההון חינם" />
         <meta property="og:description" content="האתר המקיף בישראל להשוואת מוצרי השקעה ומחשבונים פיננסיים. קורס שוק ההון למתחילים בחינם." />
+        <meta property="og:locale" content="he_IL" />
         
         {/* Open Graph Image */}
         <meta property="og:image" content="https://www.deribit.co.il/og-image.png" />
@@ -158,7 +160,6 @@ export default function Layout({ children }) {
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
         <meta property="og:image:alt" content="דריבית - מחשבונים פיננסיים וקורס שוק ההון" />
-        <meta property="og:locale" content="he_IL" />
 
         {/* Twitter Card Tags */}
         <meta name="twitter:card" content="summary_large_image" />
