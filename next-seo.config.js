@@ -1,41 +1,33 @@
-export default {
+const config = {
+  // הגדרות בסיסיות
   titleTemplate: '%s | דריבית',
   defaultTitle: 'דריבית - מחשבונים פיננסיים וקורס שוק ההון חינם',
-  description: 'האתר המקיף בישראל להשוואת מוצרי השקעה ומחשבונים פיננסיים. קורס שוק ההון למתחילים בחינם.',
-  canonical: 'https://www.deribit.co.il',
-  noindex: false,
-  nofollow: false,
+  description: 'מחשבונים פיננסיים חינמיים, קורס שוק ההון למתחילים, והשוואת מוצרי השקעה בעברית פשוטה. מחשבון ריבית דריבית, קרנות השתלמות, קופות גמל ועוד - הכל בחינם.',
+  
+  // Open Graph
   openGraph: {
     type: 'website',
     locale: 'he_IL',
-    url: 'https://www.deribit.co.il',
+    url: 'https://deribit.co.il',
     siteName: 'דריבית',
-    title: 'דריבית - מחשבונים פיננסיים וקורס שוק ההון חינם',
-    description: 'האתר המקיף בישראל להשוואת מוצרי השקעה ומחשבונים פיננסיים. קורס שוק ההון למתחילים בחינם.',
     images: [
       {
-        url: 'https://www.deribit.co.il/og-preview.jpg',
-        width: 1200,
-        height: 630,
+        url: 'https://opengraph.b-cdn.net/production/images/013da920-f264-4d22-9e72-65f7b250c52f.png?token=RszsNJDQmC993YpTOgvnz6Q12OjN_QbM-uyISwhQsrQ&height=1024&width=1024&expires=33273284450',
+        width: 1024,
+        height: 1024,
         alt: 'דריבית - מחשבונים פיננסיים וקורס שוק ההון',
-        type: 'image/jpeg',
-      },
-    ],
+      }
+    ]
   },
+
+  // Twitter
   twitter: {
-    handle: '@deribit',
-    site: '@deribit',
     cardType: 'summary_large_image',
+    site: '@deribit',
   },
+
+  // תגיות מטא נוספות
   additionalMetaTags: [
-    {
-      name: 'keywords',
-      content: 'מחשבון ריבית דריבית, קורס שוק ההון, קרן השתלמות, קופת גמל, מחשבונים פיננסיים, השקעות למתחילים'
-    },
-    {
-      name: 'author',
-      content: 'דריבית'
-    },
     {
       name: 'viewport',
       content: 'width=device-width, initial-scale=1'
@@ -43,38 +35,16 @@ export default {
     {
       name: 'robots',
       content: 'index, follow'
-    },
-    {
-      property: 'og:locale:alternate',
-      content: 'en_US'
     }
   ],
+
+  // תגיות קישור נוספות
   additionalLinkTags: [
     {
       rel: 'icon',
-      href: '/favicon.ico',
-    },
-    {
-      rel: 'apple-touch-icon',
-      href: '/apple-touch-icon.png',
-      sizes: '180x180'
-    },
-    {
-      rel: 'manifest',
-      href: '/site.webmanifest'
-    },
-    {
-      rel: 'canonical',
-      href: 'https://www.deribit.co.il'
+      href: '/favicon.ico'
     }
-  ],
-  robotsProps: {
-    nosnippet: false,
-    notranslate: false,
-    noimageindex: false,
-    noarchive: false,
-    maxSnippet: -1,
-    maxImagePreview: 'large',
-    maxVideoPreview: -1
-  }
-}; 
+  ]
+};
+
+export default config; 
