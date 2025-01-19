@@ -1,19 +1,19 @@
 export default {
-  titleTemplate: '%s | דריבית - מחשבונים פיננסיים',
-  defaultTitle: 'דריבית - מחשבונים פיננסיים חכמים',
-  description: 'מחשבונים פיננסיים חכמים לתכנון כלכלי - משכנתא, ריבית דריבית, שכר והשקעות',
+  titleTemplate: '%s | דריבית',
+  defaultTitle: 'דריבית - מחשבונים פיננסיים וקורס שוק ההון חינם',
+  description: 'האתר המקיף בישראל להשוואת מוצרי השקעה ומחשבונים פיננסיים. קורס שוק ההון למתחילים בחינם.',
   canonical: 'https://deribit.co.il',
   openGraph: {
     type: 'website',
     locale: 'he_IL',
-    url: 'https://deribit.co.il',
-    siteName: 'דריבית - DeRibit',
+    url: 'https://www.deribit.co.il',
+    siteName: 'דריבית',
     images: [
       {
-        url: '/og-image.png',
+        url: 'https://www.deribit.co.il/og-preview.jpg',
         width: 1200,
         height: 630,
-        alt: 'דריבית - מחשבונים פיננסיים',
+        alt: 'דריבית - מחשבונים פיננסיים וקורס שוק ההון',
       },
     ],
   },
@@ -31,5 +31,11 @@ export default {
       name: 'author',
       content: 'דריבית'
     }
+  ],
+  additionalLinkTags: [
+    {
+      rel: 'icon',
+      href: '/favicon.ico',
+    },
   ],
 }; 
