@@ -13,7 +13,7 @@ export default function Meta({
   description = 'האתר המקיף בישראל להשוואת מוצרי השקעה ומחשבונים פיננסיים. קורס שוק ההון למתחילים בחינם.',
   ogImage = 'https://www.deribit.co.il/og-image.png',
   url = 'https://www.deribit.co.il'
-}: MetaProps) {
+}: MetaProps): JSX.Element {
   return (
     <Head>
       {/* Primary Meta Tags */}
