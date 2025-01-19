@@ -1,19 +1,11 @@
-/** @jsxImportSource next */
 import Head from 'next/head'
-
-interface MetaProps {
-  title?: string;
-  description?: string;
-  ogImage?: string;
-  url?: string;
-}
 
 export default function Meta({
   title = 'דריבית - מחשבונים פיננסיים וקורס שוק ההון חינם',
   description = 'האתר המקיף בישראל להשוואת מוצרי השקעה ומחשבונים פיננסיים. קורס שוק ההון למתחילים בחינם.',
   ogImage = 'https://www.deribit.co.il/og-image.png',
   url = 'https://www.deribit.co.il'
-}: MetaProps): JSX.Element {
+}) {
   return (
     <Head>
       {/* Primary Meta Tags */}
