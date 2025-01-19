@@ -3,9 +3,11 @@ import Head from 'next/head'
 export default function Meta({
   title = 'דריבית - מחשבונים פיננסיים וקורס שוק ההון חינם',
   description = 'האתר המקיף בישראל להשוואת מוצרי השקעה ומחשבונים פיננסיים. קורס שוק ההון למתחילים בחינם.',
-  ogImage = 'https://www.deribit.co.il/og-image.png',
+  ogImage = 'https://www.deribit.co.il/og-preview.jpg',
   url = 'https://www.deribit.co.il'
 }) {
+  const fullImageUrl = `${url}${ogImage}`;
+
   return (
     <Head>
       {/* Primary Meta Tags */}
@@ -21,10 +23,10 @@ export default function Meta({
       <meta property="og:description" content={description} />
       <meta property="og:locale" content="he_IL" />
       
-      {/* Open Graph Image */}
-      <meta property="og:image" content={ogImage} />
-      <meta property="og:image:secure_url" content={ogImage} />
-      <meta property="og:image:type" content="image/png" />
+      {/* Open Graph Image - תמונה ייעודית לשיתוף */}
+      <meta property="og:image" content={fullImageUrl} />
+      <meta property="og:image:secure_url" content={fullImageUrl} />
+      <meta property="og:image:type" content="image/jpeg" />
       <meta property="og:image:width" content="1200" />
       <meta property="og:image:height" content="630" />
       <meta property="og:image:alt" content={title} />
@@ -35,7 +37,7 @@ export default function Meta({
       <meta name="twitter:url" content={url} />
       <meta name="twitter:title" content={title} />
       <meta name="twitter:description" content={description} />
-      <meta name="twitter:image" content={ogImage} />
+      <meta name="twitter:image" content={fullImageUrl} />
 
       {/* General SEO */}
       <meta name="robots" content="index, follow" />
