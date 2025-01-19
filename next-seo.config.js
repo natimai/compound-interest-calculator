@@ -3,6 +3,8 @@ export default {
   defaultTitle: 'דריבית - מחשבונים פיננסיים וקורס שוק ההון חינם',
   description: 'האתר המקיף בישראל להשוואת מוצרי השקעה ומחשבונים פיננסיים. קורס שוק ההון למתחילים בחינם.',
   canonical: 'https://www.deribit.co.il',
+  noindex: false,
+  nofollow: false,
   openGraph: {
     type: 'website',
     locale: 'he_IL',
@@ -41,6 +43,10 @@ export default {
     {
       name: 'robots',
       content: 'index, follow'
+    },
+    {
+      property: 'og:locale:alternate',
+      content: 'en_US'
     }
   ],
   additionalLinkTags: [
@@ -49,8 +55,26 @@ export default {
       href: '/favicon.ico',
     },
     {
+      rel: 'apple-touch-icon',
+      href: '/apple-touch-icon.png',
+      sizes: '180x180'
+    },
+    {
+      rel: 'manifest',
+      href: '/site.webmanifest'
+    },
+    {
       rel: 'canonical',
       href: 'https://www.deribit.co.il'
     }
   ],
+  robotsProps: {
+    nosnippet: false,
+    notranslate: false,
+    noimageindex: false,
+    noarchive: false,
+    maxSnippet: -1,
+    maxImagePreview: 'large',
+    maxVideoPreview: -1
+  }
 }; 

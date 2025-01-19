@@ -2,7 +2,6 @@ import { NextSeo } from 'next-seo';
 import Link from 'next/link';
 import { Calculator, Clock, TrendingUp, DollarSign, BookOpen, ArrowRight, Users, ThumbsUp, BarChart2, Target, Lightbulb, Star, Sparkles } from 'lucide-react';
 import { StatisticCounter } from '../components/StatisticCounter';
-import Meta from '../components/Meta';
 
 export default function Home() {
   const ogImage = "https://opengraph.b-cdn.net/production/images/013da920-f264-4d22-9e72-65f7b250c52f.png?token=RszsNJDQmC993YpTOgvnz6Q12OjN_QbM-uyISwhQsrQ&height=1024&width=1024&expires=33273284450";
@@ -56,12 +55,6 @@ export default function Home() {
         ]}
       />
       <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
-        <Meta 
-          title="דריבית - מחשבונים פיננסיים וקורס שוק ההון חינם"
-          description="מחשבונים פיננסיים חינמיים, קורס שוק ההון למתחילים, והשוואת מוצרי השקעה בעברית פשוטה. מחשבון ריבית דריבית, קרנות השתלמות, קופות גמל ועוד - הכל בחינם."
-          url="https://deribit.co.il"
-        />
-
         {/* Hero Section */}
         <div className="relative overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-br from-blue-50 to-purple-50 dark:from-blue-900/20 dark:to-purple-900/20" />

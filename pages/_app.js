@@ -3,8 +3,8 @@ import { ThemeProvider } from '../contexts/ThemeContext';
 import '../styles/globals.css';
 import { CourseProgressProvider } from '../contexts/CourseProgressContext';
 import Head from 'next/head';
-import { DefaultSeo } from 'next-seo'
-import SEO from '../next-seo.config'
+import { DefaultSeo } from 'next-seo';
+import SEO from '../next-seo.config';
 
 function MyApp({ Component, pageProps }) {
   return (
