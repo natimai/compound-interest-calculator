@@ -2,20 +2,16 @@ import { NextSeo } from 'next-seo';
 import Link from 'next/link';
 import { Calculator, Clock, TrendingUp, DollarSign, BookOpen, ArrowRight, Users, ThumbsUp, BarChart2, Target, Lightbulb, Star, Sparkles } from 'lucide-react';
 import { StatisticCounter } from '../components/StatisticCounter';
-import Head from 'next/head';
+import Meta from '../components/Meta';
 
 export default function Home() {
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
-      <Head>
-        <title>דריבית - מחשבונים פיננסיים וקורס שוק ההון חינם</title>
-        <meta name="description" content="מחשבונים פיננסיים חינמיים, קורס שוק ההון למתחילים, והשוואת מוצרי השקעה בעברית פשוטה. מחשבון ריבית דריבית, קרנות השתלמות, קופות גמל ועוד - הכל בחינם." />
-        <meta name="keywords" content="מחשבון ריבית דריבית, קורס שוק ההון, קרן השתלמות, קופת גמל, מחשבונים פיננסיים, השקעות למתחילים" />
-        <meta property="og:title" content="דריבית - מחשבונים פיננסיים וקורס שוק ההון חינם" />
-        <meta property="og:description" content="מחשבונים פיננסיים חינמיים, קורס שוק ההון למתחילים, והשוואת מוצרי השקעה בעברית פשוטה." />
-        <meta property="og:url" content="https://www.deribit.co.il" />
-        <link rel="canonical" href="https://www.deribit.co.il" />
-      </Head>
+      <Meta 
+        title="דריבית - מחשבונים פיננסיים וקורס שוק ההון חינם"
+        description="מחשבונים פיננסיים חינמיים, קורס שוק ההון למתחילים, והשוואת מוצרי השקעה בעברית פשוטה. מחשבון ריבית דריבית, קרנות השתלמות, קופות גמל ועוד - הכל בחינם."
+        url="https://www.deribit.co.il"
+      />
 
       {/* Hero Section */}
       <div className="relative overflow-hidden">
