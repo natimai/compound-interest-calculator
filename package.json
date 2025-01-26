@@ -4,9 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "next build && next-sitemap --config next-sitemap.config.js",
     "start": "next start",
-    "postbuild": "next-sitemap",
     "lint": "next lint"
   },
   "dependencies": {
@@ -21,6 +20,7 @@
     "lucide-react": "^0.263.1",
     "next": "15.1.4",
     "next-seo": "^6.6.0",
+    "next-sitemap": "^4.2.3",
     "react": "^18.3.1",
     "react-confetti": "^6.2.2",
     "react-countup": "^6.5.3",
@@ -32,12 +32,9 @@
     "xlsx": "^0.18.5"
   },
   "devDependencies": {
-    "@babel/core": "^7.26.7",
-    "@babel/eslint-parser": "^7.26.5",
     "@eslint/eslintrc": "^3",
     "eslint": "^9",
     "eslint-config-next": "15.1.4",
-    "next-sitemap": "^4.2.3",
     "postcss": "^8",
     "tailwindcss": "^3.4.1"
   }

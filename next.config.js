@@ -29,6 +29,18 @@ const nextConfig = {
   images: {
     domains: ['www.deribit.co.il'],
   },
+  async rewrites() {
+    return [
+      {
+        source: '/sitemap.xml',
+        destination: '/seo/sitemap.xml',
+      },
+      {
+        source: '/robots.txt',
+        destination: '/seo/robots.txt',
+      },
+    ];
+  },
 };
 
 module.exports = nextConfig; 

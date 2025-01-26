@@ -14,4 +14,5 @@ module.exports = {
         },
       ],
     },
+    outDir: 'public/seo',
 }
