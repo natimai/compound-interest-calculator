@@ -14,4 +14,17 @@ module.exports = {
       },
     ]
   },
+  i18n: {
+    locales: ['he'],
+    defaultLocale: 'he',
+    domains: [
+      {
+        domain: 'www.deribit.co.il',
+        defaultLocale: 'he',
+      },
+    ],
+  },
+  images: {
+    domains: ['www.deribit.co.il'],
+  },
 } 

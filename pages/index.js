@@ -4,56 +4,14 @@ import { Calculator, Clock, TrendingUp, DollarSign, BookOpen, ArrowRight, Users,
 import { StatisticCounter } from '../components/StatisticCounter';
 
 export default function Home() {
-  const ogImage = "https://opengraph.b-cdn.net/production/images/013da920-f264-4d22-9e72-65f7b250c52f.png?token=RszsNJDQmC993YpTOgvnz6Q12OjN_QbM-uyISwhQsrQ&height=1024&width=1024&expires=33273284450";
-  
   return (
     <>
       <NextSeo
         title="דריבית - מחשבונים פיננסיים וקורס שוק ההון חינם"
         description="מחשבונים פיננסיים חינמיים, קורס שוק ההון למתחילים, והשוואת מוצרי השקעה בעברית פשוטה. מחשבון ריבית דריבית, קרנות השתלמות, קופות גמל ועוד - הכל בחינם."
-        canonical="https://deribit.co.il"
-        openGraph={{
-          url: 'https://deribit.co.il',
-          type: 'website',
-          title: 'דריבית - מחשבונים פיננסיים וקורס שוק ההון חינם',
-          description: 'מחשבונים פיננסיים חינמיים, קורס שוק ההון למתחילים, והשוואת מוצרי השקעה בעברית פשוטה. מחשבון ריבית דריבית, קרנות השתלמות, קופות גמל ועוד - הכל בחינם.',
-          images: [
-            {
-              url: ogImage,
-              width: 1024,
-              height: 1024,
-              alt: 'דריבית - מחשבונים פיננסיים וקורס שוק ההון',
-            },
-          ],
-        }}
-        twitter={{
-          handle: '@deribit',
-          site: '@deribit',
-          cardType: 'summary_large_image',
-        }}
-        additionalMetaTags={[
-          {
-            property: 'twitter:domain',
-            content: 'deribit.co.il'
-          },
-          {
-            property: 'twitter:url',
-            content: 'https://deribit.co.il'
-          },
-          {
-            name: 'twitter:title',
-            content: 'דריבית - מחשבונים פיננסיים וקורס שוק ההון חינם'
-          },
-          {
-            name: 'twitter:description',
-            content: 'מחשבונים פיננסיים חינמיים, קורס שוק ההון למתחילים, והשוואת מוצרי השקעה בעברית פשוטה. מחשבון ריבית דריבית, קרנות השתלמות, קופות גמל ועוד - הכל בחינם.'
-          },
-          {
-            name: 'twitter:image',
-            content: ogImage
-          }
-        ]}
+        canonical="https://www.deribit.co.il"
       />
+      
       <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
         {/* Hero Section */}
         <div className="relative overflow-hidden">

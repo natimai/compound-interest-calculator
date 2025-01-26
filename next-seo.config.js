@@ -3,18 +3,21 @@ const config = {
   titleTemplate: '%s | דריבית',
   defaultTitle: 'דריבית - מחשבונים פיננסיים וקורס שוק ההון חינם',
   description: 'מחשבונים פיננסיים חינמיים, קורס שוק ההון למתחילים, והשוואת מוצרי השקעה בעברית פשוטה. מחשבון ריבית דריבית, קרנות השתלמות, קופות גמל ועוד - הכל בחינם.',
+  canonical: 'https://www.deribit.co.il',
   
   // Open Graph
   openGraph: {
     type: 'website',
     locale: 'he_IL',
-    url: 'https://deribit.co.il',
+    url: 'https://www.deribit.co.il',
     siteName: 'דריבית',
+    title: 'דריבית - מחשבונים פיננסיים וקורס שוק ההון חינם',
+    description: 'מחשבונים פיננסיים חינמיים, קורס שוק ההון למתחילים, והשוואת מוצרי השקעה בעברית פשוטה.',
     images: [
       {
-        url: 'https://opengraph.b-cdn.net/production/images/013da920-f264-4d22-9e72-65f7b250c52f.png?token=RszsNJDQmC993YpTOgvnz6Q12OjN_QbM-uyISwhQsrQ&height=1024&width=1024&expires=33273284450',
-        width: 1024,
-        height: 1024,
+        url: 'https://www.deribit.co.il/og-image.png',
+        width: 1200,
+        height: 630,
         alt: 'דריבית - מחשבונים פיננסיים וקורס שוק ההון',
       }
     ]
@@ -23,7 +26,7 @@ const config = {
   // Twitter
   twitter: {
     cardType: 'summary_large_image',
-    site: '@deribit',
+    site: '@deribit'
   },
 
   // תגיות מטא נוספות
@@ -35,6 +38,14 @@ const config = {
     {
       name: 'robots',
       content: 'index, follow'
+    },
+    {
+      name: 'google',
+      content: 'notranslate'
+    },
+    {
+      name: 'format-detection',
+      content: 'telephone=no'
     }
   ],
 
@@ -43,6 +54,27 @@ const config = {
     {
       rel: 'icon',
       href: '/favicon.ico'
+    },
+    {
+      rel: 'apple-touch-icon',
+      href: '/apple-touch-icon.png',
+      sizes: '180x180'
+    },
+    {
+      rel: 'icon',
+      type: 'image/png',
+      href: '/favicon-32x32.png',
+      sizes: '32x32'
+    },
+    {
+      rel: 'icon',
+      type: 'image/png',
+      href: '/favicon-16x16.png',
+      sizes: '16x16'
+    },
+    {
+      rel: 'manifest',
+      href: '/site.webmanifest'
     }
   ]
 };

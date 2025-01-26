@@ -3,13 +3,24 @@ import Link from 'next/link';
 import { Facebook, Twitter, Instagram, Calculator, BookOpen, Home, Mail, Sparkles } from 'lucide-react';
 
 export const Footer = () => {
+  const { isDarkMode } = useTheme();
+  
   return (
     <footer className="bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm border-t border-gray-200/50 dark:border-gray-700/50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div>
-            <h3 className="text-lg font-bold mb-4 flex items-center gap-2 bg-gradient-to-r from-blue-600 to-blue-400 bg-clip-text text-transparent">
-              <Home className="w-5 h-5 text-blue-400" />
+            <h3 
+              className="text-lg font-bold mb-4 flex items-center gap-2"
+              style={{
+                background: 'linear-gradient(to right, var(--primary-color), var(--secondary-color))',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+                '--primary-color': isDarkMode ? '#60a5fa' : '#2563eb',
+                '--secondary-color': isDarkMode ? '#818cf8' : '#4f46e5'
+              }}
+            >
+              <Home className="w-5 h-5" style={{ color: isDarkMode ? '#60a5fa' : '#2563eb' }} />
               דריבית
             </h3>
             <p className="text-gray-600 dark:text-gray-400 text-sm mb-4">

@@ -1,10 +1,10 @@
-import Layout from '../components/Layout';
-import { ThemeProvider } from '../contexts/ThemeContext';
-import '../styles/globals.css';
-import { CourseProgressProvider } from '../contexts/CourseProgressContext';
-import Head from 'next/head';
 import { DefaultSeo } from 'next-seo';
 import SEO from '../next-seo.config';
+import Layout from '../components/Layout';
+import { ThemeProvider } from '../contexts/ThemeContext';
+import { CourseProgressProvider } from '../contexts/CourseProgressContext';
+import '../styles/globals.css';
+import Head from 'next/head';
 
 function MyApp({ Component, pageProps }) {
   return (
