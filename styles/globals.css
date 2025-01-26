@@ -3,32 +3,54 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --foreground: #111827;
-  --background: #ffffff;
-  --primary: #2563eb;
-  --primary-dark: #1d4ed8;
-  --secondary: #4f46e5;
-  --accent: #7c3aed;
+@layer base {
+  body {
+    @apply bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800 text-gray-900 dark:text-gray-100;
+  }
 }
 
-[data-theme='dark'] {
-  --foreground: #f3f4f6;
-  --background: #111827;
-  --primary: #3b82f6;
-  --primary-dark: #2563eb;
-  --secondary: #6366f1;
-  --accent: #8b5cf6;
+@layer components {
+  .calculator {
+    @apply bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm p-6 rounded-2xl shadow-xl max-w-xl mx-auto;
+  }
+
+  .nav-link {
+    @apply text-gray-700 dark:text-gray-200 hover:text-primary-600 dark:hover:text-primary-400 px-3 py-2 text-sm font-medium;
+  }
+
+  .nav-link-active {
+    @apply text-primary-600 dark:text-primary-400;
+  }
+
+  .button {
+    @apply px-5 py-3 text-white bg-gradient-to-r from-primary-600 to-secondary hover:from-primary-700 hover:to-secondary rounded-xl transition-all duration-300 shadow-md hover:shadow-lg transform hover:-translate-y-0.5;
+  }
+
+  .button-secondary {
+    @apply px-5 py-3 text-primary-600 dark:text-primary-400 bg-primary-50 dark:bg-primary-900/20 hover:bg-primary-100 dark:hover:bg-primary-900/30 rounded-xl transition-all duration-300;
+  }
+
+  .button-link {
+    @apply text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300 font-medium inline-flex items-center gap-2 transition-colors;
+  }
+
+  .button-outline {
+    @apply px-5 py-3 text-primary-600 dark:text-primary-400 border-2 border-primary-600 dark:border-primary-400 hover:bg-primary-50 dark:hover:bg-primary-900/20 rounded-xl transition-all duration-300;
+  }
 }
 
-body {
-  @apply bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800 text-gray-900 dark:text-gray-100;
+/* Layout styles */
+#__next {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
-.calculator {
-  @apply bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm p-6 rounded-2xl shadow-xl max-w-xl mx-auto;
+main {
+  flex: 1;
 }
 
+/* Form styles */
 .form-group {
   @apply mb-6 text-right;
 }
@@ -41,42 +63,7 @@ body {
   @apply w-full px-4 py-3 rounded-xl border border-gray-300 dark:border-gray-600 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm focus:ring-2 focus:ring-primary-500/50 focus:border-primary-500 transition-all duration-200;
 }
 
-.form-group.inline {
-  @apply flex-row justify-start w-[90%];
-}
-
-.form-group.inline label {
-  @apply mr-2 mb-0;
-}
-
-.form-group.inline input[type="checkbox"] {
-  @apply w-5 h-5;
-}
-
-button, .button {
-  @apply px-5 py-3 text-white bg-gradient-to-r from-primary-600 to-secondary hover:from-primary-700 hover:to-secondary rounded-xl transition-all duration-300 shadow-md hover:shadow-lg transform hover:-translate-y-0.5;
-}
-
-.summary {
-  @apply mt-5 text-lg font-medium;
-}
-
-.green {
-  color: #2ecc71;
-}
-
-.red {
-  color: #e74c3c;
-}
-
-/* סגנונות חדשים לטבלה */
-.toggle-details {
-  cursor: pointer;
-  margin: 15px 0;
-  color: #3498db;
-  text-decoration: underline;
-}
-
+/* Table styles */
 .result-table {
   @apply w-full border-collapse mt-5 text-center;
 }
@@ -93,45 +80,40 @@ button, .button {
   @apply bg-gray-50 dark:bg-gray-800/50;
 }
 
-#details {
-  overflow-x: auto;
-  margin-top: 20px;
-}
-.nav-link {
-  @apply text-gray-700 dark:text-gray-200 hover:text-primary-600 dark:hover:text-primary-400 px-3 py-2 text-sm font-medium;
+/* הסרנו את כל ההגדרות המיותרות */
+
+/* בסוף הקובץ */
+.high-contrast {
+  --tw-contrast: 150%;
+  filter: contrast(var(--tw-contrast));
 }
 
-.nav-link-active {
-  @apply text-primary-600 dark:text-primary-400;
+.high-contrast img,
+.high-contrast video {
+  filter: contrast(calc(100% / var(--tw-contrast)));
 }
 
-/* Add these styles */
-#__next {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
+.bigger-cursor,
+.bigger-cursor * {
+  cursor: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="2"><path d="M3 3l7.07 16.97 2.51-7.39 7.39-2.51L3 3z"/></svg>') 12 12, auto !important;
 }
 
-main {
-  flex: 1;
+.highlight-links a {
+  text-decoration: underline !important;
+  color: #2563eb !important;
 }
 
-/* כפתור משני */
-.button-secondary {
-  @apply px-5 py-3 text-primary-600 dark:text-primary-400 bg-primary-50 dark:bg-primary-900/20 hover:bg-primary-100 dark:hover:bg-primary-900/30 rounded-xl transition-all duration-300;
+.dark .highlight-links a {
+  color: #60a5fa !important;
 }
 
-/* כפתור קישור */
-.button-link {
-  @apply text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300 font-medium inline-flex items-center gap-2 transition-colors;
+.dyslexic-font {
+  font-family: 'OpenDyslexic', sans-serif !important;
 }
 
-/* כפתור מסגרת */
-.button-outline {
-  @apply px-5 py-3 text-primary-600 dark:text-primary-400 border-2 border-primary-600 dark:border-primary-400 hover:bg-primary-50 dark:hover:bg-primary-900/20 rounded-xl transition-all duration-300;
-}
-
-/* עדכון סגנון כפתור מצב כהה */
-.theme-toggle {
-  @apply p-2 rounded-lg bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors;
+@font-face {
+  font-family: 'OpenDyslexic';
+  src: url('/fonts/OpenDyslexic-Regular.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
 }

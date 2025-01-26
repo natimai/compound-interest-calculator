@@ -4,15 +4,24 @@ import { useRouter } from 'next/router'
 import { 
   Moon, 
   Sun, 
-  Home, 
-  Calculator, 
-  BookOpen, 
-  Info, 
   Menu, 
   X,
-  TrendingUp
+  Home,
+  GraduationCap,
+  Calculator,
+  BookOpen,
+  Info
 } from 'lucide-react';
 import { useTheme } from '../contexts/ThemeContext';
+import { AnimatePresence, motion } from 'framer-motion';
+
+const navigation = [
+  { name: 'בית', href: '/', icon: Home },
+  { name: 'קורסים', href: '/course', icon: GraduationCap },
+  { name: 'מחשבונים', href: '/calculators', icon: Calculator },
+  { name: 'מדריכים', href: '/guides', icon: BookOpen },
+  { name: 'אודות', href: '/about', icon: Info },
+];
 
 export const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -28,6 +37,11 @@ export const Navbar = () => {
     window.addEventListener('scroll', handleScroll)
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
+
+  // סגירת התפריט בעת ניווט
+  useEffect(() => {
+    setIsMenuOpen(false);
+  }, [router.pathname]);
 
   // Close menu when clicking outside
   useEffect(() => {
@@ -51,164 +65,162 @@ export const Navbar = () => {
     };
   }, [isMenuOpen]);
 
-  const navigation = [
-    { name: 'דף הבית', href: '/', icon: Home },
-    { name: 'מחשבונים פיננסיים', href: '/calculators', icon: Calculator },
-    { name: 'קורס שוק ההון', href: '/course', icon: BookOpen },  // הוספנו את זה
-    { name: 'מוצרי השקעה', href: '/investment-products', icon: TrendingUp },
-    { name: 'מדריכים', href: '/guides', icon: BookOpen },
-    { name: 'אודות', href: '/about', icon: Info },
-  ]
-
   const isActive = (path) => router.pathname === path;
 
-  return (
-    <nav className={`fixed top-0 w-full z-50 transition-all duration-300 ${
-      isScrolled 
-        ? 'bg-white/80 dark:bg-gray-900/80 backdrop-blur-lg shadow-lg' 
-        : 'bg-white dark:bg-gray-900'
-    }`}>
-      <div className="max-w-7xl mx-auto px-4">
-        <div className="relative flex items-center justify-between h-16">
-          {/* כפתור המבורגר */}
-          <div className="md:hidden">
-            <button
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="inline-flex items-center justify-center p-2 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
-            >
-              {isMenuOpen ? (
-                <X className="h-6 w-6" />
-              ) : (
-                <Menu className="h-6 w-6" />
-              )}
-            </button>
-          </div>
+  const menuVariants = {
+    hidden: { 
+      opacity: 0,
+      y: -20,
+      scale: 0.95
+    },
+    visible: { 
+      opacity: 1,
+      y: 0,
+      scale: 1,
+      transition: {
+        duration: 0.2,
+        ease: "easeOut"
+      }
+    },
+    exit: {
+      opacity: 0,
+      y: -20,
+      scale: 0.95,
+      transition: {
+        duration: 0.2,
+        ease: "easeIn"
+      }
+    }
+  };
 
-          {/* לוגו */}
-          <div className="flex-1 flex items-center justify-center">
+  return (
+    <nav className={`sticky top-0 z-50 transition-all duration-300 ${
+      isScrolled ? 'bg-white/80 dark:bg-gray-800/80 backdrop-blur-md shadow-lg' : 'bg-white dark:bg-gray-800'
+    }`}>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between h-16">
+          <div className="flex items-center">
             <Link 
               href="/" 
-              className="group flex items-center gap-2 text-2xl font-bold transition-transform hover:scale-105"
+              className="flex-shrink-0 flex items-center"
             >
-              <span className="text-blue-600 dark:text-blue-400">דריבית</span>
-              <span className="text-gray-400 dark:text-gray-500">|</span>
-              <span className="text-blue-500 dark:text-blue-300 text-xl">DeRibit</span>
+              <span 
+                className="text-2xl font-bold"
+                style={{
+                  background: 'linear-gradient(to right, var(--primary-color), var(--secondary-color))',
+                  WebkitBackgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent',
+                  '--primary-color': isDarkMode ? '#60a5fa' : '#2563eb',
+                  '--secondary-color': isDarkMode ? '#818cf8' : '#4f46e5'
+                }}
+              >
+                דריבית
+              </span>
             </Link>
+
+            {/* Desktop Navigation */}
+            <div className="hidden md:flex md:items-center md:justify-center flex-1 mx-10">
+              <div className="flex space-x-1 bg-gray-100 dark:bg-gray-700 p-1 rounded-xl">
+                {navigation.map((item) => {
+                  const Icon = item.icon;
+                  const isActive = router.pathname === item.href;
+                  return (
+                    <Link
+                      key={item.name}
+                      href={item.href}
+                      className={`flex items-center px-4 py-2 text-sm font-medium rounded-lg transition-all duration-200 ${
+                        isActive 
+                          ? 'bg-white dark:bg-gray-600 text-blue-600 dark:text-blue-400 shadow-sm' 
+                          : 'text-gray-700 dark:text-gray-300 hover:bg-white/50 dark:hover:bg-gray-600/50'
+                      }`}
+                    >
+                      <Icon className="w-4 h-4 ml-2" />
+                      {item.name}
+                    </Link>
+                  );
+                })}
+              </div>
+            </div>
           </div>
 
-          {/* תפריט דסקטופ */}
-          <div className="hidden md:flex md:items-center md:space-x-1">
-            {navigation.map((item) => (
-              <Link
-                key={item.name}
-                href={item.href}
-                className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
-                  isActive(item.href)
-                    ? 'bg-blue-100 dark:bg-blue-900 text-blue-600 dark:text-blue-400'
-                    : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800'
-                }`}
-              >
-                <item.icon className="w-4 h-4" />
-                {item.name}
-              </Link>
-            ))}
-
+          {/* Dark Mode Toggle */}
+          <div className="flex items-center gap-2">
             <button
               onClick={toggleDarkMode}
-              className="p-2 rounded-lg text-gray-500 dark:text-gray-400 
-                       hover:bg-gray-100 dark:hover:bg-gray-800 
-                       transition-all duration-200"
-              aria-label="החלף מצב תצוגה"
+              className="p-2 rounded-lg bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors"
+              aria-label={isDarkMode ? 'מצב בהיר' : 'מצב כהה'}
             >
-              {isDarkMode ? (
-                <Sun className="w-5 h-5" />
-              ) : (
-                <Moon className="w-5 h-5" />
-              )}
+              {isDarkMode ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
+            </button>
+
+            {/* Mobile Menu Button */}
+            <button
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+              className="md:hidden p-2 rounded-lg bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors"
+              aria-label={isMenuOpen ? 'סגור תפריט' : 'פתח תפריט'}
+            >
+              <div className="w-6 h-6 relative flex items-center justify-center">
+                <AnimatePresence mode="wait">
+                  {isMenuOpen ? (
+                    <motion.div
+                      key="close"
+                      initial={{ rotate: -90, opacity: 0 }}
+                      animate={{ rotate: 0, opacity: 1 }}
+                      exit={{ rotate: 90, opacity: 0 }}
+                      transition={{ duration: 0.2 }}
+                    >
+                      <X className="w-6 h-6" />
+                    </motion.div>
+                  ) : (
+                    <motion.div
+                      key="menu"
+                      initial={{ rotate: -90, opacity: 0 }}
+                      animate={{ rotate: 0, opacity: 1 }}
+                      exit={{ rotate: 90, opacity: 0 }}
+                      transition={{ duration: 0.2 }}
+                    >
+                      <Menu className="w-6 h-6" />
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
             </button>
           </div>
         </div>
 
-        {/* Mobile Menu - Updated with slide-down animation */}
-        <div 
-          className={`
-            md:hidden fixed inset-0 bg-gray-800/50 backdrop-blur-sm z-40
-            transition-opacity duration-300 ease-in-out
-            ${isMenuOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'}
-          `}
-          onClick={() => setIsMenuOpen(false)}
-        >
-          <div 
-            className={`
-              fixed top-0 right-0 w-full bg-white dark:bg-gray-900 shadow-xl z-50
-              transition-transform duration-300 ease-in-out
-              ${isMenuOpen ? 'translate-y-0' : '-translate-y-full'}
-            `}
-            onClick={e => e.stopPropagation()}
-          >
-            {/* Close button */}
-            <div className="p-4 flex justify-end">
-              <button
-                onClick={() => setIsMenuOpen(false)}
-                className="p-2 rounded-lg text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200
-                         transition-transform duration-200 hover:scale-110"
-              >
-                <X className="h-6 w-6" />
-              </button>
-            </div>
-
-            {/* Mobile menu content with fade-in animation */}
-            <div className="px-4 pt-2 pb-3 space-y-1">
-              {navigation.map((item, index) => (
-                <Link
-                  key={item.name}
-                  href={item.href}
-                  className={`
-                    flex items-center gap-2 px-4 py-3 rounded-lg text-base font-medium
-                    transition-all duration-200 transform
-                    ${isMenuOpen ? 'translate-y-0 opacity-100' : '-translate-y-4 opacity-0'}
-                    ${isActive(item.href)
-                      ? 'bg-blue-100 dark:bg-blue-900 text-blue-600 dark:text-blue-400'
-                      : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800'
-                    }
-                  `}
-                  style={{ transitionDelay: `${index * 50}ms` }}
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  <item.icon className="w-5 h-5" />
-                  {item.name}
-                </Link>
-              ))}
-              
-              {/* Theme toggle with animation */}
-              <button
-                onClick={() => {
-                  toggleDarkMode();
-                  setIsMenuOpen(false);
-                }}
-                className={`
-                  w-full flex items-center gap-2 px-4 py-3 rounded-lg text-base font-medium
-                  text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800
-                  transition-all duration-200 transform
-                  ${isMenuOpen ? 'translate-y-0 opacity-100' : '-translate-y-4 opacity-0'}
-                `}
-                style={{ transitionDelay: `${navigation.length * 50}ms` }}
-              >
-                {isDarkMode ? (
-                  <>
-                    <Sun className="w-5 h-5" />
-                    <span>מצב בהיר</span>
-                  </>
-                ) : (
-                  <>
-                    <Moon className="w-5 h-5" />
-                    <span>מצב כהה</span>
-                  </>
-                )}
-              </button>
-            </div>
-          </div>
-        </div>
+        {/* Mobile Navigation */}
+        <AnimatePresence>
+          {isMenuOpen && (
+            <motion.div
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: 'auto' }}
+              exit={{ opacity: 0, height: 0 }}
+              transition={{ duration: 0.3, ease: "easeInOut" }}
+              className="md:hidden fixed inset-x-0 top-16 p-4 bg-white/90 dark:bg-gray-800/90 backdrop-blur-lg shadow-xl"
+            >
+              <div className="grid gap-2">
+                {navigation.map((item) => {
+                  const Icon = item.icon;
+                  const isActive = router.pathname === item.href;
+                  return (
+                    <Link
+                      key={item.name}
+                      href={item.href}
+                      className={`flex items-center px-4 py-3 rounded-xl transition-all duration-200 ${
+                        isActive
+                          ? 'bg-blue-50 dark:bg-blue-900/50 text-blue-600 dark:text-blue-400'
+                          : 'text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700/50'
+                      }`}
+                    >
+                      <Icon className="w-5 h-5 ml-3" />
+                      <span className="font-medium">{item.name}</span>
+                    </Link>
+                  );
+                })}
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     </nav>
   )
