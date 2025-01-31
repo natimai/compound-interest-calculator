@@ -2,7 +2,7 @@ import { NextSeo } from 'next-seo'
 import Link from 'next/link'
 import { ChevronRight, PiggyBank, TrendingUp, Clock, Shield, Calculator, AlertTriangle } from 'lucide-react'
 
-function KupatGemel() {
+export default function KupatGemel() {
   const currentYear = new Date().getFullYear();
   
   const pageTitle = `מדריך קופת גמל להשקעה ${currentYear} | השוואת קופות גמל - DeRibit`

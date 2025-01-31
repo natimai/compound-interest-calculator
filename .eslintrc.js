@@ -5,10 +5,9 @@ module.exports = {
     '@next/next/no-img-element': 'off',
   },
   parserOptions: {
+    requireConfigFile: false,
     babelOptions: {
-      presets: [
-        ['next/babel']
-      ]
+      presets: [require.resolve('next/babel')]
     }
   }
 };
