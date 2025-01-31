@@ -1,18 +1,116 @@
-import Head from 'next/head'
+import { NextSeo } from 'next-seo'
 import Link from 'next/link'
 import { ChevronRight, PiggyBank, TrendingUp, Clock, Shield, Calculator, AlertTriangle } from 'lucide-react'
 
-export default function KupatGemel() {
+function KupatGemel() {
   const currentYear = new Date().getFullYear();
   
+  const pageTitle = `מדריך קופת גמל להשקעה ${currentYear} | השוואת קופות גמל - DeRibit`
+  const pageDescription = `מדריך מקיף לקופת גמל להשקעה ${currentYear}: נזילות מלאה, השוואת דמי ניהול ותשואות, יתרונות וחסרונות, מסלולי השקעה והטבות מס. כל מה שצריך לדעת לפני שבוחרים קופת גמל להשקעה.`
+  const pageKeywords = `קופת גמל להשקעה, קופת גמל להשקעה ${currentYear}, השוואת קופות גמל, דמי ניהול קופת גמל, מסלולי השקעה, נזילות מלאה, הטבות מס קופת גמל`
+
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
-      <Head>
-        <title>מדריך קופת גמל להשקעה 2024 | השוואת קופות גמל - דריבית</title>
-        <meta name="description" content="המדריך המקיף לקופת גמל להשקעה: נזילות מלאה, השוואת דמי ניהול ותשואות, יתרונות וחסרונות, מסלולי השקעה והטבות מס. כל מה שצריך לדעת לפני שבוחרים קופת גמל." />
-        <meta name="keywords" content="קופת גמל להשקעה, השוואת קופות גמל, דמי ניהול קופת גמל, מסלולי השקעה, נזילות מלאה" />
-        <link rel="canonical" href="https://www.deribit.co.il/investment-products/kupat-gemel" />
-      </Head>
+      <div className="container">
+        <NextSeo
+          title={pageTitle}
+          description={pageDescription}
+          canonical="https://www.deribit.co.il/investment-products/kupat-gemel"
+          openGraph={{
+            type: 'article',
+            locale: 'he_IL',
+            url: 'https://www.deribit.co.il/investment-products/kupat-gemel',
+            siteName: 'DeRibit',
+            title: pageTitle,
+            description: pageDescription,
+            images: [
+              {
+                url: 'https://www.deribit.co.il/og-image.png',
+                width: 1200,
+                height: 630,
+                alt: 'מדריך קופת גמל להשקעה - DeRibit',
+              }
+            ]
+          }}
+          twitter={{
+            handle: '@deribit',
+            site: '@deribit',
+            cardType: 'summary_large_image',
+            title: pageTitle,
+            description: pageDescription,
+            image: 'https://www.deribit.co.il/og-image.png'
+          }}
+          additionalMetaTags={[
+            {
+              name: 'keywords',
+              content: pageKeywords
+            },
+            {
+              name: 'author',
+              content: 'DeRibit'
+            },
+            {
+              name: 'robots',
+              content: 'noindex, follow'
+            },
+            {
+              name: 'googlebot',
+              content: 'noindex, follow'
+            },
+            {
+              name: 'google',
+              content: 'notranslate'
+            },
+            {
+              name: 'format-detection',
+              content: 'telephone=no'
+            },
+            {
+              name: 'theme-color',
+              content: '#ffffff'
+            },
+            {
+              name: 'google-site-verification',
+              content: 'your-google-verification-code'
+            }
+          ]}
+        />
+        
+        {/* Additional Meta Tags */}
+        <meta name="author" content="דריבית" />
+        <meta name="robots" content="index, follow" />
+        <meta name="googlebot" content="index, follow" />
+        <meta name="google" content="notranslate" />
+        <meta name="format-detection" content="telephone=no" />
+        <meta name="theme-color" content="#ffffff" />
+        
+        {/* Schema.org markup for Google */}
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Article",
+            "mainEntityOfPage": {
+              "@type": "WebPage",
+              "@id": "https://www.deribit.co.il/investment-products/kupat-gemel"
+            },
+            "headline": `מדריך קופת גמל להשקעה ${currentYear}`,
+            "description": `מדריך מקיף לקופת גמל להשקעה ${currentYear}: נזילות מלאה, השוואת דמי ניהול ותשואות, יתרונות וחסרונות, מסלולי השקעה והטבות מס.`,
+            "author": {
+              "@type": "Organization",
+              "name": "דריבית"
+            },
+            "publisher": {
+              "@type": "Organization",
+              "name": "דריבית",
+              "logo": {
+                "@type": "ImageObject",
+                "url": "https://www.deribit.co.il/logo.png"
+              }
+            },
+            "datePublished": `${currentYear}-01-01`,
+            "dateModified": new Date().toISOString().split('T')[0]
+          })}
+        </script>
 
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         {/* ניווט חזרה */}
@@ -45,6 +143,18 @@ export default function KupatGemel() {
             <p className="mb-6">
               בניגוד לקופות גמל רגילות, קופת גמל להשקעה מאפשרת משיכת כספים בכל עת, תוך שמירה על יתרונות ההשקעה המקצועית ואפשרויות המיסוי המיוחדות.
             </p>
+            <p className="mb-4">
+              קופת גמל להשקעה נועדה לחיסכון לטווח בינוני-ארוך (בדומה לפיקדון בבנק או פוליסת חיסכון), בעוד קופת גמל לתגמולים היא חיסכון פנסיוני למטרת קצבה לפורשים לגמלאות.
+            </p>
+            <p className="mb-4">
+              קופת הגמל להשקעה משקיעה את כספי החוסך בשוק ההון, במסלול השקעה לפי בחירתו, בדומה לקופות גמל משלמת לקצבה. אך היא שונה במספר אלמנטים חשובים:
+            </p>
+            <ul className="list-disc pl-6 mb-6">
+              <li>נועדה לחיסכון תוך שמירה על ערך הכסף ולא למען הפנסיה</li>
+              <li>אינה זוכה לקידום ועידוד שהמדינה מעניקה לחיסכון פנסיוני</li>
+              <li>אין בה הפרשת סכומים לטובת העובד מצד המעסיק</li>
+              <li>אין הטבות מס בזמן ההפקדה או המשיכה</li>
+            </ul>
           </div>
 
           {/* תיבת מידע חשוב */}
@@ -54,12 +164,24 @@ export default function KupatGemel() {
               <div>
                 <h3 className="font-bold text-gray-900 dark:text-gray-100 mb-2">חשוב לדעת!</h3>
                 <p className="text-gray-600 dark:text-gray-300">
-                  תקרת ההפקדה השנתית לשנת {currentYear} עומדת על 79,006 ₪ לכל תעודת זהות.
+                  תקרת ההפקדה השנתית לשנת {currentYear} עומדת על 81,711 ₪ לכל תעודת זהות.
                 </p>
+                <p className="text-gray-600 dark:text-gray-300 mt-2">
+                  סכומי ההפקדה בשנים קודמות:
+                </p>
+                <ul className="list-disc pl-5 mt-1">
+                  <li>2024: 79,006 ₪</li>
+                  <li>2023: 76,450 ₪</li>
+                  <li>2022: 72,616 ₪</li>
+                  <li>2021: 70,913 ₪</li>
+                  <li>2020: 71,338 ₪</li>
+                  <li>2019: 71,122 ₪</li>
+                </ul>
               </div>
             </div>
           </div>
         </section>
+      </div>
 
         {/* יתרונות מרכזיים */}
         <section id="advantages" className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 mb-8">
@@ -514,5 +636,5 @@ export default function KupatGemel() {
         {/* המשך התוכן... */}
       </div>
     </div>
-  )
+  );
 }

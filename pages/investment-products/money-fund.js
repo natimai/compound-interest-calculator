@@ -8,6 +8,60 @@ export default function MoneyFund() {
         <title>קרן כספית - מדריך להשקעה סולידית 2024 | DeRibit</title>
         <meta name="description" content="כל מה שצריך לדעת על קרן כספית - יתרונות, השוואה מול פיקדונות, דמי ניהול ומיסוי. המדריך המלא להשקעה בקרן כספית שקלית ב-2024" />
         <meta name="keywords" content="קרן כספית, קרן כספית שקלית, השקעה סולידית, תשואה על קרן כספית, דמי ניהול קרן כספית" />
+        <link rel="canonical" href="https://deribit.co.il/investment-products/money-fund" />
+        
+        {/* Open Graph / Facebook */}
+        <meta property="og:type" content="article" />
+        <meta property="og:title" content="קרן כספית - מדריך להשקעה סולידית 2024 | DeRibit" />
+        <meta property="og:description" content="כל מה שצריך לדעת על קרן כספית - יתרונות, השוואה מול פיקדונות, דמי ניהול ומיסוי. המדריך המלא להשקעה בקרן כספית שקלית ב-2024" />
+        <meta property="og:url" content="https://deribit.co.il/investment-products/money-fund" />
+        <meta property="og:site_name" content="DeRibit - השוואת מוצרים פיננסיים" />
+        <meta property="og:image" content="https://deribit.co.il/og-image.png" />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+        <meta property="og:image:alt" content="מדריך קרן כספית - DeRibit" />
+        
+        {/* Twitter */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="קרן כספית - מדריך להשקעה סולידית 2024 | DeRibit" />
+        <meta name="twitter:description" content="כל מה שצריך לדעת על קרן כספית - יתרונות, השוואה מול פיקדונות, דמי ניהול ומיסוי. המדריך המלא להשקעה בקרן כספית שקלית ב-2024" />
+        <meta name="twitter:image" content="https://deribit.co.il/og-image.png" />
+        
+        {/* Additional Meta Tags */}
+        <meta name="author" content="DeRibit" />
+        <meta name="robots" content="index, follow" />
+        <meta name="googlebot" content="index, follow" />
+        <meta name="google" content="notranslate" />
+        <meta name="format-detection" content="telephone=no" />
+        <meta name="theme-color" content="#ffffff" />
+        
+        {/* Schema.org markup for Google */}
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Article",
+            "mainEntityOfPage": {
+              "@type": "WebPage",
+              "@id": "https://deribit.co.il/investment-products/money-fund"
+            },
+            "headline": "קרן כספית - מדריך להשקעה סולידית 2024",
+            "description": "כל מה שצריך לדעת על קרן כספית - יתרונות, השוואה מול פיקדונות, דמי ניהול ומיסוי. המדריך המלא להשקעה בקרן כספית שקלית ב-2024",
+            "author": {
+              "@type": "Organization",
+              "name": "DeRibit"
+            },
+            "publisher": {
+              "@type": "Organization",
+              "name": "DeRibit",
+              "logo": {
+                "@type": "ImageObject",
+                "url": "https://deribit.co.il/logo.png"
+              }
+            },
+            "datePublished": "2024-01-01",
+            "dateModified": new Date().toISOString().split('T')[0]
+          })}
+        </script>
       </Head>
 
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">

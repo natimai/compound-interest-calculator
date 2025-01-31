@@ -2,12 +2,68 @@ import Head from 'next/head'
 import Link from 'next/link'
 
 export default function PensionFund() {
+  const currentYear = new Date().getFullYear();
+  
   return (
     <div className="min-h-screen bg-gradient-to-b from-[#eef2f3] to-[#8e9eab]">
       <Head>
-        <title>קרן פנסיה - מדריך מקיף והסבר על הטבות המס 2024 | DeRibit</title>
-        <meta name="description" content="מדריך מקיף על קרן פנסיה - הסבר על סוגי קרנות, מסלולי השקעה, מסלולי ביטוח והטבות מס. כל מה שצריך לדעת על החיסכון הפנסיוני שלך" />
-        <meta name="keywords" content="קרן פנסיה, חיסכון פנסיוני, פנסיה חובה, דמי ניהול קרן פנסיה, מסלולי ביטוח, פנסיה 2024" />
+        <title>מדריך קרן פנסיה {currentYear} | השוואת קרנות פנסיה - דריבית</title>
+        <meta name="description" content={`מדריך מקיף לקרן פנסיה ${currentYear}: יתרונות וחסרונות, השוואת דמי ניהול, מסלולי השקעה, הטבות מס, ביטוחים נלווים וכל מה שצריך לדעת לפני שבוחרים קרן פנסיה.`} />
+        <meta name="keywords" content="קרן פנסיה, קרן פנסיה ${currentYear}, השוואת קרנות פנסיה, דמי ניהול קרן פנסיה, מסלולי השקעה, ביטוחים נלווים" />
+        <link rel="canonical" href="https://www.deribit.co.il/investment-products/pension-fund" />
+        
+        {/* Open Graph / Facebook */}
+        <meta property="og:type" content="article" />
+        <meta property="og:title" content={`מדריך קרן פנסיה ${currentYear} | השוואת קרנות פנסיה - דריבית`} />
+        <meta property="og:description" content={`מדריך מקיף לקרן פנסיה ${currentYear}: יתרונות וחסרונות, השוואת דמי ניהול, מסלולי השקעה, הטבות מס, ביטוחים נלווים.`} />
+        <meta property="og:url" content="https://www.deribit.co.il/investment-products/pension-fund" />
+        <meta property="og:site_name" content="דריבית - השוואת מוצרים פיננסיים" />
+        <meta property="og:image" content="https://www.deribit.co.il/og-image.png" />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+        <meta property="og:image:alt" content="מדריך קרן פנסיה - דריבית" />
+        
+        {/* Twitter */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={`מדריך קרן פנסיה ${currentYear} | השוואת קרנות פנסיה - דריבית`} />
+        <meta name="twitter:description" content={`מדריך מקיף לקרן פנסיה ${currentYear}: יתרונות וחסרונות, השוואת דמי ניהול, מסלולי השקעה, הטבות מס, ביטוחים נלווים.`} />
+        <meta name="twitter:image" content="https://www.deribit.co.il/og-image.png" />
+        
+        {/* Additional Meta Tags */}
+        <meta name="author" content="דריבית" />
+        <meta name="robots" content="index, follow" />
+        <meta name="googlebot" content="index, follow" />
+        <meta name="google" content="notranslate" />
+        <meta name="format-detection" content="telephone=no" />
+        <meta name="theme-color" content="#ffffff" />
+        
+        {/* Schema.org markup for Google */}
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Article",
+            "mainEntityOfPage": {
+              "@type": "WebPage",
+              "@id": "https://www.deribit.co.il/investment-products/pension-fund"
+            },
+            "headline": `מדריך קרן פנסיה ${currentYear}`,
+            "description": `מדריך מקיף לקרן פנסיה ${currentYear}: יתרונות וחסרונות, השוואת דמי ניהול, מסלולי השקעה, הטבות מס, ביטוחים נלווים.`,
+            "author": {
+              "@type": "Organization",
+              "name": "דריבית"
+            },
+            "publisher": {
+              "@type": "Organization",
+              "name": "דריבית",
+              "logo": {
+                "@type": "ImageObject",
+                "url": "https://www.deribit.co.il/logo.png"
+              }
+            },
+            "datePublished": `${currentYear}-01-01`,
+            "dateModified": new Date().toISOString().split('T')[0]
+          })}
+        </script>
       </Head>
 
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
