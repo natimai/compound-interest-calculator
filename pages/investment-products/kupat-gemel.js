@@ -29,8 +29,11 @@ export default function KupatGemel() {
                 width: 1200,
                 height: 630,
                 alt: 'מדריך קופת גמל להשקעה - DeRibit',
+                type: 'image/png',
+                secureUrl: 'https://www.deribit.co.il/og-image.png',
               }
-            ]
+            ],
+            site_name: 'DeRibit',
           }}
           twitter={{
             handle: '@deribit',
@@ -72,6 +75,18 @@ export default function KupatGemel() {
             {
               name: 'google-site-verification',
               content: 'your-google-verification-code'
+            },
+            {
+              property: 'og:image:width',
+              content: '1200'
+            },
+            {
+              property: 'og:image:height',
+              content: '630'
+            },
+            {
+              property: 'og:image:type',
+              content: 'image/png'
             }
           ]}
         />
