@@ -20,6 +20,55 @@ export default async function handler(req, res) {
   if (req.method !== 'POST') {
     return res.status(405).json({ message: 'שיטה לא מורשית' });
   }
+  
+  // Log request details for debugging
+  console.log('Request headers:', req.headers);
+  console.log('Request body type:', typeof req.body);
+  
+  // Handle different content types
+  let requestData = req.body;
+  
+  console.log('Raw request body:', typeof req.body === 'string' ? req.body.substring(0, 100) + '...' : 'Not a string');
+  
+  // If body is a string, try to parse it as JSON
+  if (typeof requestData === 'string') {
+    try {
+      console.log('Parsing string body as JSON');
+      requestData = JSON.parse(requestData);
+    } catch (error) {
+      console.error('Error parsing JSON string:', error);
+      
+      // Try to sanitize and fix common JSON issues
+      try {
+        console.log('Attempting to sanitize JSON');
+        // Replace single quotes with double quotes
+        let sanitized = requestData.replace(/'/g, '"');
+        // Fix unquoted property names
+        sanitized = sanitized.replace(/(\w+):/g, '"$1":');
+        
+        requestData = JSON.parse(sanitized);
+        console.log('JSON sanitization successful');
+      } catch (sanitizeError) {
+        console.error('JSON sanitization failed:', sanitizeError);
+        return res.status(400).json({
+          message: 'Invalid JSON format',
+          error: error.message,
+          details: 'Please ensure your JSON is properly formatted with double quotes around property names and string values.',
+          success: false
+        });
+      }
+    }
+  }
+  
+  // If requestData is still not an object, return an error
+  if (typeof requestData !== 'object' || requestData === null) {
+    console.error('Request data is not an object:', typeof requestData);
+    return res.status(400).json({
+      message: 'Invalid request format',
+      error: 'Request body must be a valid JSON object',
+      success: false
+    });
+  }
 
   // Validate API key - support both hardcoded key and environment variable
   const apiKey = req.headers['x-api-key'];
@@ -32,7 +81,7 @@ export default async function handler(req, res) {
 
   try {
     // Parse request body with error handling for large content
-    let { title, content, type = 'guide', slug } = req.body;
+    let { title, content, type = 'guide', slug } = requestData;
     
     console.log('Request received with slug:', slug);
     
