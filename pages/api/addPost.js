@@ -129,7 +129,7 @@ export default async function handler(req, res) {
     }
     
     // Clean up slug - remove null values
-    if (slug.includes('null')) {
+    if (slug && slug.includes('null')) {
       console.log('Detected null in slug, cleaning up:', slug);
       slug = slug.replace(/null/g, '');
       console.log('Cleaned slug:', slug);
@@ -137,11 +137,17 @@ export default async function handler(req, res) {
     
     // Process Hebrew slugs - convert to URL-friendly format if needed
     let processedSlug = slug;
-    if (/[\u0590-\u05FF]/.test(slug)) {
+    
+    // Double-check for null values before encoding
+    if (processedSlug && processedSlug.includes('null')) {
+      processedSlug = processedSlug.replace(/null/g, '');
+    }
+    
+    if (/[\u0590-\u05FF]/.test(processedSlug)) {
       // If slug contains Hebrew characters, encode it properly
-      console.log('Hebrew slug detected, processing:', slug);
+      console.log('Hebrew slug detected, processing:', processedSlug);
       try {
-        processedSlug = encodeURIComponent(slug);
+        processedSlug = encodeURIComponent(processedSlug);
         console.log('Processed slug:', processedSlug);
       } catch (error) {
         console.error('Error encoding Hebrew slug:', error);
