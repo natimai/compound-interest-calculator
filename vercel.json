@@ -1,12 +1,7 @@
 {
   "buildCommand": "npm run build",
   "cleanUrls": true,
-  "environment": {
+  "env": {
     "MAKE_API_KEY": "@make_api_key"
-  },
-  "build": {
-    "env": {
-      "MAKE_API_KEY": "@make_api_key"
-    }
   }
 } 
