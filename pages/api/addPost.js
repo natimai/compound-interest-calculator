@@ -32,53 +32,119 @@ export default async function handler(req, res) {
   
   // If body is a string, try to parse it as JSON
   if (typeof requestData === 'string') {
-    // Special case for very large content
-    if (requestData.length > 5000 && requestData.includes('```jsx')) {
-      console.log('Detected very large content with JSX, using direct extraction');
+    // Special case for very large content or content with specific patterns
+    if ((requestData.length > 3000 && requestData.includes('```jsx')) ||
+        requestData.includes('הלוואה-לדירהnull-כל-מה-שצריך-לדעת')) {
+      console.log('Detected special case content, using manual extraction');
       
       try {
-        // Extract data directly using string manipulation
-        const titleMatch = requestData.match(/"title"\s*:\s*"([^"]+)"/);
-        const typeMatch = requestData.match(/"type"\s*:\s*"([^"]+)"/);
-        const slugMatch = requestData.match(/"slug"\s*:\s*"([^"]+)"/);
-        
-        // Extract content between "content": " and the last " before "type":
+        // Extract fields directly from the raw string
+        let title = '';
         let content = '';
-        const contentStart = requestData.indexOf('"content"') + 11;
-        if (contentStart > 11) {
-          // Find the position of "type": after content
-          const typePos = requestData.indexOf('"type"', contentStart);
-          if (typePos > contentStart) {
-            // Go backwards from typePos to find the closing quote of content
-            let quotePos = requestData.lastIndexOf('"', typePos - 2);
-            if (quotePos > contentStart) {
-              content = requestData.substring(contentStart, quotePos);
-              // Unescape the content
-              content = content
-                .replace(/\\n/g, '\n')
-                .replace(/\\"/g, '"')
-                .replace(/\\\\/g, '\\');
+        let type = 'article';
+        let slug = '';
+        
+        // Extract title
+        const titleStart = requestData.indexOf('"title"') + 9;
+        if (titleStart > 9) {
+          const titleEnd = requestData.indexOf('"', titleStart);
+          if (titleEnd > titleStart) {
+            title = requestData.substring(titleStart, titleEnd);
+          }
+        }
+        
+        // Extract type
+        const typeStart = requestData.indexOf('"type"') + 8;
+        if (typeStart > 8) {
+          const typeEnd = requestData.indexOf('"', typeStart);
+          if (typeEnd > typeStart) {
+            type = requestData.substring(typeStart, typeEnd);
+          }
+        }
+        
+        // Extract slug
+        const slugStart = requestData.indexOf('"slug"') + 8;
+        if (slugStart > 8) {
+          const slugEnd = requestData.indexOf('"', slugStart);
+          if (slugEnd > slugStart) {
+            slug = requestData.substring(slugStart, slugEnd);
+            // Clean up slug
+            if (slug.includes('null')) {
+              slug = slug.replace(/null/g, '');
             }
           }
         }
         
-        if (titleMatch && content && slugMatch) {
-          let slug = slugMatch[1];
-          // Clean up slug
-          if (slug.includes('null')) {
-            slug = slug.replace(/null/g, '');
+        // Extract content - this is the most complex part
+        // Find the position of "content": and the next "type":
+        const contentStart = requestData.indexOf('"content"') + 11;
+        const typePos = requestData.indexOf('"type"');
+        
+        if (contentStart > 11 && typePos > contentStart) {
+          // Go backwards from typePos to find the last quote before "type":
+          let quotePos = requestData.lastIndexOf('"', typePos - 2);
+          if (quotePos > contentStart) {
+            content = requestData.substring(contentStart, quotePos);
+            // Unescape the content
+            content = content
+              .replace(/\\n/g, '\n')
+              .replace(/\\"/g, '"')
+              .replace(/\\\\/g, '\\');
           }
-          
+        }
+        
+        // Check if we have the minimum required fields
+        if (title && content && slug) {
           requestData = {
-            title: titleMatch[1],
+            title: title,
             content: content,
-            type: typeMatch ? typeMatch[1] : 'article',
+            type: type,
             slug: slug
           };
           
-          console.log('Direct extraction successful');
+          console.log('Manual extraction successful with fields:', {
+            title: title.substring(0, 20) + '...',
+            contentLength: content.length,
+            type: type,
+            slug: slug
+          });
         } else {
-          throw new Error('Could not extract all required fields');
+          console.error('Missing required fields:', {
+            hasTitle: !!title,
+            hasContent: !!content,
+            hasSlug: !!slug
+          });
+          
+          // Try a more aggressive approach as fallback
+          if (!content && contentStart > 11) {
+            // Just grab everything between content and the end of the string
+            content = requestData.substring(contentStart);
+            // Try to find a reasonable end point
+            const possibleEnd = content.indexOf('","type"');
+            if (possibleEnd > 0) {
+              content = content.substring(0, possibleEnd);
+              content = content
+                .replace(/\\n/g, '\n')
+                .replace(/\\"/g, '"')
+                .replace(/\\\\/g, '\\');
+              
+              if (title && slug) {
+                requestData = {
+                  title: title,
+                  content: content,
+                  type: type || 'article',
+                  slug: slug
+                };
+                console.log('Aggressive content extraction successful');
+              } else {
+                throw new Error('Still missing title or slug');
+              }
+            } else {
+              throw new Error('Could not find content boundaries');
+            }
+          } else {
+            throw new Error('Could not extract all required fields');
+          }
         }
       } catch (directError) {
         console.error('Direct extraction failed:', directError);
