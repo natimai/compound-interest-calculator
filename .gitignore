@@ -43,6 +43,3 @@ next-env.d.ts
 # Sitemap
 public/sitemap*.xml
 public/robots.txt
-
-# local env files
-.env*.local
