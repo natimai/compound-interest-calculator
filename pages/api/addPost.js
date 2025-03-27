@@ -31,13 +31,33 @@ export default async function handler(req, res) {
   }
 
   try {
-    const { title, content, type = 'guide', slug } = req.body;
-
+    // Parse request body with error handling for large content
+    let { title, content, type = 'guide', slug } = req.body;
+    
+    console.log('Request received with slug:', slug);
+    
     // Validate required fields
     if (!title || !content || !slug) {
       return res.status(400).json({
-        message: 'חסרים נתונים: כותרת, תוכן ו-slug נדרשים'
+        message: 'חסרים נתונים: כותרת, תוכן ו-slug נדרשים',
+        success: false
       });
+    }
+    
+    // Process Hebrew slugs - convert to URL-friendly format if needed
+    let processedSlug = slug;
+    if (/[\u0590-\u05FF]/.test(slug)) {
+      // If slug contains Hebrew characters, encode it properly
+      console.log('Hebrew slug detected, processing:', slug);
+      try {
+        processedSlug = encodeURIComponent(slug);
+        console.log('Processed slug:', processedSlug);
+      } catch (error) {
+        console.error('Error encoding Hebrew slug:', error);
+        // Fallback to a simplified slug if encoding fails
+        processedSlug = 'post-' + Date.now();
+        console.log('Using fallback slug:', processedSlug);
+      }
     }
 
     // Configure data paths
@@ -63,7 +83,8 @@ export default async function handler(req, res) {
           title,
           content,
           type,
-          slug,
+          slug: processedSlug,
+          originalSlug: slug,
           date: new Date().toISOString()
         },
         success: true,
@@ -109,12 +130,13 @@ export default async function handler(req, res) {
       title,
       content,
       type,
-      slug,
+      slug: processedSlug,
+      originalSlug: slug,
       date: new Date().toISOString()
     };
 
     // Find existing post index
-    const existingPostIndex = posts.findIndex(post => post.slug === slug);
+    const existingPostIndex = posts.findIndex(post => post.slug === processedSlug || post.originalSlug === slug);
 
     // Update or add new post
     if (existingPostIndex !== -1) {
