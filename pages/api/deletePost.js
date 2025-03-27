@@ -12,7 +12,7 @@ export default async function handler(req, res) {
   try {
     // אבטחה - בדיקת API Key
     const apiKey = req.headers['x-api-key'];
-    const validApiKey = process.env.MAKE_API_KEY;
+    const validApiKey = process.env.MAKE_API_KEY || '1f0e27c26a029bb5985ef1e735d0673ed6b1456b08109bb38591302ea8b00b06';
     
     if (!apiKey || apiKey !== validApiKey) {
       return res.status(401).json({ 

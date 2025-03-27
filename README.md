@@ -1,142 +1,28 @@
-# מחשבון ריבית דריבית
-# עודכן לאחרונה: 27.03.2024
+This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/pages/api-reference/create-next-app).
 
-אתר מחשבון ריבית דריבית והשקעות פיננסיות
+## Getting Started
 
-## תוכן העניינים
-
-- [התקנה](#התקנה)
-- [שימוש](#שימוש)
-- [פיתוח](#פיתוח)
-- [API](#api)
-  - [API פוסטים](#api-פוסטים)
-  - [API תוכן](#api-תוכן)
-
-## התקנה
-
-```bash
-npm install
-```
-
-## שימוש
-
-### פיתוח
+First, run the development server:
 
 ```bash
 npm run dev
+# or
+yarn dev
+# or
+pnpm dev
+# or
+bun dev
 ```
 
-### בנייה
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-```bash
-npm run build
-```
+You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
 
-### הפעלה
+[API routes](https://nextjs.org/docs/pages/building-your-application/routing/api-routes) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
 
-```bash
-npm start
-```
+The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/pages/building-your-application/routing/api-routes) instead of React pages.
 
-## API
-
-### API פוסטים
-
-#### הוספת פוסט חדש
-
-```
-POST /api/addPost
-```
-
-נדרש: `x-api-key` בכותרות הבקשה
-
-גוף הבקשה:
-```json
-{
-  "title": "כותרת הפוסט",
-  "content": "תוכן הפוסט",
-  "type": "post",
-  "metadata": {}
-}
-```
-
-#### קבלת כל הפוסטים
-
-```
-GET /api/getPosts
-```
-
-#### קבלת פוסט לפי מזהה
-
-```
-GET /api/getPostById?id=123
-```
-
-#### עדכון פוסט
-
-```
-PUT /api/updatePost
-```
-
-נדרש: `x-api-key` בכותרות הבקשה
-
-גוף הבקשה:
-```json
-{
-  "id": "123",
-  "title": "כותרת מעודכנת",
-  "content": "תוכן מעודכן",
-  "type": "post",
-  "metadata": {}
-}
-```
-
-#### מחיקת פוסט
-
-```
-DELETE /api/deletePost?id=123
-```
-
-נדרש: `x-api-key` בכותרות הבקשה
-
-### API תוכן
-
-#### קבלת תוכן
-
-```
-GET /api/content
-```
-
-לסינון לפי סוג:
-```
-GET /api/content?type=מדריך
-```
-
-#### עדכון תוכן
-
-```
-PUT /api/updateContent
-```
-
-נדרש: `x-api-key` בכותרות הבקשה
-
-גוף הבקשה:
-```json
-{
-  "key": "welcome_message",
-  "content": "ברוכים הבאים לאתר!",
-  "type": "general",
-  "metadata": {}
-}
-```
-
-#### מחיקת תוכן
-
-```
-DELETE /api/deleteContent?key=welcome_message
-```
-
-נדרש: `x-api-key` בכותרות הבקשה
+This project uses [`next/font`](https://nextjs.org/docs/pages/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
 ## Learn More
 
@@ -215,11 +101,11 @@ DELETE /api/deletePost?id=123
 1. **הוספת פוסט חדש**:
    - השתמש ב-HTTP > Make a request
    - Method: POST
-   - URL: https://your-site.com/api/addPost
+   - URL: https://www.deribit.co.il/api/addPost
    - Headers: 
      ```
      Content-Type: application/json
-     x-api-key: your-secure-api-key
+     x-api-key: 1f0e27c26a029bb5985ef1e735d0673ed6b1456b08109bb38591302ea8b00b06
      ```
    - Body: 
      ```json
@@ -237,7 +123,7 @@ DELETE /api/deletePost?id=123
 2. **קבלת פוסטים**:
    - השתמש ב-HTTP > Make a request
    - Method: GET
-   - URL: https://your-site.com/api/getPosts?type=post&limit=10
+   - URL: https://www.deribit.co.il/api/getPosts?type=post&limit=10
 
 ### אבטחה
 

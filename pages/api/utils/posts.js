@@ -39,7 +39,7 @@ export const writePosts = (posts) => {
 
 // בדיקת האם מפתח API תקף
 export const isValidApiKey = (apiKey) => {
-  const validApiKey = process.env.MAKE_API_KEY;
+  const validApiKey = process.env.MAKE_API_KEY || '1f0e27c26a029bb5985ef1e735d0673ed6b1456b08109bb38591302ea8b00b06';
   return apiKey === validApiKey;
 };
 
