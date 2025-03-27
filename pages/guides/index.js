@@ -1,7 +1,7 @@
 import React from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
-import { Book, ArrowLeft, Sparkles, Target, Shield } from 'lucide-react';
+import { Book, ArrowLeft, Sparkles, Target, Shield, Building2, TrendingUp, PiggyBank } from 'lucide-react';
 
 const GuidesPage = () => {
   const guides = [
@@ -92,6 +92,84 @@ const GuidesPage = () => {
       sections: [],
       category: 'מיסוי',
       comingSoon: true
+    },
+    {
+      id: 'real-estate-investment',
+      title: 'השקעות נדל״ן למתחילים',
+      description: 'מדריך מקיף להשקעות נדל״ן - כולל יתרונות וחסרונות, סוגי השקעות, מיסוי, מינוף פיננסי, וטיפים מעשיים',
+      icon: '🏢',
+      sections: [
+        {
+          title: 'יסודות השקעות נדל״ן',
+          content: 'הבנת היתרונות והחסרונות של השקעות נדל״ןאמתן למשקיעים שונים'
+        },
+        {
+          title: 'סוגי השקעות נדל״ן',
+          content: 'סקירת סוגי הנדל״ן השונים - דירות מגורים, נדל״ן מסחרי, והתאמתם למטרות השקעה'
+        },
+        {
+          title: 'מינוף פיננסי',
+          content: 'הבנת כוח המינוף בהשקעות נדל״ן והשפעתו על התשואה'
+        },
+        {
+          title: 'ניהול סיכונים',
+          content: 'זיהוי וניהול סיכונים בהשקעות נדל״ן, כולל תקופות ריקות ועלויות תחזוקה'
+        }
+      ],
+      category: 'השקעות',
+      href: '/guides/real-estate-investment'
+    },
+    {
+      id: 'stock-market-basics',
+      title: 'השקעות בשוק ההון למתחילים',
+      description: 'מדריך מקיף להשקעות בשוק ההון - כולל יסודות השוק, סוגי השקעות, ניהול סיכונים, וטיפים מעשיים',
+      icon: '📈',
+      sections: [
+        {
+          title: 'יסודות שוק ההון',
+          content: 'הבנת היסודות של שוק ההון והמושגים הבסיסיים'
+        },
+        {
+          title: 'סוגי השקעות',
+          content: 'סקירת סוגי ההשקעות השונים - מניות, אג"ח, קרנות נאמנות ועוד'
+        },
+        {
+          title: 'ניהול סיכונים',
+          content: 'כיצד לנהל סיכונים בצורה נכונה בהשקעות בשוק ההון'
+        },
+        {
+          title: 'בניית תיק השקעות',
+          content: 'שלבים בבניית תיק השקעות מאוזן ומותאם אישית'
+        }
+      ],
+      category: 'השקעות',
+      href: '/guides/stock-market-basics'
+    },
+    {
+      id: 'pension-planning',
+      title: 'תכנון פנסיוני למתחילים',
+      description: 'מדריך מקיף לתכנון פנסיוני - כולל הבנת המוצרים הפנסיוניים, חישובי פנסיה, והמלצות לתכנון נכון',
+      icon: '💰',
+      sections: [
+        {
+          title: 'מוצרים פנסיוניים',
+          content: 'הבנת המוצרים הפנסיוניים השונים - קרן פנסיה, ביטוח מנהלים ועוד'
+        },
+        {
+          title: 'חישובי פנסיה',
+          content: 'איך מחשבים את הפנסיה העתידית והצרכים בגיל הפרישה'
+        },
+        {
+          title: 'הטבות מס',
+          content: 'הטבות המס השונות במוצרים פנסיוניים ואיך לנצל אותן'
+        },
+        {
+          title: 'תכנון נכון',
+          content: 'טיפים לתכנון פנסיוני נכון והתחלה מוקדמת'
+        }
+      ],
+      category: 'פנסיה',
+      href: '/guides/pension-planning'
     }
   ];
 

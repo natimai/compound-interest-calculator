@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import Link from 'next/link';
-import { Calculator, Home, DollarSign, ArrowRight, ChevronRight, TrendingUp, PiggyBank, Lightbulb } from 'lucide-react';
+import { Calculator, Home, DollarSign, ArrowRight, ChevronRight, TrendingUp, PiggyBank, Lightbulb, Building2 } from 'lucide-react';
 
 export default function CalculatorsPage() {
   return (
@@ -79,6 +79,19 @@ export default function CalculatorsPage() {
               </div>
             </Link>
 
+            <Link href="/calculators/real-estate">
+              <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm p-6 border border-gray-100 dark:border-gray-700 hover:shadow-md transition-all">
+                <Building2 className="w-12 h-12 text-orange-600 mb-4" />
+                <h3 className="text-xl font-semibold mb-2">מחשבון נדל״ן</h3>
+                <p className="text-gray-600 dark:text-gray-300 mb-4">
+                  חשב תשואה, כדאיות, מינוף פיננסי והכנסה חודשית מהשקעות נדל״ן
+                </p>
+                <span className="text-orange-600 hover:text-orange-700 font-medium inline-flex items-center">
+                  נסה עכשיו <ArrowRight className="mr-2 w-4 h-4" />
+                </span>
+              </div>
+            </Link>
+
             <Link href="/calculators/salary">
               <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm p-6 border border-gray-100 dark:border-gray-700 hover:shadow-md transition-all">
                 <DollarSign className="w-12 h-12 text-purple-600 mb-4" />
@@ -110,6 +123,12 @@ export default function CalculatorsPage() {
                   <h3 className="font-bold mb-2 text-green-600">מחשבון משכנתא</h3>
                   <p className="text-gray-600 dark:text-gray-300">
                     עוזר לכם להבין את ההחזר החודשי הצפוי ולהשוות בין מסלולי משכנתא שונים
+                  </p>
+                </div>
+                <div>
+                  <h3 className="font-bold mb-2 text-orange-600">מחשבון נדל״ן</h3>
+                  <p className="text-gray-600 dark:text-gray-300">
+                    מחשב תשואה, כדאיות, מינוף פיננסי והכנסה חודשית מהשקעות נדל״ן
                   </p>
                 </div>
                 <div>

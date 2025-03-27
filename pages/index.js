@@ -1,6 +1,6 @@
 import { NextSeo } from 'next-seo';
 import Link from 'next/link';
-import { Calculator, Clock, TrendingUp, DollarSign, BookOpen, ArrowRight, Users, ThumbsUp, BarChart2, Target, Lightbulb, Star, Sparkles } from 'lucide-react';
+import { Calculator, Clock, TrendingUp, DollarSign, BookOpen, ArrowRight, Users, ThumbsUp, BarChart2, Target, Lightbulb, Star, Sparkles, Building2, PiggyBank } from 'lucide-react';
 import { StatisticCounter } from '../components/StatisticCounter';
 
 export default function Home() {
@@ -183,23 +183,31 @@ export default function Home() {
               <ul className="space-y-3">
                 <li>
                   <Link 
-                    href="/investment-products/keren-hishtalmut"
+                    href="/guides/pension-planning"
                     className="text-blue-600 hover:text-blue-800 flex items-center"
                   >
-                    <TrendingUp className="w-4 h-4 mr-2" />
-                    קרן השתלמות - המדריך המקיף
+                    <PiggyBank className="w-4 h-4 mr-2" />
+                    תכנון פנסיוני למתחילים
                   </Link>
                 </li>
                 <li>
                   <Link 
-                    href="/investment-products/kupat-gemel"
+                    href="/guides/stock-market-basics"
                     className="text-blue-600 hover:text-blue-800 flex items-center"
                   >
                     <TrendingUp className="w-4 h-4 mr-2" />
-                    קופת גמל להשקעה
+                    השקעות בשוק ההון למתחילים
                   </Link>
                 </li>
-                {/* Add more popular guides */}
+                <li>
+                  <Link 
+                    href="/guides/real-estate-investment"
+                    className="text-blue-600 hover:text-blue-800 flex items-center"
+                  >
+                    <Building2 className="w-4 h-4 mr-2" />
+                    השקעות נדל״ן למתחילים
+                  </Link>
+                </li>
               </ul>
             </div>
 
@@ -209,6 +217,15 @@ export default function Home() {
                 מחשבונים שימושיים
               </h2>
               <ul className="space-y-3">
+                <li>
+                  <Link 
+                    href="/calculators/real-estate"
+                    className="text-blue-600 hover:text-blue-800 flex items-center"
+                  >
+                    <Building2 className="w-4 h-4 mr-2" />
+                    מחשבון נדל״ן
+                  </Link>
+                </li>
                 <li>
                   <Link 
                     href="/calculators/compound-interest"
@@ -227,7 +244,6 @@ export default function Home() {
                     מחשבון משכנתא
                   </Link>
                 </li>
-                {/* Add more calculators */}
               </ul>
             </div>
 
@@ -239,14 +255,31 @@ export default function Home() {
               <ul className="space-y-3">
                 <li>
                   <Link 
-                    href="/guides/tax-benefits"
+                    href="/guides/pension-planning"
                     className="text-blue-600 hover:text-blue-800 flex items-center"
                   >
-                    <BookOpen className="w-4 h-4 mr-2" />
-                    מדריך הטבות מס 2024
+                    <PiggyBank className="w-4 h-4 mr-2" />
+                    מדריך תכנון פנסיוני למתחילים
                   </Link>
                 </li>
-                {/* Add more new content */}
+                <li>
+                  <Link 
+                    href="/guides/stock-market-basics"
+                    className="text-blue-600 hover:text-blue-800 flex items-center"
+                  >
+                    <TrendingUp className="w-4 h-4 mr-2" />
+                    מדריך השקעות בשוק ההון למתחילים
+                  </Link>
+                </li>
+                <li>
+                  <Link 
+                    href="/guides/real-estate-investment"
+                    className="text-blue-600 hover:text-blue-800 flex items-center"
+                  >
+                    <Building2 className="w-4 h-4 mr-2" />
+                    מדריך השקעות נדל״ן למתחילים
+                  </Link>
+                </li>
               </ul>
             </div>
           </div>
