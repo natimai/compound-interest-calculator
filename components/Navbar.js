@@ -10,7 +10,8 @@ import {
   GraduationCap,
   Calculator,
   BookOpen,
-  Info
+  Info,
+  FileText
 } from 'lucide-react';
 import { useTheme } from '../contexts/ThemeContext';
 import { AnimatePresence, motion } from 'framer-motion';
@@ -20,6 +21,7 @@ const navigation = [
   { name: 'קורסים', href: '/course', icon: GraduationCap },
   { name: 'מחשבונים', href: '/calculators', icon: Calculator },
   { name: 'מדריכים', href: '/guides', icon: BookOpen },
+  { name: 'מאמרים', href: '/api-posts', icon: FileText },
   { name: 'אודות', href: '/about', icon: Info },
 ];
 

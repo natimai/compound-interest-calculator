@@ -2,59 +2,36 @@ import fs from 'fs';
 import path from 'path';
 
 export default async function handler(req, res) {
+  // בדיקת האם המתודה היא GET
   if (req.method !== 'GET') {
-    return res.status(405).json({ 
-      success: false, 
-      message: 'Method Not Allowed - Only GET requests are accepted' 
-    });
+    return res.status(405).json({ message: 'שיטה לא מורשית' });
   }
 
   try {
-    // בדיקה אם קובץ הפוסטים קיים
-    const dataDir = path.join(process.cwd(), 'data');
-    const postsFile = path.join(dataDir, 'posts.json');
+    // יצירת הנתיב לתיקיית הנתונים
+    const dataDirectory = path.join(process.cwd(), 'data');
+    const postsFilePath = path.join(dataDirectory, 'posts.json');
     
-    if (!fs.existsSync(postsFile)) {
-      return res.status(200).json({ 
-        success: true, 
-        message: 'No posts found',
-        data: [] 
-      });
+    // בדיקה האם הקובץ קיים
+    if (!fs.existsSync(postsFilePath)) {
+      return res.status(200).json({ posts: [] });
     }
+
+    // קריאת הנתונים מהקובץ
+    const fileContent = fs.readFileSync(postsFilePath, 'utf8');
+    const posts = JSON.parse(fileContent);
+
+    // סינון לפי סוג אם צוין בשאילתה
+    const { type } = req.query;
     
-    // קריאת הפוסטים מהקובץ
-    const posts = JSON.parse(fs.readFileSync(postsFile, 'utf8'));
-    
-    // פילטרים אופציונליים
-    let filteredPosts = [...posts];
-    const { type, limit, offset = 0 } = req.query;
-    
-    // סינון לפי סוג אם צוין
     if (type) {
-      filteredPosts = filteredPosts.filter(post => post.type === type);
+      const filteredPosts = posts.filter(post => post.type === type);
+      return res.status(200).json({ posts: filteredPosts });
     }
-    
-    // מיון לפי תאריך יצירה (מהחדש לישן)
-    filteredPosts.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
-    
-    // החזרת פוסטים לפי הגבלת מספר אם צוינה
-    const paginatedPosts = limit 
-      ? filteredPosts.slice(parseInt(offset), parseInt(offset) + parseInt(limit))
-      : filteredPosts;
-    
-    return res.status(200).json({ 
-      success: true, 
-      message: 'Posts retrieved successfully',
-      total: filteredPosts.length,
-      data: paginatedPosts
-    });
-    
+
+    return res.status(200).json({ posts });
   } catch (error) {
-    console.error('Error retrieving posts:', error);
-    return res.status(500).json({ 
-      success: false, 
-      message: 'Internal Server Error',
-      error: error.message 
-    });
+    console.error('שגיאה בקבלת פוסטים:', error);
+    return res.status(500).json({ message: 'שגיאת שרת פנימית', error: error.message });
   }
 } 

@@ -2,15 +2,9 @@ import fs from 'fs';
 import path from 'path';
 
 export default async function handler(req, res) {
-  // בדיקת האם המתודה היא DELETE
-  if (req.method !== 'DELETE') {
+  // בדיקת האם המתודה היא GET
+  if (req.method !== 'GET') {
     return res.status(405).json({ message: 'שיטה לא מורשית' });
-  }
-
-  // בדיקת מפתח API
-  const apiKey = req.headers['x-api-key'];
-  if (apiKey !== '12345678nm') {
-    return res.status(401).json({ message: 'מפתח API לא חוקי' });
   }
 
   try {
@@ -34,26 +28,16 @@ export default async function handler(req, res) {
     const fileContent = fs.readFileSync(postsFilePath, 'utf8');
     const posts = JSON.parse(fileContent);
 
-    // בדיקה האם הפוסט קיים
-    const postIndex = posts.findIndex(post => post.slug === slug);
+    // חיפוש הפוסט עם ה-slug המתאים
+    const post = posts.find(post => post.slug === slug);
     
-    if (postIndex === -1) {
+    if (!post) {
       return res.status(404).json({ message: `פוסט עם slug '${slug}' לא נמצא` });
     }
 
-    // הסרת הפוסט מהמערך
-    const deletedPost = posts[postIndex];
-    posts.splice(postIndex, 1);
-
-    // שמירת הקובץ המעודכן
-    fs.writeFileSync(postsFilePath, JSON.stringify(posts, null, 2), 'utf8');
-
-    return res.status(200).json({ 
-      message: 'הפוסט נמחק בהצלחה',
-      deletedPost
-    });
+    return res.status(200).json({ post });
   } catch (error) {
-    console.error('שגיאה במחיקת פוסט:', error);
+    console.error('שגיאה בקבלת פוסט:', error);
     return res.status(500).json({ message: 'שגיאת שרת פנימית', error: error.message });
   }
 } 
