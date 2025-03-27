@@ -32,161 +32,215 @@ export default async function handler(req, res) {
   
   // If body is a string, try to parse it as JSON
   if (typeof requestData === 'string') {
-    try {
-      console.log('Parsing string body as JSON');
+    // Special case for very large content
+    if (requestData.length > 5000 && requestData.includes('```jsx')) {
+      console.log('Detected very large content with JSX, using direct extraction');
       
-      // Pre-process the JSON string to handle common issues
-      let processedJson = requestData;
-      
-      // Handle special case with triple backticks in content
-      if (processedJson.includes('```')) {
-        console.log('Detected triple backticks in content, applying special handling');
-        // Use a more robust approach to handle backticks in content
-        processedJson = processedJson.replace(/```/g, '\\`\\`\\`');
-      }
-      
-      // Handle escaped quotes in content
-      if (processedJson.includes('\\"')) {
-        console.log('Detected escaped quotes in content');
-        processedJson = processedJson.replace(/\\"/g, '\\\\\"');
-      }
-      
-      // Try to parse the processed JSON
       try {
-        requestData = JSON.parse(processedJson);
-        console.log('JSON parsing successful');
-      } catch (initialError) {
-        console.error('Initial JSON parsing failed:', initialError);
-        throw initialError; // Throw to trigger the catch block
-      }
-    } catch (error) {
-      console.error('Error parsing JSON string:', error);
-      
-      // Try to sanitize and fix common JSON issues
-      try {
-        console.log('Attempting to sanitize JSON');
+        // Extract data directly using string manipulation
+        const titleMatch = requestData.match(/"title"\s*:\s*"([^"]+)"/);
+        const typeMatch = requestData.match(/"type"\s*:\s*"([^"]+)"/);
+        const slugMatch = requestData.match(/"slug"\s*:\s*"([^"]+)"/);
         
-        // Create a more robust sanitization process
-        let sanitized = requestData;
-        
-        // Replace single quotes with double quotes
-        sanitized = sanitized.replace(/'/g, '"');
-        
-        // Fix unquoted property names
-        sanitized = sanitized.replace(/(\w+):/g, '"$1":');
-        
-        // Escape backticks
-        sanitized = sanitized.replace(/```/g, '\\`\\`\\`');
-        
-        // Remove null values from slugs
-        sanitized = sanitized.replace(/null/g, '');
-        
-        // Handle newlines in content
-        sanitized = sanitized.replace(/\n/g, '\\n');
-        
-        // Fix double escaped quotes
-        sanitized = sanitized.replace(/\\\\"/g, '\\"');
-        
-        // Try to parse the sanitized JSON
-        try {
-          requestData = JSON.parse(sanitized);
-          console.log('JSON sanitization successful');
-        } catch (sanitizeParseError) {
-          console.error('Sanitized JSON parsing failed:', sanitizeParseError);
-          throw sanitizeParseError; // Throw to trigger the next catch block
-        }
-      } catch (sanitizeError) {
-        console.error('JSON sanitization failed:', sanitizeError);
-        
-        // Last resort: try to extract the data using more robust regex
-        try {
-          console.log('Attempting advanced regex extraction as last resort');
-          
-          // Use more robust regex patterns that can handle complex content
-          const titleRegex = /"title"\s*:\s*"((?:\\"|[^"])*?)"/;
-          const contentRegex = /"content"\s*:\s*"((?:\\.|[^"])*?)(?="\s*,\s*"type")/;
-          const typeRegex = /"type"\s*:\s*"((?:\\"|[^"])*?)"/;
-          const slugRegex = /"slug"\s*:\s*"((?:\\"|[^"])*?)"/;
-          
-          const titleMatch = requestData.match(titleRegex);
-          const contentMatch = requestData.match(contentRegex);
-          const typeMatch = requestData.match(typeRegex);
-          const slugMatch = requestData.match(slugRegex);
-          
-          console.log('Regex matches found:', {
-            title: !!titleMatch,
-            content: !!contentMatch,
-            type: !!typeMatch,
-            slug: !!slugMatch
-          });
-          
-          if (titleMatch && contentMatch && typeMatch && slugMatch) {
-            requestData = {
-              title: titleMatch[1].replace(/\\"/g, '"'),
-              content: contentMatch[1]
+        // Extract content between "content": " and the last " before "type":
+        let content = '';
+        const contentStart = requestData.indexOf('"content"') + 11;
+        if (contentStart > 11) {
+          // Find the position of "type": after content
+          const typePos = requestData.indexOf('"type"', contentStart);
+          if (typePos > contentStart) {
+            // Go backwards from typePos to find the closing quote of content
+            let quotePos = requestData.lastIndexOf('"', typePos - 2);
+            if (quotePos > contentStart) {
+              content = requestData.substring(contentStart, quotePos);
+              // Unescape the content
+              content = content
                 .replace(/\\n/g, '\n')
                 .replace(/\\"/g, '"')
-                .replace(/\\\\/g, '\\'),
-              type: typeMatch[1],
-              slug: slugMatch[1].replace(/null/g, '')
-            };
-            console.log('Advanced regex extraction successful');
-          } else {
-            // Try a more aggressive approach for content
-            console.log('Trying more aggressive content extraction');
+                .replace(/\\\\/g, '\\');
+            }
+          }
+        }
+        
+        if (titleMatch && content && slugMatch) {
+          let slug = slugMatch[1];
+          // Clean up slug
+          if (slug.includes('null')) {
+            slug = slug.replace(/null/g, '');
+          }
+          
+          requestData = {
+            title: titleMatch[1],
+            content: content,
+            type: typeMatch ? typeMatch[1] : 'article',
+            slug: slug
+          };
+          
+          console.log('Direct extraction successful');
+        } else {
+          throw new Error('Could not extract all required fields');
+        }
+      } catch (directError) {
+        console.error('Direct extraction failed:', directError);
+        // Continue to standard parsing
+      }
+    } else {
+      try {
+        console.log('Parsing string body as JSON');
+        
+        // Pre-process the JSON string to handle common issues
+        let processedJson = requestData;
+        
+        // Handle special case with triple backticks in content
+        if (processedJson.includes('```')) {
+          console.log('Detected triple backticks in content, applying special handling');
+          // Use a more robust approach to handle backticks in content
+          processedJson = processedJson.replace(/```/g, '\\`\\`\\`');
+        }
+        
+        // Handle escaped quotes in content
+        if (processedJson.includes('\\"')) {
+          console.log('Detected escaped quotes in content');
+          processedJson = processedJson.replace(/\\"/g, '\\\\\"');
+        }
+        
+        // Try to parse the processed JSON
+        try {
+          requestData = JSON.parse(processedJson);
+          console.log('JSON parsing successful');
+        } catch (initialError) {
+          console.error('Initial JSON parsing failed:', initialError);
+          throw initialError; // Throw to trigger the catch block
+        }
+      } catch (error) {
+        console.error('Error parsing JSON string:', error);
+        
+        // Try to sanitize and fix common JSON issues
+        try {
+          console.log('Attempting to sanitize JSON');
+          
+          // Create a more robust sanitization process
+          let sanitized = requestData;
+          
+          // Replace single quotes with double quotes
+          sanitized = sanitized.replace(/'/g, '"');
+          
+          // Fix unquoted property names
+          sanitized = sanitized.replace(/(\w+):/g, '"$1":');
+          
+          // Escape backticks
+          sanitized = sanitized.replace(/```/g, '\\`\\`\\`');
+          
+          // Remove null values from slugs
+          sanitized = sanitized.replace(/null/g, '');
+          
+          // Handle newlines in content
+          sanitized = sanitized.replace(/\n/g, '\\n');
+          
+          // Fix double escaped quotes
+          sanitized = sanitized.replace(/\\\\"/g, '\\"');
+          
+          // Try to parse the sanitized JSON
+          try {
+            requestData = JSON.parse(sanitized);
+            console.log('JSON sanitization successful');
+          } catch (sanitizeParseError) {
+            console.error('Sanitized JSON parsing failed:', sanitizeParseError);
+            throw sanitizeParseError; // Throw to trigger the next catch block
+          }
+        } catch (sanitizeError) {
+          console.error('JSON sanitization failed:', sanitizeError);
+          
+          // Last resort: try to extract the data using more robust regex
+          try {
+            console.log('Attempting advanced regex extraction as last resort');
             
-            // Extract content between "content": " and the last " before "type":
-            const fullContent = requestData.substring(
-              requestData.indexOf('"content"') + 10,
-              requestData.lastIndexOf('"type"') - 2
-            );
+            // Use more robust regex patterns that can handle complex content
+            const titleRegex = /"title"\s*:\s*"((?:\\"|[^"])*?)"/;
+            const contentRegex = /"content"\s*:\s*"((?:\\.|[^"])*?)(?="\s*,\s*"type")/;
+            const typeRegex = /"type"\s*:\s*"((?:\\"|[^"])*?)"/;
+            const slugRegex = /"slug"\s*:\s*"((?:\\"|[^"])*?)"/;
             
-            if (fullContent && titleMatch && slugMatch) {
+            const titleMatch = requestData.match(titleRegex);
+            const contentMatch = requestData.match(contentRegex);
+            const typeMatch = requestData.match(typeRegex);
+            const slugMatch = requestData.match(slugRegex);
+            
+            console.log('Regex matches found:', {
+              title: !!titleMatch,
+              content: !!contentMatch,
+              type: !!typeMatch,
+              slug: !!slugMatch
+            });
+            
+            if (titleMatch && contentMatch && typeMatch && slugMatch) {
               requestData = {
                 title: titleMatch[1].replace(/\\"/g, '"'),
-                content: fullContent
+                content: contentMatch[1]
                   .replace(/\\n/g, '\n')
                   .replace(/\\"/g, '"')
                   .replace(/\\\\/g, '\\'),
-                type: typeMatch ? typeMatch[1] : 'article',
+                type: typeMatch[1],
                 slug: slugMatch[1].replace(/null/g, '')
               };
-              console.log('Aggressive content extraction successful');
+              console.log('Advanced regex extraction successful');
             } else {
-              throw new Error('Could not extract all required fields');
-            }
-          }
-        } catch (regexError) {
-          console.error('Advanced regex extraction failed:', regexError);
-          
-          // Final fallback: create a minimal valid object
-          try {
-            console.log('Creating minimal valid object as final fallback');
-            requestData = {
-              title: "Extracted Content " + Date.now(),
-              content: "Content could not be fully parsed",
-              type: "article",
-              slug: "extracted-content-" + Date.now()
-            };
-            
-            // Try to extract at least the title from the raw data
-            if (requestData.includes('"title"')) {
-              const titleStart = requestData.indexOf('"title"') + 9;
-              const titleEnd = requestData.indexOf('"', titleStart);
-              if (titleStart > 9 && titleEnd > titleStart) {
-                requestData.title = requestData.substring(titleStart, titleEnd);
+              // Try a more aggressive approach for content
+              console.log('Trying more aggressive content extraction');
+              
+              // Extract content between "content": " and the last " before "type":
+              const fullContent = requestData.substring(
+                requestData.indexOf('"content"') + 10,
+                requestData.lastIndexOf('"type"') - 2
+              );
+              
+              if (fullContent && titleMatch && slugMatch) {
+                requestData = {
+                  title: titleMatch[1].replace(/\\"/g, '"'),
+                  content: fullContent
+                    .replace(/\\n/g, '\n')
+                    .replace(/\\"/g, '"')
+                    .replace(/\\\\/g, '\\'),
+                  type: typeMatch ? typeMatch[1] : 'article',
+                  slug: slugMatch[1].replace(/null/g, '')
+                };
+                console.log('Aggressive content extraction successful');
+              } else {
+                throw new Error('Could not extract all required fields');
               }
             }
+          } catch (regexError) {
+            console.error('Advanced regex extraction failed:', regexError);
             
-            console.log('Created minimal valid object');
-          } catch (finalError) {
-            console.error('All extraction methods failed:', finalError);
-            return res.status(400).json({
-              message: 'Invalid JSON format',
-              error: error.message,
-              details: 'Please ensure your JSON is properly formatted with double quotes around property names and string values.',
-              success: false
-            });
+            // Final fallback: create a minimal valid object
+            try {
+              console.log('Creating minimal valid object as final fallback');
+              requestData = {
+                title: "Extracted Content " + Date.now(),
+                content: "Content could not be fully parsed",
+                type: "article",
+                slug: "extracted-content-" + Date.now()
+              };
+              
+              // Try to extract at least the title from the raw data
+              if (requestData.includes('"title"')) {
+                const titleStart = requestData.indexOf('"title"') + 9;
+                const titleEnd = requestData.indexOf('"', titleStart);
+                if (titleStart > 9 && titleEnd > titleStart) {
+                  requestData.title = requestData.substring(titleStart, titleEnd);
+                }
+              }
+              
+              console.log('Created minimal valid object');
+            } catch (finalError) {
+              console.error('All extraction methods failed:', finalError);
+              return res.status(400).json({
+                message: 'Invalid JSON format',
+                error: error.message,
+                details: 'Please ensure your JSON is properly formatted with double quotes around property names and string values.',
+                success: false
+              });
+            }
           }
         }
       }
