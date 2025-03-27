@@ -34,6 +34,14 @@ export default async function handler(req, res) {
   if (typeof requestData === 'string') {
     try {
       console.log('Parsing string body as JSON');
+      
+      // Handle special case with triple backticks in content
+      if (requestData.includes('```')) {
+        console.log('Detected triple backticks in content, applying special handling');
+        // Escape backticks to prevent JSON parsing issues
+        requestData = requestData.replace(/```/g, '\\`\\`\\`');
+      }
+      
       requestData = JSON.parse(requestData);
     } catch (error) {
       console.error('Error parsing JSON string:', error);
@@ -45,17 +53,44 @@ export default async function handler(req, res) {
         let sanitized = requestData.replace(/'/g, '"');
         // Fix unquoted property names
         sanitized = sanitized.replace(/(\w+):/g, '"$1":');
+        // Escape backticks
+        sanitized = sanitized.replace(/```/g, '\\`\\`\\`');
+        // Remove null values from slugs
+        sanitized = sanitized.replace(/null/g, '');
         
         requestData = JSON.parse(sanitized);
         console.log('JSON sanitization successful');
       } catch (sanitizeError) {
         console.error('JSON sanitization failed:', sanitizeError);
-        return res.status(400).json({
-          message: 'Invalid JSON format',
-          error: error.message,
-          details: 'Please ensure your JSON is properly formatted with double quotes around property names and string values.',
-          success: false
-        });
+        
+        // Last resort: try to extract the data using regex
+        try {
+          console.log('Attempting regex extraction as last resort');
+          const titleMatch = requestData.match(/"title":\s*"([^"]+)"/);
+          const contentMatch = requestData.match(/"content":\s*"([^}]+?)(?=",\s*"type")/);
+          const typeMatch = requestData.match(/"type":\s*"([^"]+)"/);
+          const slugMatch = requestData.match(/"slug":\s*"([^"]+)"/);
+          
+          if (titleMatch && contentMatch && typeMatch && slugMatch) {
+            requestData = {
+              title: titleMatch[1],
+              content: contentMatch[1].replace(/\\n/g, '\n').replace(/\\"/g, '"'),
+              type: typeMatch[1],
+              slug: slugMatch[1].replace('null', '')
+            };
+            console.log('Regex extraction successful');
+          } else {
+            throw new Error('Could not extract all required fields');
+          }
+        } catch (regexError) {
+          console.error('Regex extraction failed:', regexError);
+          return res.status(400).json({
+            message: 'Invalid JSON format',
+            error: error.message,
+            details: 'Please ensure your JSON is properly formatted with double quotes around property names and string values.',
+            success: false
+          });
+        }
       }
     }
   }
@@ -91,6 +126,13 @@ export default async function handler(req, res) {
         message: 'חסרים נתונים: כותרת, תוכן ו-slug נדרשים',
         success: false
       });
+    }
+    
+    // Clean up slug - remove null values
+    if (slug.includes('null')) {
+      console.log('Detected null in slug, cleaning up:', slug);
+      slug = slug.replace(/null/g, '');
+      console.log('Cleaned slug:', slug);
     }
     
     // Process Hebrew slugs - convert to URL-friendly format if needed
