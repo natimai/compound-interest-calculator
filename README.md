@@ -38,3 +38,97 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/pages/building-your-application/deploying) for more details.
+
+## API לניהול תוכן
+
+האתר כולל מערכת API המאפשרת יצירה, עדכון, מחיקה וקבלה של תוכן באופן דינמי.
+
+### נקודות קצה (Endpoints)
+
+#### הוספת פוסט חדש
+```
+POST /api/addPost
+```
+דורש header: `x-api-key`
+
+גוף הבקשה (JSON):
+```json
+{
+  "title": "כותרת הפוסט",
+  "content": "תוכן הפוסט",
+  "type": "post", // אופציונלי, ברירת מחדל: "post"
+  "metadata": {} // אופציונלי, מידע נוסף על הפוסט
+}
+```
+
+#### קבלת כל הפוסטים
+```
+GET /api/getPosts
+```
+
+פרמטרים אופציונליים:
+- `type`: סינון לפי סוג פוסט
+- `limit`: הגבלת מספר התוצאות
+- `offset`: דילוג על מספר תוצאות מסוים (לדפדוף)
+
+#### קבלת פוסט בודד
+```
+GET /api/getPostById?id=123
+```
+
+#### עדכון פוסט
+```
+PUT /api/updatePost?id=123
+```
+דורש header: `x-api-key`
+
+גוף הבקשה (JSON) - רק השדות שברצונך לעדכן:
+```json
+{
+  "title": "כותרת מעודכנת",
+  "content": "תוכן מעודכן"
+}
+```
+
+#### מחיקת פוסט
+```
+DELETE /api/deletePost?id=123
+```
+דורש header: `x-api-key`
+
+### דוגמה לשימוש ב-Make (Integromat)
+
+1. **הוספת פוסט חדש**:
+   - השתמש ב-HTTP > Make a request
+   - Method: POST
+   - URL: https://your-site.com/api/addPost
+   - Headers: 
+     ```
+     Content-Type: application/json
+     x-api-key: your-secure-api-key
+     ```
+   - Body: 
+     ```json
+     {
+       "title": "{{title}}",
+       "content": "{{content}}",
+       "type": "{{type}}",
+       "metadata": {
+         "source": "make",
+         "author": "{{author}}"
+       }
+     }
+     ```
+
+2. **קבלת פוסטים**:
+   - השתמש ב-HTTP > Make a request
+   - Method: GET
+   - URL: https://your-site.com/api/getPosts?type=post&limit=10
+
+### אבטחה
+
+- הנקודות `addPost`, `updatePost` ו-`deletePost` דורשות מפתח API.
+- מומלץ להגדיר את מפתח ה-API כמשתנה סביבה בקובץ `.env`:
+  ```
+  MAKE_API_KEY=your-secure-api-key
+  ```
