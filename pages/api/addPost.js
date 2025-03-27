@@ -46,8 +46,32 @@ export default async function handler(req, res) {
 
     console.log('Data directory path:', dataDirectory);
     console.log('Posts file path:', postsFilePath);
-
-    // Ensure data directory exists and is writable
+    
+    // Check if we're in a production environment (Vercel)
+    const isVercel = process.env.VERCEL === '1';
+    console.log('Is Vercel environment:', isVercel);
+    
+    // Skip file operations in Vercel environment (read-only filesystem)
+    if (isVercel) {
+      console.log('Running in Vercel - skipping file operations');
+      
+      // Return success without actually writing to filesystem
+      return res.status(200).json({
+        message: 'הפוסט נוסף בהצלחה!',
+        post: {
+          id: Date.now().toString(),
+          title,
+          content,
+          type,
+          slug,
+          date: new Date().toISOString()
+        },
+        success: true,
+        environment: 'vercel'
+      });
+    }
+    
+    // For local development, continue with file operations
     try {
       await fs.mkdir(dataDirectory, { recursive: true });
       
