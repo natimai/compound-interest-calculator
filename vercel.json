@@ -1,5 +1,6 @@
 {
   "buildCommand": "npm run build",
+  "outputDirectory": ".next",
   "cleanUrls": true,
   "env": {
     "MAKE_API_KEY": "@make_api_key"
