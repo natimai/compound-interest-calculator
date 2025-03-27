@@ -1,28 +1,141 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/pages/api-reference/create-next-app).
+# מחשבון ריבית דריבית
 
-## Getting Started
+אתר מחשבון ריבית דריבית והשקעות פיננסיות
 
-First, run the development server:
+## תוכן העניינים
+
+- [התקנה](#התקנה)
+- [שימוש](#שימוש)
+- [פיתוח](#פיתוח)
+- [API](#api)
+  - [API פוסטים](#api-פוסטים)
+  - [API תוכן](#api-תוכן)
+
+## התקנה
+
+```bash
+npm install
+```
+
+## שימוש
+
+### פיתוח
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### בנייה
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+```bash
+npm run build
+```
 
-[API routes](https://nextjs.org/docs/pages/building-your-application/routing/api-routes) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+### הפעלה
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/pages/building-your-application/routing/api-routes) instead of React pages.
+```bash
+npm start
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/pages/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## API
+
+### API פוסטים
+
+#### הוספת פוסט חדש
+
+```
+POST /api/addPost
+```
+
+נדרש: `x-api-key` בכותרות הבקשה
+
+גוף הבקשה:
+```json
+{
+  "title": "כותרת הפוסט",
+  "content": "תוכן הפוסט",
+  "type": "post",
+  "metadata": {}
+}
+```
+
+#### קבלת כל הפוסטים
+
+```
+GET /api/getPosts
+```
+
+#### קבלת פוסט לפי מזהה
+
+```
+GET /api/getPostById?id=123
+```
+
+#### עדכון פוסט
+
+```
+PUT /api/updatePost
+```
+
+נדרש: `x-api-key` בכותרות הבקשה
+
+גוף הבקשה:
+```json
+{
+  "id": "123",
+  "title": "כותרת מעודכנת",
+  "content": "תוכן מעודכן",
+  "type": "post",
+  "metadata": {}
+}
+```
+
+#### מחיקת פוסט
+
+```
+DELETE /api/deletePost?id=123
+```
+
+נדרש: `x-api-key` בכותרות הבקשה
+
+### API תוכן
+
+#### קבלת תוכן
+
+```
+GET /api/content
+```
+
+לסינון לפי סוג:
+```
+GET /api/content?type=מדריך
+```
+
+#### עדכון תוכן
+
+```
+PUT /api/updateContent
+```
+
+נדרש: `x-api-key` בכותרות הבקשה
+
+גוף הבקשה:
+```json
+{
+  "key": "welcome_message",
+  "content": "ברוכים הבאים לאתר!",
+  "type": "general",
+  "metadata": {}
+}
+```
+
+#### מחיקת תוכן
+
+```
+DELETE /api/deleteContent?key=welcome_message
+```
+
+נדרש: `x-api-key` בכותרות הבקשה
 
 ## Learn More
 
