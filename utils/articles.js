@@ -4,6 +4,22 @@ import matter from 'gray-matter';
 
 const articlesDirectory = path.join(process.cwd(), 'content/articles');
 
+function formatDate(date) {
+  if (!date) {
+    return new Date().toISOString(); // Fallback to current date as ISO string
+  }
+  if (date instanceof Date) {
+    return date.toISOString(); // Convert Date object to ISO string
+  }
+  // Try to parse the date string and return as ISO string
+  try {
+    return new Date(date).toISOString();
+  } catch (e) {
+    console.error(`Error formatting date: ${date}`, e);
+    return new Date().toISOString(); // Fallback on parsing error
+  }
+}
+
 export function getAllArticles() {
   const fileNames = fs.readdirSync(articlesDirectory);
   const articles = fileNames.map((fileName) => {
@@ -37,7 +53,7 @@ export function getAllArticles() {
     return {
       slug,
       title: data.title || '', // Provide empty string as fallback title
-      date: data.date || new Date().toISOString(), // Provide current date as fallback
+      date: formatDate(data.date), // Format date to ISO string
       readingTime: readingTime || null, // Ensure it's serializable, use null as fallback
       tags: data.tags || [],
       description: description || '', // Ensure description is always a string
@@ -45,13 +61,17 @@ export function getAllArticles() {
   });
 
   return articles.sort((a, b) => {
-    // Handle cases where date might be invalid
-    const dateA = new Date(a.date);
-    const dateB = new Date(b.date);
-    if (isNaN(dateA.getTime()) || isNaN(dateB.getTime())) {
-      return 0; // Don't sort if dates are invalid
+    try {
+      const dateA = new Date(a.date);
+      const dateB = new Date(b.date);
+      if (isNaN(dateA.getTime()) || isNaN(dateB.getTime())) {
+        return 0;
+      }
+      return dateB - dateA;
+    } catch (e) {
+      console.error(`Error comparing dates: ${a.date}, ${b.date}`, e);
+      return 0;
     }
-    return dateB - dateA;
   });
 }
 
@@ -81,7 +101,7 @@ export function getArticleBySlug(slug) {
     return {
       slug,
       title: data.title || '', // Add fallback for title
-      date: data.date || new Date().toISOString(), // Add fallback for date
+      date: formatDate(data.date), // Format date to ISO string
       readingTime: readingTime || null, // Ensure readingTime is serializable
       tags: data.tags || [],
       description: description || '', 
