@@ -1,9 +1,36 @@
 import { Html, Head, Main, NextScript } from 'next/document'
 
 export default function Document() {
+  const pageTitle = "דריבית - מחשבונים פיננסיים וקורס שוק ההון חינם";
+  const pageDescription = "מחשבונים פיננסיים חינמיים: מחשבון ריבית דריבית, קרן השתלמות, קופת גמל, קרן פנסיה, פיקדון בנקאי ועוד. קורס שוק ההון למתחילים והשוואת מוצרי השקעה בעברית פשוטה. הכל בחינם וללא התחייבות.";
+  const siteUrl = "https://www.deribit.co.il";
+  const ogImageUrl = `${siteUrl}/og-image.png`;
+
   return (
     <Html lang="he" dir="rtl">
       <Head>
+        {/* Basic Meta Tags - These might be overridden by page-specific Head components */}
+        <meta charSet="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        
+        {/* Default OG Tags - For homepage and as fallback */}
+        <meta property="og:title" content={pageTitle} />
+        <meta property="og:description" content={pageDescription} />
+        <meta property="og:url" content={siteUrl} />
+        <meta property="og:type" content="website" />
+        <meta property="og:image" content={ogImageUrl} />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+        <meta property="og:site_name" content="דריבית" />
+        <meta property="og:locale" content="he_IL" />
+
+        {/* Default Twitter Card Tags */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={pageTitle} />
+        <meta name="twitter:description" content={pageDescription} />
+        <meta name="twitter:image" content={ogImageUrl} />
+
+        {/* Favicons and PWA stuff from original _document.js */}
         <link rel="manifest" href="/manifest.json" />
         <link rel="icon" href="/favicon.ico" />
         <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" />
