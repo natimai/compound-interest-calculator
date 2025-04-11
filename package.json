@@ -10,6 +10,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@tailwindcss/typography": "^0.5.16",
     "@vercel/analytics": "^1.4.1",
     "@vercel/speed-insights": "^1.1.0",
     "canvas-confetti": "^1.9.3",
@@ -17,9 +18,11 @@
     "clsx": "^2.1.1",
     "darkreader": "^4.9.96",
     "framer-motion": "^11.18.0",
+    "gray-matter": "^4.0.3",
     "jspdf": "^2.5.2",
     "lucide-react": "^0.263.1",
     "next": "15.1.4",
+    "next-mdx-remote": "^5.0.0",
     "next-seo": "^6.6.0",
     "next-sitemap": "^4.2.3",
     "react": "^18.3.1",
