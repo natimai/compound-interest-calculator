@@ -69,6 +69,7 @@ export function getAllArticles() {
         date: formatDate(data.date),
         readingTime: readingTime || null,
         tags: data.tags || [],
+        category: data.category || 'כללי',
         description: description || '',
       };
     })
