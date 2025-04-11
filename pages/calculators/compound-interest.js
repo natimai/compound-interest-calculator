@@ -53,11 +53,11 @@ export default function CompoundInterestCalculator() {
                 <p className="text-gray-700 dark:text-gray-200 leading-relaxed mb-2">
                   נניח שהשקעתם 10,000 ₪ בתשואה שנתית של 8%.
                 </p>
-                <ul className="list-disc list-inside space-y-1 text-gray-700 dark:text-gray-200 mb-3">
-                  <li>**שנה 1:** הקרן היא 10,000 ₪. הרווח הוא 800 ₪ (8% מ-10,000). היתרה בסוף השנה: 10,800 ₪.</li>
-                  <li>**שנה 2:** הקרן היא 10,800 ₪. הרווח הוא 864 ₪ (8% מ-10,800). היתרה בסוף השנה: 11,664 ₪.</li>
-                  <li>**שנה 3:** הקרן היא 11,664 ₪. הרווח הוא 933.12 ₪ (8% מ-11,664). היתרה בסוף השנה: 12,597.12 ₪.</li>
-                </ul>
+                <div className="space-y-1 text-gray-700 dark:text-gray-200 mb-3">
+                  <p><strong className="text-gray-900 dark:text-white">שנה 1:</strong> הקרן היא 10,000 ₪. הרווח הוא 800 ₪ (8% מ-10,000). היתרה בסוף השנה: 10,800 ₪.</p>
+                  <p><strong className="text-gray-900 dark:text-white">שנה 2:</strong> הקרן היא 10,800 ₪. הרווח הוא 864 ₪ (8% מ-10,800). היתרה בסוף השנה: 11,664 ₪.</p>
+                  <p><strong className="text-gray-900 dark:text-white">שנה 3:</strong> הקרן היא 11,664 ₪. הרווח הוא 933.12 ₪ (8% מ-11,664). היתרה בסוף השנה: 12,597.12 ₪.</p>
+                </div>
                 <p className="text-gray-700 dark:text-gray-200 leading-relaxed">
                   שימו לב כיצד סכום הרווח השנתי גדל משנה לשנה. זוהי תמצית אפקט "כדור השלג": ככל שיש יותר זמן וככל שהתשואה גבוהה יותר, כך הצמיחה הופכת אקספוננציאלית.
                 </p>
