@@ -1,6 +1,6 @@
 import { NextSeo } from 'next-seo';
 import Link from 'next/link';
-import { ReceiptText, ArrowRight, Info, Calculator, ShieldCheck, TrendingDown, Clock } from 'lucide-react';
+import { FileText, ArrowRight, Info, Calculator, ShieldCheck, TrendingDown, Clock } from 'lucide-react';
 
 export default function TaxPlanningGuide() {
   return (
@@ -28,7 +28,7 @@ export default function TaxPlanningGuide() {
 
           <article className="prose prose-lg dark:prose-invert max-w-none space-y-8">
             <h1 className="text-4xl font-bold mb-12 flex items-center gap-3">
-              <ReceiptText className="w-8 h-8 text-blue-500" />
+              <FileText className="w-8 h-8 text-blue-500" />
               מדריך מקיף לתכנון מס ונקודות זיכוי בישראל
             </h1>
 

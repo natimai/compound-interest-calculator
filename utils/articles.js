@@ -10,48 +10,96 @@ export function getAllArticles() {
     const slug = fileName.replace(/\.mdx$/, '');
     const fullPath = path.join(articlesDirectory, fileName);
     const fileContents = fs.readFileSync(fullPath, 'utf8');
-    const { data, content } = matter(fileContents);
+    let data = {};
+    let content = '';
+    try {
+      const parsed = matter(fileContents);
+      data = parsed.data;
+      content = parsed.content;
+    } catch (e) {
+      console.error(`Error parsing frontmatter for ${fileName}:`, e);
+      // Provide default data if parsing fails
+      data = { title: slug }; // Use slug as fallback title
+    }
 
     // Extract the first paragraph as description if not provided
     let description = data.description;
-    if (!description) {
-      const firstParagraph = content.split('\n\n')[0];
-      description = firstParagraph.replace(/^#+\s+/, '').trim();
+    if (!description && content) {
+      const firstParagraphMatch = content.match(/^([^#\n].*?)(\n\n|$)/s);
+      if (firstParagraphMatch) {
+        description = firstParagraphMatch[1].replace(/\*\*/g, '').trim();
+      }
     }
+
+    // Calculate reading time if not provided
+    const readingTime = data.readingTime || estimateReadingTime(content);
 
     return {
       slug,
-      title: data.title,
-      date: data.date,
-      readingTime: data.readingTime,
+      title: data.title || '', // Provide empty string as fallback title
+      date: data.date || new Date().toISOString(), // Provide current date as fallback
+      readingTime: readingTime || null, // Ensure it's serializable, use null as fallback
       tags: data.tags || [],
-      description,
-      content,
+      description: description || '', // Ensure description is always a string
     };
   });
 
-  return articles.sort((a, b) => new Date(b.date) - new Date(a.date));
+  return articles.sort((a, b) => {
+    // Handle cases where date might be invalid
+    const dateA = new Date(a.date);
+    const dateB = new Date(b.date);
+    if (isNaN(dateA.getTime()) || isNaN(dateB.getTime())) {
+      return 0; // Don't sort if dates are invalid
+    }
+    return dateB - dateA;
+  });
 }
 
 export function getArticleBySlug(slug) {
   const fullPath = path.join(articlesDirectory, `${slug}.mdx`);
-  const fileContents = fs.readFileSync(fullPath, 'utf8');
-  const { data, content } = matter(fileContents);
+  console.log(`Attempting to read file: ${fullPath}`);
+  try {
+    const fileContents = fs.readFileSync(fullPath, 'utf8');
+    console.log(`Successfully read file: ${slug}.mdx`);
+    const { data, content } = matter(fileContents);
+    console.log(`Successfully parsed frontmatter for: ${slug}.mdx`);
 
-  // Extract the first paragraph as description if not provided
-  let description = data.description;
-  if (!description) {
-    const firstParagraph = content.split('\n\n')[0];
-    description = firstParagraph.replace(/^#+\s+/, '').trim();
+    // Extract the first paragraph as description if not provided
+    let description = data.description;
+    if (!description && content) {
+      const firstParagraphMatch = content.match(/^([^#\n].*?)(\n\n|$)/s);
+      if (firstParagraphMatch) {
+        description = firstParagraphMatch[1].replace(/\*\*/g, '').trim();
+      }
+    }
+    
+    const readingTime = data.readingTime || estimateReadingTime(content);
+
+    // Log the content before returning to ensure frontmatter is removed
+    console.log(`Content for ${slug} before returning (first 100 chars):`, content.substring(0, 100));
+
+    return {
+      slug,
+      title: data.title || '', // Add fallback for title
+      date: data.date || new Date().toISOString(), // Add fallback for date
+      readingTime: readingTime || null, // Ensure readingTime is serializable
+      tags: data.tags || [],
+      description: description || '', 
+      content, // Content is needed for the individual article page
+    };
+  } catch (error) {
+    console.error(`Error processing file ${slug}.mdx:`, error);
+    // It might be better to return null or an error object here
+    // so getStaticProps can handle it (e.g., return notFound: true)
+    // For now, rethrowing to see the error.
+    throw new Error(`Failed to process article ${slug}: ${error.message}`);
   }
+}
 
-  return {
-    slug,
-    title: data.title,
-    date: data.date,
-    readingTime: data.readingTime,
-    tags: data.tags || [],
-    description,
-    content,
-  };
+function estimateReadingTime(text) {
+  if (!text) return 'N/A';
+  const wordsPerMinute = 200;
+  const words = text.split(/\s+/).length;
+  const minutes = Math.ceil(words / wordsPerMinute);
+  return `${minutes} דק' קריאה`;
 } 
