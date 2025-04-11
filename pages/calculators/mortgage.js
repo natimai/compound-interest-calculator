@@ -1,18 +1,18 @@
 import Head from 'next/head';
 import MortgageCalculator from '../../components/MortgageCalculator';
 import Link from 'next/link';
-import { ChevronRight, Info, Home, Calculator, Landmark, AlertTriangle, HelpCircle, TrendingDown, ListOrdered, SlidersHorizontal, Banknote, Percent, CalendarDays, FileText } from 'lucide-react';
+import { ChevronRight, Info, Home, Calculator, Landmark, AlertTriangle, HelpCircle, TrendingDown, ListOrdered, SlidersHorizontal, Banknote, Percent, CalendarDays, FileText, Scale, CheckSquare, ShieldCheck, Shuffle, Target, Wallet, Library } from 'lucide-react';
 import { WarningBox, TipBox, InfoBox } from '../../components/Boxes';
 
 export default function MortgageCalculatorPage() {
   return (
     <>
       <Head>
-        <title>מחשבון משכנתא מתקדם | דריבית - תכנון חכם של הלוואת הדיור</title>
-        <meta name="description" content="מחשבון משכנתא מתקדם וחינמי מבית דריבית. השוו מסלולים, חשבו החזר חודשי, צפו בלוח סילוקין ובדקו כדאיות מחזור. כולל מדריך מקיף למשכנתאות." />
-        <meta name="keywords" content="מחשבון משכנתא, חישוב משכנתא, ריבית משכנתא, מסלולי משכנתא, פריים, מדד המחירים לצרכן, ריבית קבועה, ריבית משתנה, תמהיל משכנתא, לוח סילוקין, שפיצר, מחזור משכנתא, החזר חודשי, יועץ משכנתאות, הלוואת דיור, אחוז מימון (LTV), ביטוח משכנתא" />
-        <meta property="og:title" content="מחשבון משכנתא מתקדם | דריבית - תכנון חכם של הלוואת הדיור" />
-        <meta property="og:description" content="קחו שליטה על המשכנתא שלכם! מחשבון מתקדם מבית דריבית עם מדריך מקיף להבנת מסלולים, ריביות, החזרים ותכנון אופטימלי." />
+        <title>מחשבון משכנתא | דריבית - המדריך המקיף לתכנון הלוואת דיור</title>
+        <meta name="description" content="תכננו את המשכנתא שלכם עם המחשבון המתקדם והמדריך המקיף בישראל מבית דריבית. הסברים מעמיקים על מסלולים, ריביות, תמהיל, מחזור, מיסוי וטיפים חיוניים." />
+        <meta name="keywords" content="מחשבון משכנתא, חישוב משכנתא, ריבית משכנתא, מסלולי משכנתא, פריים, מדד המחירים לצרכן, קלצ, ריבית קבועה, ריבית משתנה, תמהיל משכנתא, לוח סילוקין, שפיצר, מחזור משכנתא, החזר חודשי, יועץ משכנתאות, הלוואת דיור, LTV, אחוז מימון, אישור עקרוני, ביטוח משכנתא" />
+        <meta property="og:title" content="מחשבון משכנתא | דריבית - המדריך המקיף לתכנון הלוואת דיור" />
+        <meta property="og:description" content="המדריך האולטימטיבי למשכנתאות בישראל ומחשבון מתקדם מבית דריבית. הבינו לעומק מסלולים, ריביות, תמהילים, סיכונים וקבלו החלטה מושכלת." />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://www.deribit.co.il/calculators/mortgage" />
         <link rel="canonical" href="https://www.deribit.co.il/calculators/mortgage" />
@@ -29,148 +29,179 @@ export default function MortgageCalculatorPage() {
           <MortgageCalculator />
 
           <article className="mt-16 bg-white dark:bg-gray-800 rounded-2xl shadow-xl overflow-hidden">
-            <div className="p-8 md:p-12 lg:p-16">
-              <h2 className="text-3xl md:text-4xl font-extrabold mb-10 text-center text-gray-900 dark:text-white">המדריך המקיף למחשבון משכנתא ותכנון הלוואת דיור</h2>
+            <div className="p-8 md:p-12 lg:p-16 prose prose-lg dark:prose-invert max-w-none space-y-10">
+              <h2 className="text-3xl md:text-4xl font-extrabold text-center text-gray-900 dark:text-white !mb-12">המדריך המעמיק למשכנתא: מהחזר חודשי ועד תמהיל אופטימלי</h2>
 
-              <section className="mb-12 text-center">
-                <p className="text-lg md:text-xl text-gray-700 dark:text-gray-300 mb-4">
-                  לקיחת משכנתא היא אחת ההחלטות הפיננסיות המשמעותיות ביותר שתקבלו בחייכם. מדובר בהתחייבות ארוכת טווח בסכומים גבוהים, והבחירות שתעשו ישפיעו על מצבכם הכלכלי לשנים רבות. מחשבון משכנתא הוא כלי חיוני המסייע להבין את המספרים, להשוות בין אפשרויות ולקבל החלטה מושכלת.
-                </p>
-                <p className="text-lg md:text-xl text-gray-700 dark:text-gray-300">
-                  המדריך הבא, יחד עם המחשבון המתקדם של דריבית, נועד להעניק לכם את הידע והכלים הדרושים לניווט בעולם המורכב של המשכנתאות, החל מהבנת המושגים הבסיסיים ועד לשימוש נכון במחשבון ותכנון התמהיל האופטימלי עבורכם.
+              <section>
+                <p className="lead">
+                  רכישת דירה היא צעד מרגש, אך לקיחת משכנתא היא התחייבות פיננסית כבדה וארוכת טווח. הבנה מעמיקה של המנגנונים, המסלולים, הסיכונים והאפשרויות היא קריטית כדי להימנע מטעויות יקרות ולהבטיח שההלוואה תתאים לכם לא רק היום, אלא גם בעוד 10, 20 או 30 שנה. מחשבון המשכנתא של דריבית, יחד עם מדריך זה, נועדו לספק לכם את כל המידע הדרוש.
                 </p>
               </section>
 
-              <section className="mb-12 p-6 bg-gray-50 dark:bg-gray-700 rounded-lg">
-                <h3 className="text-2xl font-semibold mb-4 flex items-center gap-3 text-gray-800 dark:text-white">
+              <section className="p-6 bg-gray-50 dark:bg-gray-700 rounded-lg !mt-8">
+                <h3 className="flex items-center gap-3 !mt-0">
                   <HelpCircle className="w-7 h-7 text-blue-600" />
-                  נתחיל מהבסיס: מהי משכנתא?
+                  תזכורת: מהי משכנתא?
                 </h3>
-                <p className="text-gray-700 dark:text-gray-200 leading-relaxed mb-3">
-                  משכנתא היא הלוואה גדולה לטווח ארוך, המיועדת בדרך כלל לרכישת נכס נדל"ן (דירה או בית). הייחוד שלה הוא שהנכס הנרכש משמש כבטוחה (משכון) לבנק המלווה. כלומר, אם הלווה אינו עומד בתשלומי ההחזר, הבנק רשאי לממש את הנכס כדי לכסות את יתרת החוב.
-                </p>
-                <p className="text-gray-700 dark:text-gray-200 leading-relaxed">
-                  המשכנתא מורכבת ממספר מסלולים אפשריים, שלכל אחד מהם מאפייני ריבית והצמדה שונים. בניית תמהיל משכנתא נכון, המשלב בין המסלולים השונים בצורה שמתאימה ליכולת ההחזר, לרמת הסיכון ולצפי הכלכלי של הלווה, היא המפתח למשכנתא משתלמת ובטוחה.
-                </p>
+                <p>משכנתא היא הלוואה לרכישת נדל"ן, כאשר הנכס עצמו משמש כבטוחה לבנק. היא מורכבת לרוב ממספר "מסלולים" בעלי מאפייני ריבית והצמדה שונים, המשולבים יחד ל"תמהיל" אחד.</p>
               </section>
 
-              <section className="mb-12">
-                <h3 className="text-2xl font-semibold mb-4 flex items-center gap-3 text-gray-800 dark:text-white">
+              <section>
+                <h3 className="flex items-center gap-3">
                   <Home className="w-7 h-7 text-green-600" />
-                  מדוע חיוני להשתמש במחשבון משכנתא?
+                  תפקידו הקריטי של מחשבון המשכנתא
                 </h3>
-                <p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-4">
-                  מחשבון משכנתא הוא הרבה יותר מסתם כלי לחישוב החזר חודשי. הוא מאפשר לכם:
-                </p>
-                <ul className="list-disc list-inside space-y-3 text-gray-700 dark:text-gray-300">
-                  <li><strong>להבין את גובה ההחזר החודשי:**</strong> לחשב כמה תצטרכו לשלם מדי חודש עבור סכום, תקופה וריבית נתונים, ולבדוק אם זה מתאים ליכולת הכלכלית שלכם.</li>
-                  <li><strong>להשוות בין מסלולים:**</strong> לראות כיצד שינויים בריבית, בהצמדה או בתקופה משפיעים על ההחזר החודשי ועל סך התשלום הכולל.</li>
-                  <li><strong>לראות את התמונה המלאה (לוח סילוקין):**</strong> להבין כיצד התשלום החודשי מתחלק בין החזר הקרן להחזר הריבית לאורך חיי ההלוואה (רמז: בהתחלה משלמים בעיקר ריבית).</li>
-                  <li><strong>לתכנן תמהיל אופטימלי:**</strong> לבנות שילוב של מספר מסלולים (למשל, חלק בריבית קבועה וחלק בריבית פריים) ולראות את ההשפעה הכוללת על ההחזר והסיכון.</li>
-                  <li><strong>לבדוק כדאיות מחזור משכנתא:**</strong> להשוות את תנאי המשכנתא הקיימת שלכם מול תנאים חדשים אפשריים ולראות אם מחזור יכול לחסוך לכם כסף.</li>
-                  <li><strong>לקבל החלטות מבוססות נתונים:**</strong> במקום להסתמך על תחושות בטן או הבטחות, המחשבון מספק מספרים קונקרטיים שעוזרים בקבלת החלטה מושכלת.</li>
+                <p>אל תסתפקו בהצעה הראשונה או בתחושת בטן. מחשבון משכנתא איכותי מאפשר לכם:</p>
+                <ul>
+                  <li>לחשב במדויק את ההחזר החודשי ההתחלתי והצפוי.</li>
+                  <li>להשוות באופן אובייקטיבי בין ריביות ומסלולים שונים.</li>
+                  <li>לראות את השפעת שינויים עתידיים (בריבית/מדד) על ההחזר.</li>
+                  <li>להבין את חלוקת התשלום בין קרן וריבית (לוח סילוקין).</li>
+                  <li>לבנות ולבדוק תמהילים שונים עד למציאת האיזון הנכון עבורכם.</li>
+                  <li>להעריך כדאיות של מחזור משכנתא קיימת.</li>
+                  <li>לקבל החלטות פיננסיות מבוססות נתונים ולא על השערות.</li>
                 </ul>
               </section>
 
-              <section className="mb-12 p-6 bg-gray-50 dark:bg-gray-700 rounded-lg">
-                <h3 className="text-2xl font-semibold mb-4 flex items-center gap-3 text-gray-800 dark:text-white">
+              <section className="p-6 bg-gray-50 dark:bg-gray-700 rounded-lg">
+                <h3 className="flex items-center gap-3 !mt-0">
                   <Calculator className="w-7 h-7 text-blue-600" />
-                  מדריך מפורט לשימוש במחשבון המשכנתא של דריבית
+                  שימוש במחשבון ופירוט מעמיק של מסלולי המשכנתא
                 </h3>
-                <p className="text-gray-700 dark:text-gray-200 leading-relaxed mb-4">
-                  המחשבון מאפשר לכם להגדיר מספר מסלולים שונים ולראות את התוצאה המשולבת. הנה הסבר על השדות העיקריים בכל מסלול:
-                </p>
-                <ol className="space-y-5 text-gray-700 dark:text-gray-200">
-                  <li className="border-b pb-4 dark:border-gray-600">
-                    <strong className="block mb-1"><Banknote className="inline-block w-4 h-4 mr-1" /> 1. סכום ההלוואה במסלול (₪):</strong><br /> כמה כסף אתם לווים במסלול הספציפי הזה? סך הסכומים בכל המסלולים צריך להיות שווה לסכום המשכנתא הכולל שאתם לוקחים.
-                  </li>
-                  <li className="border-b pb-4 dark:border-gray-600">
-                    <strong className="block mb-1"><CalendarDays className="inline-block w-4 h-4 mr-1" /> 2. תקופת ההלוואה (שנים):</strong><br /> לכמה שנים נלקח המסלול הספציפי הזה? ניתן לקחת מסלולים שונים לתקופות שונות באותה משכנתא.
-                  </li>
-                  <li className="border-b pb-4 dark:border-gray-600">
-                    <strong className="block mb-1"><Percent className="inline-block w-4 h-4 mr-1" /> 3. שיעור הריבית השנתית (%):</strong><br /> הריבית הנומינלית המוצעת לכם במסלול זה. שימו לב אם זו ריבית קבועה או הבסיס לריבית משתנה.
-                  </li>
-                  <li className="border-b pb-4 dark:border-gray-600">
-                    <strong className="block mb-1"><SlidersHorizontal className="inline-block w-4 h-4 mr-1" /> 4. סוג המסלול:</strong><br /> בחירת סוג המסלול משפיעה על אופן חישוב הריבית וההצמדה. המסלולים הנפוצים:
-                    <ul className="list-disc list-inside mt-2 space-y-1 pl-4 text-sm">
-                      <li><strong>פריים (P):</strong> הריבית משתנה בהתאם לריבית הפריים במשק (שמושפעת מריבית בנק ישראל). אין הצמדה למדד. נחשב למסלול גמיש אך עם סיכון לעליית החזרים אם ריבית הפריים עולה.</li>
-                      <li><strong>קבועה לא צמודה (קל"צ):</strong> הריבית קבועה לאורך כל חיי המסלול ואין הצמדה למדד. מסלול זה מספק ודאות מלאה לגבי גובה ההחזר החודשי, אך הריבית ההתחלתית שלו היא לרוב הגבוהה ביותר. כולל לרוב עמלת פירעון מוקדם משמעותית.</li>
-                      <li><strong>קבועה צמודה (ק"צ):</strong> הריבית קבועה, אך הקרן צמודה למדד המחירים לצרכן. ההחזר החודשי עולה אם המדד עולה (אינפלציה). הריבית ההתחלתית נמוכה יותר מקל"צ, אך יש סיכון לעליית ההחזרים והקרן בגלל ההצמדה.</li>
-                      <li><strong>משתנה צמודה (מ"צ):</strong> הריבית משתנה במועדים קבועים (למשל, כל שנה או 5 שנים) בהתאם לעוגן שנקבע (כמו אג"ח ממשלתי), והקרן צמודה למדד. מסלול זה משלב סיכון של שינוי ריבית וסיכון של הצמדה למדד.</li>
-                      <li><strong>מסלולים נוספים:</strong> קיימים מסלולים נוספים כמו ריבית משתנה לא צמודה (על בסיס פריים או עוגן אחר), מסלולי מט"ח ועוד.</li>
-                    </ul>
-                  </li>
-                  <li>
-                    <strong className="block mb-1"><ListOrdered className="inline-block w-4 h-4 mr-1" /> 5. הוספת מסלולים וחישוב:</strong><br /> 
-                    ניתן להוסיף מספר מסלולים לפי תמהיל המשכנתא הרצוי. לאחר מילוי כל המסלולים, לחצו "חשב" כדי לראות את ההחזר החודשי הכולל, סך התשלום ולוח הסילוקין המשולב.
-                  </li>
-                </ol>
-              </section>
-
-              <section className="mb-12">
-                <h3 className="text-2xl font-semibold mb-4 flex items-center gap-3 text-gray-800 dark:text-white">
-                  <FileText className="w-7 h-7 text-orange-500" />
-                  פענוח התוצאות: מה המספרים אומרים?
-                </h3>
-                <p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-4">
-                  המחשבון יציג לכם מספר נתונים חשובים ולוח סילוקין:
-                </p>
-                <div className="grid md:grid-cols-3 gap-4 mb-6">
-                  <div className="p-4 bg-gray-100 dark:bg-gray-700 rounded">
-                    <strong className="block text-center text-gray-900 dark:text-white">החזר חודשי התחלתי</strong>
-                    <p className="text-center text-2xl font-bold text-blue-600 dark:text-blue-400 mt-1">₪{/* Placeholder */}</p>
-                    <p className="text-xs text-center text-gray-500 dark:text-gray-400 mt-1">הסכום שתשלמו בחודש הראשון (עשוי להשתנות במסלולים צמודים/משתנים).</p>
+                <p>הכניסו את פרטי כל מסלול בתמהיל המשכנתא המתוכנן שלכם:</p>
+                <h4>1. סכום ההלוואה במסלול (₪) <Banknote className="inline-block w-5 h-5 ml-1" /></h4>
+                <p>חלק המשכנתא הכולל שאתם מייעדים למסלול זה.</p>
+                <h4>2. תקופת ההלוואה (שנים) <CalendarDays className="inline-block w-5 h-5 ml-1" /></h4>
+                <p>משך הזמן להחזר מסלול זה. תקופות ארוכות יותר מקטינות החזר חודשי אך מגדילות את סך הריבית המשולמת.</p>
+                <h4>3. שיעור הריבית השנתית (%) <Percent className="inline-block w-5 h-5 ml-1" /></h4>
+                <p>הריבית הנקובה שהוצעה לכם למסלול זה.</p>
+                <h4>4. סוג המסלול <SlidersHorizontal className="inline-block w-5 h-5 ml-1" /></h4>
+                <p>כאן טמונה מורכבות המשכנתא. נפרט את הנפוצים:</p>
+                <div className="space-y-4 mt-4">
+                  <div className="p-4 border rounded dark:border-gray-600">
+                    <strong className="text-blue-700 dark:text-blue-300">א. ריבית פריים (P)</strong>
+                    <p className="text-sm">ריבית זו צמודה לריבית בנק ישראל בתוספת מרווח קבוע (לרוב 1.5%). היא משתנה רק כאשר בנק ישראל משנה את הריבית במשק. <strong>יתרונות:</strong> גמישות גבוהה לפירעון מוקדם (ללא עמלות משמעותיות), אין הצמדה למדד, היסטורית הייתה זולה יחסית. <strong>חסרונות:</strong> סיכון לעליית החזרים אם ריבית בנק ישראל עולה. <strong>למי מתאים?</strong> למי שמאמין שהריבית תרד או תישאר נמוכה, או למי שמתכנן לסלק חלק זה מוקדם. <strong>דוגמה:</strong> אם הפריים 6% והמסלול הוא P-0.5, הריבית היא 5.5%. אם בנק ישראל יעלה ריבית והפריים יעלה ל-7%, הריבית תהיה 6.5% וההחזר החודשי יגדל.</p>
                   </div>
-                  <div className="p-4 bg-gray-100 dark:bg-gray-700 rounded">
-                    <strong className="block text-center text-gray-900 dark:text-white">סך ההחזר הכולל</strong>
-                    <p className="text-center text-2xl font-bold text-red-600 dark:text-red-400 mt-1">₪{/* Placeholder */}</p>
-                    <p className="text-xs text-center text-gray-500 dark:text-gray-400 mt-1">הסכום הכולל שתשלמו לבנק לאורך כל חיי המשכנתא (קרן + ריבית).</p>
+                  <div className="p-4 border rounded dark:border-gray-600">
+                    <strong className="text-green-700 dark:text-green-300">ב. ריבית קבועה לא צמודה (קל"צ)</strong>
+                    <p className="text-sm">הריבית נשארת זהה לאורך כל חיי המסלול, והקרן אינה צמודה למדד. <strong>יתרונות:</strong> ודאות מוחלטת לגבי גובה ההחזר החודשי לכל התקופה, הגנה מלאה מאינפלציה ושינויי ריבית. <strong>חסרונות:</strong> הריבית ההתחלתית היא הגבוהה ביותר מבין המסלולים, קיימת עמלת פירעון מוקדם משמעותית אם תרצו לסלק לפני הזמן והריבית במשק ירדה. <strong>למי מתאים?</strong> לשונאי סיכון, למי שחשוב לו לדעת בדיוק כמה ישלם כל חודש, ולטווחים ארוכים כ"עוגן" בתמהיל. <strong>דוגמה:</strong> אם לקחתם קל"צ ב-5%, תשלמו 5% לכל אורך התקופה, לא משנה מה יקרה לריביות או למדד.</p>
                   </div>
-                  <div className="p-4 bg-gray-100 dark:bg-gray-700 rounded">
-                    <strong className="block text-center text-gray-900 dark:text-white">סך הריבית המשולמת</strong>
-                    <p className="text-center text-2xl font-bold text-red-600 dark:text-red-400 mt-1">₪{/* Placeholder */}</p>
-                    <p className="text-xs text-center text-gray-500 dark:text-gray-400 mt-1">ההפרש בין סך ההחזר לסכום ההלוואה המקורי - "עלות הכסף".</p>
+                  <div className="p-4 border rounded dark:border-gray-600">
+                    <strong className="text-red-700 dark:text-red-300">ג. ריבית קבועה צמודה למדד (ק"צ)</strong>
+                    <p className="text-sm">הריבית קבועה, אך יתרת הקרן צמודה למדד המחירים לצרכן. <strong>יתרונות:</strong> הריבית ההתחלתית נמוכה משמעותית מקל"צ. <strong>חסרונות:</strong> ההחזר החודשי ויתרת הקרן עולים יחד עם האינפלציה (המדד). בתקופות אינפלציה גבוהה, ההחזר יכול לעלות משמעותית, ואף ייתכן מצב שבו אתם משלמים כל חודש אך הקרן גדלה (הצמדה שלילית). כולל גם עמלת פירעון מוקדם. <strong>למי מתאים?</strong> פחות מומלץ כיום עקב האינפלציה, אך יכול להתאים למי שצופה שהכנסתו תעלה ריאלית (מעל המדד) לאורך זמן, או לטווחים קצרים יחסית. <strong>דוגמה:</strong> לקחתם ק"צ ב-3%. בשנה הראשונה המדד עלה ב-4%. יתרת הקרן שלכם גדלה ב-4%, והריבית לשנה הבאה תחושב על הקרן הגבוהה יותר, מה שיגדיל את ההחזר.</p>
+                  </div>
+                   <div className="p-4 border rounded dark:border-gray-600">
+                    <strong className="text-purple-700 dark:text-purple-300">ד. ריבית משתנה צמודה למדד (מ"צ)</strong>
+                    <p className="text-sm">הקרן צמודה למדד, והריבית משתנה כל תקופה קבועה (לרוב כל 5 שנים) בהתאם לעוגן שנקבע (למשל, ממוצע תשואות אג"ח ממשלתיות צמודות). <strong>יתרונות:</strong> ריבית התחלתית נמוכה יחסית, נקודות יציאה ללא עמלה משמעותית במועדי שינוי הריבית. <strong>חסרונות:</strong> חשיפה כפולה לסיכון - גם סיכון עליית המדד (אינפלציה) וגם סיכון עליית הריבית במועד השינוי. <strong>למי מתאים?</strong> למי שמוכן לקחת סיכון גבוה יותר בתמורה לריבית התחלתית נמוכה, או כחלק מפיזור בתמהיל. <strong>דוגמה:</strong> לקחתם מ"צ משתנה כל 5 שנים. במשך 5 שנים אתם חשופים לעליית המדד. לאחר 5 שנים, הריבית תתעדכן לפי העוגן - היא יכולה לעלות, לרדת או להישאר דומה, בנוסף להשפעת המדד על הקרן.</p>
                   </div>
                 </div>
-                <InfoBox title="לוח הסילוקין (שפיצר)" className="text-sm">
-                  הטבלה המפורטת מציגה עבור כל תשלום ותשלום לאורך חיי ההלוואה, כיצד הוא מתחלק בין החזר על חשבון הריבית להחזר על חשבון הקרן. שימו לב שבתחילת הדרך, רוב התשלום הולך לכיסוי הריבית ורק חלק קטן מקטין את הקרן. ככל שהזמן עובר, יחס זה מתהפך. לוח הסילוקין גם מראה את יתרת הקרן העדכנית לאחר כל תשלום.
-                </InfoBox>
+                <h4 className="mt-6">5. הוספת מסלולים וחישוב <ListOrdered className="inline-block w-5 h-5 ml-1" /></h4>
+                <p>לאחר שהזנתם את כל פרטי המסלול הראשון, תוכלו ללחוץ על "הוסף מסלול" ולהזין את פרטי המסלולים הנוספים בתמהיל שלכם. בסיום, לחצו "חשב".</p>
               </section>
+
+              <section>
+                <h3 className="flex items-center gap-3">
+                  <FileText className="w-7 h-7 text-orange-500" />
+                  פענוח תוצאות המחשבון - מבט מעמיק
+                </h3>
+                <p>התוצאות יציגו לכם את הנתונים המשולבים של כל המסלולים שהזנתם:</p>
+                <div className="grid md:grid-cols-3 gap-4 my-6">
+                   <div className="p-4 bg-gray-100 dark:bg-gray-700 rounded">
+                     <strong className="block text-center text-gray-900 dark:text-white">החזר חודשי התחלתי</strong>
+                     <p className="text-center text-2xl font-bold text-blue-600 dark:text-blue-400 mt-1">₪{/* Placeholder */}</p>
+                     <p className="text-xs text-center text-gray-500 dark:text-gray-400 mt-1">סך התשלום בחודש הראשון. זכרו שהוא ישתנה במסלולים צמודים/משתנים.</p>
+                   </div>
+                   <div className="p-4 bg-gray-100 dark:bg-gray-700 rounded">
+                     <strong className="block text-center text-gray-900 dark:text-white">סך ההחזר הכולל</strong>
+                     <p className="text-center text-2xl font-bold text-red-600 dark:text-red-400 mt-1">₪{/* Placeholder */}</p>
+                     <p className="text-xs text-center text-gray-500 dark:text-gray-400 mt-1">הסכום הכולל שתשלמו לבנק על פני כל שנות המשכנתא.</p>
+                   </div>
+                   <div className="p-4 bg-gray-100 dark:bg-gray-700 rounded">
+                     <strong className="block text-center text-gray-900 dark:text-white">סך הריבית המשולמת</strong>
+                     <p className="text-center text-2xl font-bold text-red-600 dark:text-red-400 mt-1">₪{/* Placeholder */}</p>
+                     <p className="text-xs text-center text-gray-500 dark:text-gray-400 mt-1">ההפרש בין סך ההחזר לסכום ההלוואה - עלות ההלוואה שלכם.</p>
+                   </div>
+                 </div>
+                 <InfoBox title="ניתוח לוח הסילוקין (שפיצר)" className="text-sm">
+                   לוח הסילוקין הוא טבלה המפרטת כל תשלום עתידי. שיטת שפיצר הנפוצה מבטיחה החזר חודשי קבוע (במסלולים לא צמודים ולא משתנים), אך שימו לב לחלוקה הפנימית: בתחילת חיי המשכנתא, רוב מוחלט של התשלום מופנה לכיסוי הריבית ורק חלק זעיר מקטין את הקרן. ככל שמתקדמים בהחזרים, חלק הריבית בתשלום קטן וחלק הקרן גדל. הבנה זו חשובה, במיוחד כששוקלים פירעון מוקדם.
+                 </InfoBox>
+               </section>
+
+              <section>
+                <h3 className="flex items-center gap-3">
+                    <Shuffle className="w-7 h-7 text-indigo-500" />
+                    חשיבות תמהיל המשכנתא הנכון
+                </h3>
+                <p>כמעט אף פעם לא מומלץ לקחת משכנתא במסלול אחד בלבד. בניית תמהיל נכון, המשלב מספר מסלולים, מאפשרת לפזר סיכונים ולהתאים את המשכנתא למצבכם וליכולותיכם:</p>
+                <ul>
+                    <li><strong>פיזור סיכון ריבית:</strong> שילוב מסלולים בריבית קבועה (קל"צ) עם מסלולים בריבית משתנה (פריים, מ"צ) מאפשר ליהנות מיציבות חלקית לצד פוטנציאל לחיסכון אם הריביות ירדו (ולהיפך).</li>
+                    <li><strong>פיזור סיכון אינפלציה:</strong> שילוב מסלולים צמודי מדד (ק"צ, מ"צ) עם מסלולים לא צמודים (קל"צ, פריים) מאזן את החשיפה לעליית מדד המחירים לצרכן.</li>
+                    <li><strong>התאמה לתזרים:</strong> ניתן לבנות תמהיל עם החזר התחלתי נמוך יותר (למשל, עם יותר פריים או תקופות ארוכות יותר) אם צופים עלייה בהכנסות בעתיד, או תמהיל יציב יותר אם מעדיפים ודאות.</li>
+                </ul>
+                <TipBox className="mt-4 text-sm">
+                    <strong>דוגמאות לתמהילים (להמחשה בלבד!):</strong>
+                    *   <strong>שמרני/יציב:</strong> אחוז גבוה של קל"צ (למשל 50%), והיתרה בפריים ו/או מ"צ לטווחים קצרים יותר.
+                    *   <strong>מאוזן:</strong> חלוקה יחסית שווה בין קל"צ, פריים ומשתנה צמודה (למשל, שליש כל אחד).
+                    *   <strong>נוטה לסיכון/גמישות:</strong> אחוז גבוה של פריים (עד המגבלה של בנק ישראל, כיום 2/3 מהמשכנתא) ואחוז גבוה של משתנות, עם חלק קטן יחסית בקל"צ.
+                    <strong>חובה להתאים את התמהיל למצבכם האישי ולהתייעץ!</strong>
+                </TipBox>
+            </section>
+
+              <section>
+                  <h3 className="flex items-center gap-3">
+                      <Library className="w-7 h-7 text-cyan-500" />
+                      מושגי יסוד נוספים במשכנתא
+                  </h3>
+                  <div className="space-y-3">
+                      <p><strong className="text-gray-900 dark:text-white">אחוז מימון (LTV - Loan to Value):</strong> היחס בין סכום המשכנתא לשווי הנכס. בנק ישראל מטיל מגבלות על אחוז המימון (למשל, עד 75% לדירה ראשונה, 50% למשפרי דיור, וכו'). ככל שאחוז המימון נמוך יותר, הריביות המוצעות לרוב טובות יותר.</p>
+                      <p><strong className="text-gray-900 dark:text-white">יחס החזר מהכנסה (PTI - Payment to Income):</strong> היחס בין ההחזר החודשי הכולל על כל ההלוואות (לא רק משכנתא) להכנסה הפנויה נטו של משק הבית. מומלץ לא לעבור יחס של 30%-35% כדי לשמור על יציבות כלכלית.</p>
+                      <p><strong className="text-gray-900 dark:text-white">עמלת פירעון מוקדם:**</strong> קנס שהבנק עשוי לגבות אם תרצו לסלק את המשכנתא (או חלק ממנה) לפני תום התקופה. רלוונטית בעיקר במסלולים בריבית קבועה (קל"צ, ק"צ) כאשר הריבית הממוצעת במשק נמוכה מהריבית שלכם. במסלול פריים אין עמלה משמעותית.</p>
+                      <p><strong className="text-gray-900 dark:text-white">תקופת גרייס (חסד):**</strong> תקופה (לרוב קצרה) בתחילת המשכנתא שבה משלמים רק את הריבית ולא את הקרן. מקטין את ההחזר ההתחלתי אך מגדיל את סך התשלום הכולל. יכול להתאים במקרים ספציפיים (למשל, בבנייה).</p>
+                      <p><strong className="text-gray-900 dark:text-white">מחזור משכנתא:**</strong> החלפת המשכנתא הקיימת במשכנתא חדשה בתנאים טובים יותר (ריבית נמוכה יותר, תמהיל שונה). כדאי לבדוק כדאיות מחזור אחת לכמה שנים, או כאשר חל שינוי משמעותי בריביות במשק או במצבכם הכלכלי.</p>
+                  </div>
+              </section>
+
+               <section>
+                 <h3 className="flex items-center gap-3">
+                     <ListOrdered className="w-7 h-7 text-lime-500" />
+                     שלבי התהליך בלקיחת משכנתא (בקצרה)
+                 </h3>
+                 <ol className="list-decimal list-inside space-y-1 text-sm text-gray-700 dark:text-gray-300">
+                    <li>קבלת **אישור עקרוני** מהבנק (מסגרת אשראי למשכנתא).</li>
+                    <li>מציאת נכס וחתימת חוזה רכישה.</li>
+                    <li>הזמנת **שמאות** לנכס (דרך הבנק או באופן פרטי).</li>
+                    <li>קבלת **אישור סופי** למשכנתא מהבנק בהתאם לשמאות ולחוזה.</li>
+                    <li>**חתימה** על מסמכי ההלוואה והבטוחות בבנק.</li>
+                    <li>רכישת **ביטוח חיים וביטוח נכס** למשכנתא.</li>
+                    <li>רישום הערת אזהרה ו/או משכון ברשויות.</li>
+                    <li>**העברת כספי המשכנתא** למוכר הנכס.</li>
+                 </ol>
+                 <p className="text-xs mt-2 text-gray-500 dark:text-gray-400">זהו תהליך מורכב, ומומלץ להיעזר באנשי מקצוע (עו"ד, יועץ משכנתאות) בכל שלב.</p>
+               </section>
 
               <section className="mb-12 bg-green-50 dark:bg-green-900/30 rounded-xl p-6">
                 <h3 className="text-xl font-semibold mb-4 flex items-center gap-3 text-green-800 dark:text-green-200">
-                  <Landmark className="w-6 h-6 text-green-600" />
-                  טיפים חשובים לבחירת תמהיל משכנתא נכון
+                  <CheckSquare className="w-6 h-6 text-green-600" />
+                  סיכום טיפים לבחירת משכנתא חכמה
                 </h3>
                 <ul className="space-y-3 text-gray-700 dark:text-gray-300">
-                  <li><strong className="text-gray-900 dark:text-white">1. התאמה ליכולת ההחזר:**</strong> חשבו לא רק על ההחזר ההתחלתי, אלא גם על יכולתכם לעמוד בעליות אפשריות בהחזר החודשי (במסלולים משתנים/צמודים) לאורך זמן. כלל אצבע מקובל הוא שההחזר החודשי לא יעלה על 30%-35% מההכנסה הפנויה.</li>
-                  <li><strong className="text-gray-900 dark:text-white">2. פיזור סיכונים:**</strong> אל תשימו את כל הכסף במסלול אחד. שילוב של מסלולים (למשל, שליש קל"צ, שליש פריים, שליש משתנה צמודה) יכול לאזן בין הוודאות של ריבית קבועה לפוטנציאל החיסכון (והסיכון) של ריביות משתנות.</li>
-                  <li><strong className="text-gray-900 dark:text-white">3. הבנת הסיכונים בכל מסלול:**</strong> דעו מהם הטריגרים לשינוי בריבית או בהחזר בכל מסלול (פריים, מדד, עוגן) ומה הצפי לעתיד (למרות שקשה לחזות).</li>
-                  <li><strong className="text-gray-900 dark:text-white">4. תקופת ההלוואה:**</strong> תקופה ארוכה יותר מקטינה את ההחזר החודשי אך מגדילה משמעותית את סך הריבית שתשלמו. תקופה קצרה יותר דורשת החזר חודשי גבוה יותר אך חוסכת בריבית.</li>
-                  <li><strong className="text-gray-900 dark:text-white">5. השוואת הצעות:**</strong> אל תיקחו את ההצעה הראשונה. פנו למספר בנקים, קבלו הצעות מפורטות לתמהילים שונים, והתמקחו על הריביות.</li>
-                  <li><strong className="text-gray-900 dark:text-white">6. אל תוותרו על ייעוץ מקצועי:**</strong> יועץ משכנתאות בלתי תלוי יכול לעזור לכם לבנות תמהיל מותאם אישית, לנהל מו"מ מול הבנקים ולחסוך לכם הרבה כסף וטעויות יקרות.</li>
+                  <li><strong className="text-gray-900 dark:text-white">• תכננו לטווח ארוך:</strong> חשבו על שינויים עתידיים בהכנסות, הוצאות וריביות.</li>
+                  <li><strong className="text-gray-900 dark:text-white">• התאימו את התמהיל לפרופיל הסיכון שלכם.</strong></li>
+                  <li><strong className="text-gray-900 dark:text-white">• שמרו על יחס החזר סביר (עד 30-35% מההכנסה הפנויה).</strong></li>
+                  <li><strong className="text-gray-900 dark:text-white">• בצעו סקר שוק מקיף והשוו הצעות ממספר בנקים.</strong></li>
+                  <li><strong className="text-gray-900 dark:text-white">• אל תתמקדו רק בריבית - בחנו את כל תנאי המסלול והתמהיל.</strong></li>
+                  <li><strong className="text-gray-900 dark:text-white">• אל תוותרו על ייעוץ מקצועי בלתי תלוי.</strong></li>
+                  <li><strong className="text-gray-900 dark:text-white">• קראו את כל האותיות הקטנות לפני החתימה.</strong></li>
                 </ul>
               </section>
 
-              <section className="mb-12 bg-yellow-50 dark:bg-yellow-900/30 rounded-xl p-6">
-                <h3 className="text-xl font-semibold mb-4 flex items-center gap-3 text-yellow-800 dark:text-yellow-200">
-                  <AlertTriangle className="w-6 h-6 text-yellow-500" />
-                  חשוב לזכור: מגבלות המחשבון והמציאות
-                </h3>
-                <ul className="space-y-3 text-gray-700 dark:text-gray-300">
-                  <li>• **הערכה בלבד:** המחשבון מספק סימולציה והערכה כללית המבוססת על הנתונים שהוזנו. הוא אינו מהווה הצעה מחייבת מהבנק.</li>
-                  <li>• **תנאים סופיים:** הריביות, המסלולים והתנאים הסופיים נקבעים על ידי הבנק בלבד, לאחר בחינת נתוני הלווה והנכס.</li>
-                  <li>• **עלויות נלוות:** החישוב אינו כולל עלויות נוספות הכרוכות בלקיחת משכנתא, כגון: עמלת פתיחת תיק, שמאות, ביטוח חיים, ביטוח נכס, רישום ברשויות ועוד.</li>
-                  <li>• **אי-ודאות:** ריבית הפריים והמדד יכולים להשתנות באופן בלתי צפוי ולהשפיע על ההחזר החודשי במסלולים הרלוונטיים.</li>
-                </ul>
-                 <WarningBox title="חובה להתייעץ" className="mt-4 text-sm">
-                   אין לראות בתוצאות המחשבון או בתוכן המדריך תחליף לייעוץ משכנתאות מקצועי ופרטני המתחשב במכלול הנתונים האישיים שלכם. פנו ליועץ מוסמך לפני קבלת החלטה.
-                 </WarningBox>
-              </section>
+               <WarningBox title="אזהרה וגילוי נאות" className="mb-10 text-base">
+                 המידע המוצג בעמוד זה ובמחשבון המשכנתא נועד להמחשה, לימוד והרחבת ידע בלבד. הוא אינו מהווה ייעוץ השקעות, ייעוץ מס, ייעוץ משכנתאות או המלצה כלשהי לביצוע פעולה. התוצאות המוצגות הן סימולציות תיאורטיות המבוססות על הנחות והנתונים שהוזנו, ואינן מהוות הבטחה לתוצאה עתידית או הצעה מחייבת מהבנק. תנאי המשכנתא בפועל ייקבעו באופן פרטני על ידי הגוף המלווה. לקיחת משכנתא היא החלטה מורכבת בעלת השלכות ארוכות טווח. **חובה להתייעץ עם יועץ משכנתאות מוסמך ובלתי תלוי ו/או יועץ פיננסי לפני קבלת החלטות.**
+               </WarningBox>
 
               <div className="text-sm text-gray-500 dark:text-gray-400 text-center">
                 <p>
-                  <strong>מושגים קשורים:</strong> מחשבון משכנתא, חישוב משכנתא, ריבית משכנתא, מסלולי משכנתא, פריים, מדד המחירים לצרכן, ריבית קבועה לא צמודה (קל"צ), ריבית קבועה צמודה (ק"צ), ריבית משתנה צמודה (מ"צ), תמהיל משכנתא, לוח סילוקין, שפיצר, קרן שווה, גרייס, עמלת פירעון מוקדם, מחזור משכנתא, החזר חודשי, יועץ משכנתאות, הלוואת דיור, אחוז מימון (LTV), ביטוח משכנתא.
+                  <strong>מושגים קשורים:</strong> מחשבון משכנתא, חישוב משכנתא, ריבית משכנתא, מסלולי משכנתא, פריים, מדד המחירים לצרכן, ריבית קבועה לא צמודה (קל"צ), ריבית קבועה צמודה (ק"צ), ריבית משתנה צמודה (מ"צ), תמהיל משכנתא, לוח סילוקין, שפיצר, קרן שווה, גרייס, עמלת פירעון מוקדם, מחזור משכנתא, החזר חודשי, יועץ משכנתאות, הלוואת דיור, אחוז מימון (LTV), יחס החזר מהכנסה (PTI), ביטוח משכנתא, אישור עקרוני, שמאות מקרקעין.
                 </p>
               </div>
             </div>
