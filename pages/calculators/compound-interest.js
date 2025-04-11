@@ -1,157 +1,247 @@
 import Head from 'next/head';
 import { Calculator } from '../../components/Calculator';
 import Link from 'next/link';
-import { ChevronRight, Info, TrendingUp, PiggyBank, Clock, HelpCircle, BarChart2, Users } from 'lucide-react';
-import { WarningBox } from '../../components/Boxes';
+import { ChevronRight, Info, TrendingUp, PiggyBank, Clock, HelpCircle, BarChart2, Users, Scale, AlertTriangle, CheckSquare } from 'lucide-react';
+import { WarningBox, TipBox, InfoBox } from '../../components/Boxes';
 
 export default function CompoundInterestCalculator() {
   return (
     <>
       <Head>
-        <title>מחשבון ריבית דריבית | דריבית - חשבו את כוח ההשקעה שלכם</title>
-        <meta name="description" content="מחשבון ריבית דריבית המתקדם בישראל - חשבו את התשואה הפוטנציאלית על ההשקעות שלכם לאורך זמן, כולל הפקדות חודשיות, דמי ניהול והמחשה ויזואלית." />
-        <meta name="keywords" content="מחשבון ריבית דריבית, חישוב ריבית דריבית, תשואה על השקעות, הפקדות חודשיות, חיסכון ארוך טווח, כוח הריבית דריבית, מחשבון תשואה, חישוב תשואה, קופת גמל, קרן השתלמות, פנסיה" />
-        <meta property="og:title" content="מחשבון ריבית דריבית | דריבית - חשבו את כוח ההשקעה שלכם" />
-        <meta property="og:description" content="גלו את הפוטנציאל האמיתי של ההשקעות שלכם עם מחשבון ריבית דריבית מבית דריבית. כולל הפקדות, דמי ניהול והמחשה." />
+        <title>מחשבון ריבית דריבית | דריבית - המדריך המקיף לכוח ההשקעה שלכם</title>
+        <meta name="description" content="גלו את כוחה של הריבית דריבית עם המחשבון המתקדם של דריבית. מדריך מקיף, דוגמאות, השפעת אינפלציה, מיסוי וטיפים לחיסכון והשקעה חכמה לטווח ארוך." />
+        <meta name="keywords" content="מחשבון ריבית דריבית, חישוב ריבית דריבית, כוח הריבית דריבית, תשואה על השקעות, הפקדות חודשיות, חיסכון ארוך טווח, תכנון פרישה, קופת גמל, קרן השתלמות, פנסיה, השקעות פסיביות, דמי ניהול, אינפלציה, מיסוי השקעות" />
+        <meta property="og:title" content="מחשבון ריבית דריבית | דריבית - המדריך המקיף לכוח ההשקעה שלכם" />
+        <meta property="og:description" content="המדריך המלא לכוח הריבית דריבית ומחשבון מתקדם מבית דריבית לחישוב פוטנציאל הצמיחה של החיסכון וההשקעות שלכם לאורך זמן." />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://www.deribit.co.il/calculators/compound-interest" />
         <link rel="canonical" href="https://www.deribit.co.il/calculators/compound-interest" />
       </Head>
-      <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white dark:from-gray-900 dark:to-gray-800">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
           <div className="mb-8">
             <Link href="/calculators" className="text-sm text-gray-600 dark:text-gray-400 hover:text-blue-600 flex items-center gap-1">
               <ChevronRight className="w-4 h-4" />
               חזרה למחשבונים
             </Link>
           </div>
-          <Calculator />
           
-          <div className="mt-12 bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-8 md:p-12">
-            <h2 className="text-3xl font-bold mb-8 text-center text-gray-800 dark:text-white">הכל על מחשבון ריבית דריבית</h2>
-            
-            <div className="mb-10 text-center">
-              <p className="text-lg text-gray-700 dark:text-gray-300 mb-4">
-                מחשבון ריבית דריבית הוא כלי עוצמתי שיכול לשנות את הדרך בה אתם חושבים על כסף וחיסכון. הוא מאפשר לנו לבצע חישוב שכמעט בלתי אפשרי לבצע באופן אינטואיטיבי, ולהבין את **כוחה האמיתי של הריבית המצטברת** על ההשקעות שלנו לאורך זמן.
-              </p>
-              <p className="text-lg text-gray-700 dark:text-gray-300">
-                המחשבון של דריבית נועד להמחיש לכם כמה תוכלו לצבור לאורך שנים, בהשקעה עקבית וחכמה. התכוננו להיות מופתעים מהתוצאות!
-              </p>
-            </div>
-            
-            <section className="mb-10">
-              <h3 className="text-2xl font-semibold mb-4 flex items-center gap-2 text-gray-800 dark:text-white">
-                <HelpCircle className="w-6 h-6 text-blue-500" />
-                מהי ריבית דריבית?
-              </h3>
-              <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
-                ריבית דריבית היא למעשה "ריבית על ריבית". זהו הרווח שנוצר לא רק מהסכום המקורי שהשקעתם (הקרן), אלא גם מהרווחים שנצברו על הקרן לאורך התקופה. כאשר הרווחים הללו מתווספים לקרן ומתחילים גם הם לייצר רווחים נוספים, נוצר אפקט "כדור שלג".
-              </p>
-              <p className="text-gray-600 dark:text-gray-300 leading-relaxed mt-3">
-                לדוגמה: אם תשקיעו 1,000 ₪ בתשואה של 10% לשנה, בשנה הראשונה תרוויחו 100 ₪. אם תמשכו את הרווח, יישארו לכם 1,000 ₪. אך אם לא תמשכו, בשנה השנייה תתחילו עם 1,100 ₪, וה-10% יחושבו על הסכום הזה, כך שתרוויחו 110 ₪. בשנה השלישית תרוויחו 121 ₪, וכן הלאה. ככל שהזמן עובר, הצמיחה הופכת מהירה יותר ויותר.
-              </p>
-            </section>
-            
-            <section className="mb-10">
-              <h3 className="text-2xl font-semibold mb-4 flex items-center gap-2 text-gray-800 dark:text-white">
-                <TrendingUp className="w-6 h-6 text-green-500" />
-                למה חשוב להכיר את עיקרון הריבית דריבית?
-              </h3>
-              <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
-                הבנת העיקרון הזה היא קריטית לניהול פיננסי נכון. מי שלא מבין את כוחה של הריבית דריבית, לרוב משלם אותה - בריביות על הלוואות, משכנתאות, מינוס בבנק וכרטיסי אשראי. הריבית הזו פועלת נגדו.
-              </p>
-              <p className="text-gray-600 dark:text-gray-300 leading-relaxed mt-3">
-                לעומת זאת, מי שמבין את העיקרון יכול לרתום אותו לטובתו וליהנות ממנו דרך השקעות בשוק ההון, תוכניות חיסכון פנסיוני, נדל"ן מניב ועוד. הריבית הזו פועלת עבורו ומצמיחה את הונו.
-              </p>
-            </section>
-            
-            <section className="mb-10">
-              <h3 className="text-2xl font-semibold mb-4 flex items-center gap-2 text-gray-800 dark:text-white">
-                <Users className="w-6 h-6 text-purple-500" />
-                למי המחשבון רלוונטי?
-              </h3>
-              <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
-                במילה אחת: <strong>לכולם.</strong> <br />
-                בפירוט: המחשבון מתאים לכל מי שחוסך או משקיע לטווח ארוך, ובמיוחד למשקיעים פסיביים בשוק ההון.
-              </p>
-              <p className="text-gray-600 dark:text-gray-300 leading-relaxed mt-3">
-                גם אם אינכם משקיעים באופן עצמאי, סביר להניח שיש לכם חיסכון פנסיוני (קרן פנסיה, ביטוח מנהלים או קופת גמל) וייתכן שיש לכם גם קרן השתלמות. כל הכספים הללו מושקעים בשוק ההון, בדרך כזו או אחרת, ומנגנון הריבית דריבית הוא המנוע המרכזי לצמיחתם לאורך שנים. לכן, הבנת הפוטנציאל באמצעות המחשבון רלוונטית לכל חוסך בישראל.
-              </p>
-            </section>
-            
-            <section className="mb-10">
-              <h3 className="text-2xl font-semibold mb-4 flex items-center gap-2 text-gray-800 dark:text-white">
-                <PiggyBank className="w-6 h-6 text-blue-500" />
-                איך להשתמש במחשבון?
-              </h3>
-              <ol className="space-y-4 text-gray-600 dark:text-gray-300 list-decimal list-inside">
-                <li>
-                  <strong>סכום השקעה ראשוני:</strong> הזינו את הסכום הנוכחי שיש לכם בחיסכון/השקעה הרלוונטית, או את הסכום הראשוני שאתם מתכננים להפקיד. אם אתם מתחילים מאפס, הזינו 0.
-                </li>
-                <li>
-                  <strong>סכום הפקדה חודשית:</strong> הזינו את הסכום הקבוע שאתם מתכננים להפקיד מדי חודש לאותה השקעה/חיסכון. אם אינכם מתכננים הפקדות נוספות, הזינו 0.
-                  <TipBox className="mt-2 text-sm">
-                    <strong>טיפ:</strong> בחיסכון פנסיוני או קרן השתלמות, תוכלו למצוא את סכום ההפקדה החודשית (עובד + מעסיק) בדוחות הרבעוניים/שנתיים או בתלוש השכר.
-                  </TipBox>
-                </li>
-                <li>
-                  <strong>מספר שנות ההשקעה:</strong> כמה שנים אתם מתכננים להמשיך ולהפקיד ולהשאיר את הכסף מושקע? ככל שהטווח ארוך יותר, כך אפקט הריבית דריבית משמעותי יותר.
-                </li>
-                <li>
-                  <strong>תשואה שנתית ממוצעת (%):</strong> זהו הנתון המורכב ביותר להערכה, מכיוון שתשואות העתיד אינן ידועות. מה שמזינים כאן הוא *הנחה* מבוססת ציפיות או נתוני עבר.
-                  <ul className="list-disc list-inside mt-2 space-y-1 pl-4">
-                    <li><strong>תלוי מסלול/רמת סיכון:</strong> ככלל, מסלולים עם חשיפה גבוהה יותר למניות (כמו מסלולים מחקי מדדים גלובליים כמו S&P 500 או MSCI World) צפויים להניב תשואה שנתית ממוצעת גבוהה יותר בטווח הארוך, אך גם יהיו תנודתיים יותר. מסלולים סולידיים יותר (אג"ח, פקדונות) או מסלולים תלויי גיל צפויים להניב תשואה נמוכה יותר אך עם תנודתיות נמוכה יותר.</li>
-                    <li><strong>ממוצע היסטורי כנקודת ייחוס (לא הבטחה!):</strong> לדוגמה, התשואה השנתית הממוצעת הנומינלית (לפני אינפלציה) של מדד S&P 500 לאורך עשרות שנים הייתה היסטורית סביב 9%-11%. מסלולים כלליים בפנסיה/גמל הניבו היסטורית ממוצע נמוך יותר, סביב 4%-6%.
-                    </li>
+          <Calculator />
+
+          <article className="mt-16 bg-white dark:bg-gray-800 rounded-2xl shadow-xl overflow-hidden">
+            <div className="p-8 md:p-12 lg:p-16">
+              <h2 className="text-3xl md:text-4xl font-extrabold mb-10 text-center text-gray-900 dark:text-white">המדריך המקיף לריבית דריבית וכוחה של הצמיחה המצטברת</h2>
+
+              <section className="mb-12 text-center">
+                <p className="text-lg md:text-xl text-gray-700 dark:text-gray-300 mb-4">
+                  מחשבון ריבית דריבית הוא לא סתם עוד כלי חישוב – הוא חלון הצצה לעתיד הפיננסי שלכם. הוא חושף את "הקסם" של הריבית המצטברת, עיקרון פיננסי יסודי שאלברט איינשטיין כינה אותו (לפי האגדה) "הכוח החזק ביותר ביקום". הבנה ויישום של עיקרון זה יכולים להיות ההבדל בין ביטחון כלכלי לדאגות פיננסיות.
+                </p>
+                <p className="text-lg md:text-xl text-gray-700 dark:text-gray-300">
+                  במדריך זה, יחד עם המחשבון של דריבית, נצלול לעומק המושג, נבין מדוע הוא קריטי לכל אחד, נלמד כיצד להשתמש במחשבון בצורה נכונה, ונדון בהיבטים נוספים כמו אינפלציה, מיסים והנחות היסוד של החישוב.
+                </p>
+              </section>
+
+              <section className="mb-12 p-6 bg-gray-50 dark:bg-gray-700 rounded-lg">
+                <h3 className="text-2xl font-semibold mb-4 flex items-center gap-3 text-gray-800 dark:text-white">
+                  <HelpCircle className="w-7 h-7 text-blue-600" />
+                  מהי ריבית דריבית (ריבית מצטברת)?
+                </h3>
+                <p className="text-gray-700 dark:text-gray-200 leading-relaxed mb-3">
+                  בפשטות, ריבית דריבית היא **ריבית שמרוויחים על הריבית**. בניגוד לריבית פשוטה, שמחושבת רק על סכום הקרן המקורי, ריבית דריבית מחושבת בכל תקופה מחדש על הקרן *בתוספת* כל הריבית שנצברה עד כה. הרווחים מהתקופה הקודמת הופכים לחלק מהקרן בתקופה הבאה, ומתחילים גם הם לייצר רווחים.
+                </p>
+                <h4 className="font-semibold mb-2 text-gray-800 dark:text-white">דוגמה מספרית להמחשה:</h4>
+                <p className="text-gray-700 dark:text-gray-200 leading-relaxed mb-2">
+                  נניח שהשקעתם 10,000 ₪ בתשואה שנתית של 8%.
+                </p>
+                <ul className="list-disc list-inside space-y-1 text-gray-700 dark:text-gray-200 mb-3">
+                  <li>**שנה 1:** הקרן היא 10,000 ₪. הרווח הוא 800 ₪ (8% מ-10,000). היתרה בסוף השנה: 10,800 ₪.</li>
+                  <li>**שנה 2:** הקרן היא 10,800 ₪. הרווח הוא 864 ₪ (8% מ-10,800). היתרה בסוף השנה: 11,664 ₪.</li>
+                  <li>**שנה 3:** הקרן היא 11,664 ₪. הרווח הוא 933.12 ₪ (8% מ-11,664). היתרה בסוף השנה: 12,597.12 ₪.</li>
+                </ul>
+                <p className="text-gray-700 dark:text-gray-200 leading-relaxed">
+                  שימו לב כיצד סכום הרווח השנתי גדל משנה לשנה. זוהי תמצית אפקט "כדור השלג": ככל שיש יותר זמן וככל שהתשואה גבוהה יותר, כך הצמיחה הופכת אקספוננציאלית.
+                </p>
+              </section>
+
+              <section className="mb-12">
+                <h3 className="text-2xl font-semibold mb-4 flex items-center gap-3 text-gray-800 dark:text-white">
+                  <TrendingUp className="w-7 h-7 text-green-600" />
+                  חשיבות עליונה: מדוע חובה להבין ריבית דריבית?
+                </h3>
+                <p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-3">
+                  הבנת העיקרון הזה היא אבן יסוד באוריינות פיננסית. הסיבה פשוטה: **ריבית דריבית פועלת תמיד - או לטובתכם או נגדכם.**
+                </p>
+                <div className="grid md:grid-cols-2 gap-6">
+                  <div className="bg-red-50 dark:bg-red-900/30 p-4 rounded-lg border border-red-200 dark:border-red-700">
+                    <h4 className="font-semibold mb-2 text-red-700 dark:text-red-300">כשהיא פועלת נגדכם:</h4>
+                    <ul className="list-disc list-inside space-y-1 text-red-600 dark:text-red-200">
+                      <li>חובות בכרטיסי אשראי</li>
+                      <li>הלוואות בריבית גבוהה</li>
+                      <li>מינוס (אוברדרפט) בבנק</li>
+                      <li>משכנתאות (אם כי כאן הריבית לרוב נמוכה יותר)</li>
+                    </ul>
+                    <p className="mt-2 text-sm text-red-500 dark:text-red-400">כאן, אתם משלמים "ריבית על ריבית" לגופים הפיננסיים, והחוב עלול לתפוח במהירות.</p>
+                  </div>
+                  <div className="bg-green-50 dark:bg-green-900/30 p-4 rounded-lg border border-green-200 dark:border-green-700">
+                    <h4 className="font-semibold mb-2 text-green-700 dark:text-green-300">כשהיא פועלת לטובתכם:</h4>
+                    <ul className="list-disc list-inside space-y-1 text-green-600 dark:text-green-200">
+                      <li>חיסכון פנסיוני (פנסיה, גמל, השתלמות)</li>
+                      <li>השקעות בשוק ההון (מניות, אג"ח, קרנות)</li>
+                      <li>פקדונות בנקאיים (אם כי התשואה נמוכה)</li>
+                      <li>השקעות אלטרנטיביות (נדל"ן מניב וכו')</li>
+                    </ul>
+                    <p className="mt-2 text-sm text-green-500 dark:text-green-400">כאן, הכסף שלכם "עובד בשבילכם" ומייצר עוד כסף לאורך זמן.</p>
+                  </div>
+                </div>
+              </section>
+
+              <section className="mb-12">
+                <h3 className="text-2xl font-semibold mb-4 flex items-center gap-3 text-gray-800 dark:text-white">
+                  <Users className="w-7 h-7 text-purple-600" />
+                  למי מיועד מחשבון ריבית דריבית?
+                </h3>
+                <p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-3">
+                  לכל מי שרוצה להבין את פוטנציאל הצמיחה של כספו לאורך זמן. זה רלוונטי במיוחד עבור:
+                </p>
+                <ul className="list-disc list-inside space-y-2 text-gray-700 dark:text-gray-300">
+                  <li>**חוסכים לטווח ארוך:** פרישה, חיסכון לילדים, קניית דירה בעתיד.</li>
+                  <li>**משקיעים בשוק ההון:** להמחשת הצמיחה הפוטנציאלית של תיק ההשקעות.</li>
+                  <li>**בעלי חיסכון פנסיוני:** להבנת הצפי לצבירה בקופת הגמל, קרן ההשתלמות או הפנסיה.</li>
+                  <li>**כל מי שרוצה לקבל החלטות פיננסיות מושכלות:** המחשבון עוזר לכמת את ההשפעה של החלטות כמו סכום הפקדה, בחירת מסלול השקעה (תשואה צפויה) ודמי ניהול.</li>
+                  <li>**הורים המלמדים את ילדיהם על כסף:** כלי ויזואלי מצוין להמחשת חשיבות החיסכון וההשקעה מגיל צעיר.</li>
+                </ul>
+              </section>
+
+              <section className="mb-12 p-6 bg-gray-50 dark:bg-gray-700 rounded-lg">
+                <h3 className="text-2xl font-semibold mb-4 flex items-center gap-3 text-gray-800 dark:text-white">
+                  <PiggyBank className="w-7 h-7 text-blue-600" />
+                  מדריך מפורט לשימוש במחשבון דריבית
+                </h3>
+                <p className="text-gray-700 dark:text-gray-200 leading-relaxed mb-4">
+                  המחשבון שלנו פשוט וידידותי, אך חשוב להזין את הנתונים הנכונים כדי לקבל תחזית רלוונטית. הנה פירוט השדות:
+                </p>
+                <ol className="space-y-5 text-gray-700 dark:text-gray-200">
+                  <li className="border-b pb-4 dark:border-gray-600">
+                    <strong className="block mb-1">1. סכום השקעה ראשוני (₪):</strong><br /> הסכום ההתחלתי שעומד לרשותכם. אם אתם מחשבים עבור חיסכון קיים (כמו קופת גמל), הזינו את היתרה הנוכחית. אם אתם מתחילים מאפס, הזינו 0.
+                  </li>
+                  <li className="border-b pb-4 dark:border-gray-600">
+                    <strong className="block mb-1">2. סכום הפקדה חודשית (₪):</strong><br /> הסכום שאתם מתכננים להפקיד באופן קבוע מדי חודש. עקביות בהפקדות מגבירה משמעותית את הצבירה הסופית. אם אין הפקדות נוספות, הזינו 0.
+                    <TipBox className="mt-2 text-sm">
+                      לחיסכון פנסיוני, בדקו בתלוש השכר את סך ההפרשות (עובד+מעסיק+פיצויים) או בדוח התקופתי מהגוף המנהל.
+                    </TipBox>
+                  </li>
+                  <li className="border-b pb-4 dark:border-gray-600">
+                    <strong className="block mb-1">3. מספר שנות ההשקעה:</strong><br /> טווח הזמן (בשנים) שבו אתם מתכננים להשאיר את הכסף מושקע ולבצע הפקדות. זמן הוא בעל הברית החזק ביותר של הריבית דריבית.
+                  </li>
+                  <li className="border-b pb-4 dark:border-gray-600">
+                    <strong className="block mb-1">4. תשואה שנתית ממוצעת (%):</strong><br /> הנקודה המאתגרת ביותר. איש אינו יודע מה תהיה התשואה העתידית. הזינו כאן את התשואה *הממוצעת* שאתם *מניחים* שתתקבל לאורך כל התקופה.
+                    <InfoBox title="איך להעריך תשואה? (נקודות למחשבה)" className="mt-3 text-sm">
+                      *   **רמת סיכון:** ככל שההשקעה מסוכנת יותר (למשל, חשיפה גבוהה למניות), פוטנציאל התשואה לטווח ארוך גבוה יותר, אך כך גם התנודתיות והסיכון להפסדים.
+                      *   **נתוני עבר:** ניתן להסתכל על ממוצעים היסטוריים של מדדים רלוונטיים (כמו S&P 500 שהניב כ-10% נומינלית בממוצע היסטורי ארוך טווח, או ביצועי המסלול הספציפי שלכם בפנסיה/גמל), אך חשוב לזכור: **ביצועי העבר אינם ערובה לביצועי העתיד.**
+                      *   **שמרנות:** ייתכן שכדאי להזין הנחה שמרנית יותר (למשל, 6%-8% למסלול מנייתי) מאשר הנחה אופטימית מדי.
+                      *   **התייעצות:** יועץ פיננסי יכול לעזור לכם לגבש הנחת תשואה סבירה בהתאם למטרות ורמת הסיכון שלכם.
+                    </InfoBox>
+                  </li>
+                  <li>
+                    <strong className="block mb-1">5. דמי ניהול שנתיים (%):</strong><br /> רלוונטי בעיקר למוצרי חיסכון מנוהלים (פנסיה, גמל, השתלמות, קרנות נאמנות אקטיביות). הזינו את אחוז דמי הניהול השנתיים מהצבירה. תוכלו למצוא נתון זה בדוחות או באתר הגוף המנהל.
+                    <TipBox className="mt-2 text-sm">
+                      אל תזלזלו בדמי הניהול! אפילו 0.5% לשנה יכולים להצטבר לסכומים עצומים לאורך עשרות שנים. השוואת דמי ניהול היא צעד חשוב.
+                    </TipBox>
+                  </li>
+                </ol>
+              </section>
+
+              <section className="mb-12">
+                <h3 className="text-2xl font-semibold mb-4 flex items-center gap-3 text-gray-800 dark:text-white">
+                  <BarChart2 className="w-7 h-7 text-orange-500" />
+                  הבנת התוצאות: מה המחשבון מראה לנו?
+                </h3>
+                <p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-4">
+                  לאחר לחיצה על "חשב", תקבלו פירוט מספרי וגרף הממחישים את התחזית:
+                </p>
+                <ul className="space-y-3 text-gray-700 dark:text-gray-300 mb-6">
+                  <li><strong className="text-gray-900 dark:text-white">יתרה סופית משוערכת:</strong> זהו הסכום הכולל החזוי שיהיה לכם בסוף תקופת ההשקעה, בהתאם לנתונים שהוזנו.</li>
+                  <li><strong className="text-gray-900 dark:text-white">סך כל ההפקדות:</strong> הסכום הראשוני + (הפקדה חודשית * 12 * מספר שנים). זה הכסף שאתם הכנסתם.</li>
+                  <li><strong className="text-gray-900 dark:text-white">סך הריבית (רווח נטו):</strong> היתרה הסופית פחות סך כל ההפקדות. זהו הרווח שנצבר נטו (לאחר דמי ניהול, אם הוזנו), כולו בזכות הריבית דריבית. שימו לב ליחס בין הרווח להפקדות – ככל שהשנים עוברות, הרווח הופך לחלק גדול יותר ויותר מהסכום הכולל.</li>
+                </ul>
+                <div className="bg-indigo-50 dark:bg-indigo-900/30 p-4 rounded-lg">
+                  <h4 className="font-semibold mb-2 text-indigo-700 dark:text-indigo-300">הגרף הויזואלי:</h4>
+                  <p className="text-sm text-indigo-600 dark:text-indigo-200">הגרף ממחיש את הצמיחה לאורך זמן. תוכלו לראות כיצד הקו המייצג את היתרה הכוללת הופך תלול יותר ויותר ככל שהשנים חולפות – זוהי ההמחשה הויזואלית של כוח הריבית דריבית בפעולה.</p>
+                </div>
+              </section>
+
+              <section className="mb-12">
+                <h3 className="text-2xl font-semibold mb-4 flex items-center gap-3 text-gray-800 dark:text-white">
+                  <Scale className="w-7 h-7 text-teal-500" />
+                  גורמים נוספים שיש לקחת בחשבון
+                </h3>
+                <p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-4">
+                  המחשבון הוא כלי מצוין להמחשה, אך המציאות מורכבת יותר. חשוב להיות מודעים לגורמים נוספים:
+                </p>
+                <ul className="space-y-4 text-gray-700 dark:text-gray-300">
+                  <li>
+                    <strong className="block text-gray-900 dark:text-white">אינפלציה:</strong> אינפלציה היא העלייה הכללית במחירים לאורך זמן, ששוחקת את כוח הקנייה של הכסף. 100 ש"ח היום קונים פחות ממה שקנו לפני 10 שנים. לכן, התשואה החשובה באמת היא **התשואה הריאלית** - התשואה הנומינלית (מה שהמחשבון מראה) פחות שיעור האינפלציה. אם התשואה שלכם היא 7% והאינפלציה היא 3%, התשואה הריאלית שלכם היא כ-4%. חשוב לשאוף לתשואה שתנצח את האינפלציה לאורך זמן.
+                  </li>
+                  <li>
+                    <strong className="block text-gray-900 dark:text-white">מיסוי:</strong> במדינת ישראל, רווחים מהשקעות (כמו אלה שנוצרים מריבית דריבית בשוק ההון) חייבים במס רווחי הון (כ-25% על הרווח הריאלי, נכון ל-2024). המס משולם בעת מימוש (מכירת ההשקעה). במוצרים פנסיוניים כמו קופות גמל או קרנות השתלמות קיימים פטורים או הטבות מס משמעותיות בתנאים מסוימים. תוצאות המחשבון אינן כוללות מיסוי, ויש לקחת זאת בחשבון בתכנון הפיננסי הכולל.
+                    <WarningBox title="לא ייעוץ מס" className="mt-2 text-sm">תמיד התייעצו עם רואה חשבון או יועץ מס לגבי השלכות המיסוי הספציפיות למצבכם.</WarningBox>
+                  </li>
+                  <li>
+                    <strong className="block text-gray-900 dark:text-white">תנודתיות ותשואות לא קבועות:</strong> המחשבון מניח תשואה שנתית ממוצעת קבועה. בפועל, תשואות בשוק ההון משתנות מאוד משנה לשנה ויכולות להיות גם שליליות. הריבית דריבית פועלת גם על הפסדים! השקעה לטווח ארוך עוזרת "להחליק" את התנודות האלה, אך חשוב להיות מוכנים לתקופות של ירידות.
+                  </li>
+                  <li>
+                    <strong className="block text-gray-900 dark:text-white">עמלות נוספות:</strong> המחשבון מאפשר להזין דמי ניהול שנתיים, אך ייתכנו עמלות נוספות בהשקעות מסוימות (כמו עמלות קנייה/מכירה של ניירות ערך, דמי נאמן, עמלות העברה וכו') שיכולות להשפיע על התשואה נטו.
+                  </li>
+                </ul>
+              </section>
+
+              <section className="mb-12">
+                  <h3 className="text-2xl font-semibold mb-4 flex items-center gap-3 text-gray-800 dark:text-white">
+                      <AlertTriangle className="w-7 h-7 text-yellow-500" />
+                      הנחות יסוד ומגבלות המחשבון
+                  </h3>
+                  <p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-4">
+                      חשוב להבין את הנחות היסוד של המחשבון כדי להשתמש בו בחוכמה:
+                  </p>
+                  <ul className="list-disc list-inside space-y-2 text-gray-700 dark:text-gray-300">
+                      <li>הוא מניח שהתשואה השנתית שהוזנה היא קבועה לאורך כל התקופה.</li>
+                      <li>הוא מניח שההפקדות החודשיות מבוצעות באופן עקבי ורציף.</li>
+                      <li>הוא מחשב את הריבית על בסיס שנתי (או חודשי, תלוי במימוש הספציפי, אך התוצאה מוצגת שנתית).</li>
+                      <li>הוא לוקח בחשבון דמי ניהול שנתיים מהצבירה, אך לא עמלות אחרות או מיסים.</li>
+                      <li>הוא אינו מתחשב באינפלציה (מציג תוצאה נומינלית).</li>
                   </ul>
-                  <WarningBox title="אזהרה חשובה לגבי תשואה צפויה" className="mt-3">
-                    הנתונים ההיסטוריים אינם ערובה לתשואות עתידיות! השווקים יכולים להשתנות. הזינו כאן את ההנחה שלכם, אך זכרו שזוהי רק תחזית תיאורטית. אל תבססו החלטות פיננסיות קריטיות רק על תוצאת המחשבון.
-                  </WarningBox>
-                </li>
-                <li>
-                  <strong>דמי ניהול שנתיים (%):</strong> אם רלוונטי (בעיקר בקופות גמל, קרנות השתלמות, פנסיה, קרנות נאמנות מסוימות), הזינו את אחוז דמי הניהול השנתיים שגובים מכם (לרוב מסך הצבירה). דמי ניהול, גם אם נראים נמוכים, יכולים "לנגוס" משמעותית בתשואה לאורך זמן.
-                </li>
-              </ol>
-            </section>
-            
-            <section className="mb-10">
-              <h3 className="text-2xl font-semibold mb-4 flex items-center gap-2 text-gray-800 dark:text-white">
-                <BarChart2 className="w-6 h-6 text-orange-500" />
-                איך לקרוא נכון את התוצאות?
-              </h3>
-              <p className="text-gray-600 dark:text-gray-300 leading-relaxed mb-4">
-                לאחר הזנת הנתונים, המחשבון יציג לכם תחזית וגרף. הנה הסבר לנתונים העיקריים:
-              </p>
-              <ul className="space-y-3 text-gray-600 dark:text-gray-300">
-                <li>• <strong>היתרה הסופית:</strong> הסכום הכולל הצפוי בסוף תקופת ההשקעה שהוגדרה.</li>
-                <li>• <strong>סך ההפקדות:</strong> סכום ההשקעה הראשוני + סך כל ההפקדות החודשיות שתבצעו לאורך התקופה. זה הכסף שאתם הכנסתם מכיסכם.</li>
-                <li>• <strong>סך הריבית (רווח):</strong> ההפרש בין היתרה הסופית לסך ההפקדות. זהו הרווח נטו שנצבר בזכות הריבית דריבית (לאחר דמי ניהול, אם הוזנו). שימו לב כמה הרווח גדל ביחס להפקדות ככל ששנות ההשקעה מתארכות!</li>
-                <li>• <strong>הגרף והטבלה (אם קיימים):</strong> מראים את התפתחות הצבירה והרווחים לאורך השנים, וממחישים את אפקט כדור השלג של הריבית דריבית.</li>
-              </ul>
-            </section>
-            
-            <div className="bg-blue-50 dark:bg-blue-900/30 rounded-xl p-6 mb-10">
-              <h3 className="text-xl font-semibold mb-4 flex items-center gap-2">
-                <Clock className="w-5 h-5 text-blue-500" />
-                טיפים למיקסום הריבית דריבית
-              </h3>
-              <ul className="space-y-3 text-gray-600 dark:text-gray-300">
-                <li>• <strong>התחילו מוקדם ככל האפשר:</strong> זמן הוא המרכיב החשוב ביותר בריבית דריבית.</li>
-                <li>• <strong>היו עקביים:</strong> הפקדות חודשיות קבועות, גם אם קטנות, מצטברות לסכומים משמעותיים.</li>
-                <li>• <strong>השקיעו לטווח ארוך:</strong> אפקט הריבית דריבית מתעצם משמעותית ככל שטווח ההשקעה ארוך יותר. אל תיבהלו מתנודות קצרות טווח.</li>
-                <li>• <strong>שימו לב לדמי ניהול:</strong> בדקו והשוו דמי ניהול. הפרש קטן באחוזים הופך לסכום גדול לאורך שנים.</li>
-                <li>• <strong>הגדילו הפקדות כשניתן:</strong> אם ההכנסה שלכם עולה, שקלו להגדיל את ההפקדה החודשית.</li>
-              </ul>
+                  <p className="mt-4 text-gray-700 dark:text-gray-300 leading-relaxed">
+                      לכן, יש להתייחס לתוצאות כאל <strong>הערכה ותחזית תיאורטית</strong> המבוססת על ההנחות שהוזנו, ולא כאל הבטחה לתוצאה עתידית.
+                  </p>
+              </section>
+
+              <section className="mb-12 bg-blue-50 dark:bg-blue-900/30 rounded-xl p-6">
+                <h3 className="text-xl font-semibold mb-4 flex items-center gap-3 text-blue-800 dark:text-blue-200">
+                  <CheckSquare className="w-6 h-6 text-blue-600" />
+                  טיפים למיקסום כוחה של הריבית דריבית
+                </h3>
+                <ul className="space-y-3 text-gray-700 dark:text-gray-300">
+                  <li><strong className="text-gray-900 dark:text-white">1. התחילו מוקדם ככל האפשר:</strong> הזמן הוא המרכיב הקריטי ביותר. גם סכומים קטנים המושקעים לאורך זמן רב יכולים לצמוח משמעותית.</li>
+                  <li><strong className="text-gray-900 dark:text-white">2. היו עקביים בהפקדות:</strong> הפקדות קבועות (למשל, בהוראת קבע) מבטיחות חיסכון רציף ומסייעות למצע את תנודות השוק (Dollar Cost Averaging).</li>
+                  <li><strong className="text-gray-900 dark:text-white">3. חשבו לטווח ארוך:</strong> אל תיבהלו מירידות זמניות בשוק. השקעה היא מרתון, לא ספרינט. תנו לזמן לעשות את שלו.</li>
+                  <li><strong className="text-gray-900 dark:text-white">4. מזערו עלויות:</strong> בחרו מוצרי השקעה וחיסכון עם דמי ניהול נמוכים ככל האפשר. השוואת דמי ניהול יכולה לחסוך לכם עשרות ואף מאות אלפי שקלים לאורך חיי החיסכון.</li>
+                  <li><strong className="text-gray-900 dark:text-white">5. הגדילו הפקדות כשמתאפשר:</strong> העלאת שכר? בונוס? שקלו להפנות חלק מהתוספת להגדלת החיסכון החודשי.</li>
+                   <li><strong className="text-gray-900 dark:text-white">6. גוונו את השקעותיכם:</strong> אל תשימו את כל הביצים בסל אחד. פיזור ההשקעות בין אפיקים שונים (מניות, אג"ח, נדל"ן וכו') יכול להפחית את הסיכון הכולל.</li>
+                  <li><strong className="text-gray-900 dark:text-white">7. למדו והתעדכנו:</strong> המשיכו ללמוד על אפשרויות השקעה וניהול פיננסי. ידע הוא כוח.</li>
+                </ul>
+              </section>
+
+               <WarningBox title="חשוב לזכור" className="mb-10">
+                 התוכן בעמוד זה והמחשבון נועדו למטרות המחשה ולימוד בלבד ואין לראות בהם ייעוץ השקעות, ייעוץ מס או המלצה לביצוע פעולות. התוצאות המוצגות הן תחזית תיאורטית המבוססת על ההנחות שהוזנו. השקעות כרוכות בסיכון, כולל אפשרות לאובדן הקרן. לפני קבלת החלטות פיננסיות, מומלץ בחום להתייעץ עם יועץ פיננסי או פנסיוני מוסמך ו/או יועץ מס.
+               </WarningBox>
+
+              <div className="text-sm text-gray-500 dark:text-gray-400 text-center">
+                <p>
+                  <strong>מושגים קשורים:</strong> ריבית דריבית, חישוב ריבית דריבית, כוח הריבית דריבית, תשואה על השקעות, הפקדות חודשיות, חיסכון ארוך טווח, תכנון פרישה, קופת גמל, קרן השתלמות, פנסיה, השקעות פסיביות, דמי ניהול, אינפלציה, מיסוי השקעות, תשואה ריאלית, תשואה נומינלית, אפקט כדור השלג, תכנון פיננסי, תיק השקעות, תשואה מצטברת, S&P 500, גיוון השקעות.
+                </p>
+              </div>
             </div>
-            
-            <div className="mt-8 text-sm text-gray-500 dark:text-gray-400">
-              <p>
-                <strong>מושגים קשורים:</strong> ריבית דריבית, חיסכון ארוך טווח, תשואה שנתית, הפקדות חודשיות,
-                דמי ניהול, אפקט הריבית דריבית, תכנון פיננסי, השקעות לטווח ארוך, חיסכון פנסיוני,
-                קופות גמל, קרנות השתלמות, תיק השקעות, תשואה מצטברת, כוח הריבית, מדד S&P 500, חישוב תשואה.
-              </p>
-            </div>
-          </div>
+          </article>
         </div>
       </div>
     </>
