@@ -21,44 +21,58 @@ function formatDate(date) {
 }
 
 export function getAllArticles() {
-  const fileNames = fs.readdirSync(articlesDirectory);
-  const articles = fileNames.map((fileName) => {
-    const slug = fileName.replace(/\.mdx$/, '');
-    const fullPath = path.join(articlesDirectory, fileName);
-    const fileContents = fs.readFileSync(fullPath, 'utf8');
-    let data = {};
-    let content = '';
-    try {
-      const parsed = matter(fileContents);
-      data = parsed.data;
-      content = parsed.content;
-    } catch (e) {
-      console.error(`Error parsing frontmatter for ${fileName}:`, e);
-      // Provide default data if parsing fails
-      data = { title: slug }; // Use slug as fallback title
-    }
-
-    // Extract the first paragraph as description if not provided
-    let description = data.description;
-    if (!description && content) {
-      const firstParagraphMatch = content.match(/^([^#\n].*?)(\n\n|$)/s);
-      if (firstParagraphMatch) {
-        description = firstParagraphMatch[1].replace(/\*\*/g, '').trim();
+  let fileNames = [];
+  try {
+    fileNames = fs.readdirSync(articlesDirectory);
+  } catch (error) {
+      console.error("Error reading articles directory:", error);
+      return []; // Return empty array if directory read fails
+  }
+  
+  const articles = fileNames
+    .filter((fileName) => /\.(mdx|md)$/.test(fileName)) // Filter for .mdx or .md files
+    .map((fileName) => {
+      const slug = fileName.replace(/\.(mdx|md)$/, ''); // Remove either extension
+      const fullPath = path.join(articlesDirectory, fileName);
+      let fileContents = '';
+      try {
+          fileContents = fs.readFileSync(fullPath, 'utf8');
+      } catch (error) {
+          console.error(`Error reading file ${fileName}:`, error);
+          return null; // Skip this file if read fails
       }
-    }
+      
+      let data = {};
+      let content = '';
+      try {
+        const parsed = matter(fileContents);
+        data = parsed.data;
+        content = parsed.content;
+      } catch (e) {
+        console.error(`Error parsing frontmatter for ${fileName}:`, e);
+        data = { title: slug }; 
+      }
 
-    // Calculate reading time if not provided
-    const readingTime = data.readingTime || estimateReadingTime(content);
+      let description = data.description;
+      if (!description && content) {
+        const firstParagraphMatch = content.match(/^([^#\n].*?)(\n\n|$)/s);
+        if (firstParagraphMatch) {
+          description = firstParagraphMatch[1].replace(/\*\*/g, '').trim();
+        }
+      }
 
-    return {
-      slug,
-      title: data.title || '', // Provide empty string as fallback title
-      date: formatDate(data.date), // Format date to ISO string
-      readingTime: readingTime || null, // Ensure it's serializable, use null as fallback
-      tags: data.tags || [],
-      description: description || '', // Ensure description is always a string
-    };
-  });
+      const readingTime = data.readingTime || estimateReadingTime(content);
+
+      return {
+        slug,
+        title: data.title || '',
+        date: formatDate(data.date),
+        readingTime: readingTime || null,
+        tags: data.tags || [],
+        description: description || '',
+      };
+    })
+    .filter(article => article !== null); // Remove null entries from failed reads
 
   return articles.sort((a, b) => {
     try {
@@ -76,15 +90,26 @@ export function getAllArticles() {
 }
 
 export function getArticleBySlug(slug) {
-  const fullPath = path.join(articlesDirectory, `${slug}.mdx`);
+  const mdxPath = path.join(articlesDirectory, `${slug}.mdx`);
+  const mdPath = path.join(articlesDirectory, `${slug}.md`);
+  let fullPath = '';
+
+  if (fs.existsSync(mdxPath)) {
+    fullPath = mdxPath;
+  } else if (fs.existsSync(mdPath)) {
+    fullPath = mdPath;
+  } else {
+    console.error(`Article file not found for slug: ${slug} (checked .mdx and .md)`);
+    throw new Error(`Article file not found for slug: ${slug}`);
+  }
+
   console.log(`Attempting to read file: ${fullPath}`);
   try {
     const fileContents = fs.readFileSync(fullPath, 'utf8');
-    console.log(`Successfully read file: ${slug}.mdx`);
+    console.log(`Successfully read file: ${path.basename(fullPath)}`);
     const { data, content } = matter(fileContents);
-    console.log(`Successfully parsed frontmatter for: ${slug}.mdx`);
+    console.log(`Successfully parsed frontmatter for: ${slug}`);
 
-    // Extract the first paragraph as description if not provided
     let description = data.description;
     if (!description && content) {
       const firstParagraphMatch = content.match(/^([^#\n].*?)(\n\n|$)/s);
@@ -92,26 +117,22 @@ export function getArticleBySlug(slug) {
         description = firstParagraphMatch[1].replace(/\*\*/g, '').trim();
       }
     }
-    
+
     const readingTime = data.readingTime || estimateReadingTime(content);
 
-    // Log the content before returning to ensure frontmatter is removed
     console.log(`Content for ${slug} before returning (first 100 chars):`, content.substring(0, 100));
 
     return {
       slug,
-      title: data.title || '', // Add fallback for title
-      date: formatDate(data.date), // Format date to ISO string
-      readingTime: readingTime || null, // Ensure readingTime is serializable
+      title: data.title || '',
+      date: formatDate(data.date),
+      readingTime: readingTime || null,
       tags: data.tags || [],
-      description: description || '', 
-      content, // Content is needed for the individual article page
+      description: description || '',
+      content,
     };
   } catch (error) {
-    console.error(`Error processing file ${slug}.mdx:`, error);
-    // It might be better to return null or an error object here
-    // so getStaticProps can handle it (e.g., return notFound: true)
-    // For now, rethrowing to see the error.
+    console.error(`Error processing file ${path.basename(fullPath)}:`, error);
     throw new Error(`Failed to process article ${slug}: ${error.message}`);
   }
 }
