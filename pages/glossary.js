@@ -1,6 +1,7 @@
 import Head from 'next/head';
 import Link from 'next/link';
 import { ChevronRight, BookText } from 'lucide-react';
+import { useMemo } from 'react';
 
 // Expanded list of terms - can be moved to a separate file later
 const glossaryTerms = [
@@ -148,6 +149,21 @@ const glossaryTerms = [
 glossaryTerms.sort((a, b) => a.term.localeCompare(b.term, 'he'));
 
 export default function GlossaryPage() {
+
+  // Group terms by the first letter
+  const groupedTerms = useMemo(() => {
+    return glossaryTerms.reduce((acc, item) => {
+      const firstLetter = item.term[0].toUpperCase(); // Use uppercase for consistency
+      if (!acc[firstLetter]) {
+        acc[firstLetter] = [];
+      }
+      acc[firstLetter].push(item);
+      return acc;
+    }, {});
+  }, []); // Dependency array is empty as glossaryTerms is constant within the module scope
+
+  const alphabet = useMemo(() => Object.keys(groupedTerms).sort((a,b) => a.localeCompare(b, 'he')), [groupedTerms]);
+
   return (
     <>
       <Head>
@@ -158,33 +174,50 @@ export default function GlossaryPage() {
         <meta property="og:description" content="הסברים פשוטים וברורים למושגים החשובים בעולם הפיננסים וההשקעות. המילון המקיף של דריבית." />
         <meta property="og:url" content="https://www.deribit.co.il/glossary" />
         <link rel="canonical" href="https://www.deribit.co.il/glossary" />
-        {/* Add og:image later if needed */}
       </Head>
 
       <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white dark:from-gray-900 dark:to-gray-800 py-16">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          {/* Breadcrumb/Back link could be added here if desired */}
-          {/* <div className="mb-8">
-            <Link href="/" className="text-sm ...">חזרה</Link>
-          </div> */} 
-
+          
           <div className="text-center mb-12">
             <BookText className="mx-auto h-12 w-12 text-indigo-600 mb-4" />
             <h1 className="text-4xl font-extrabold text-gray-900 dark:text-white mb-4">מילון מונחים פיננסיים</h1>
             <p className="text-xl text-gray-600 dark:text-gray-300">הסברים פשוטים וברורים למושגים החשובים בעולם הפיננסים</p>
           </div>
 
+          {/* Alphabet Navigation */}
+          <div className="flex flex-wrap justify-center gap-2 mb-12 sticky top-4 bg-gray-50/80 dark:bg-gray-900/80 backdrop-blur-sm py-3 z-10 rounded-full border border-gray-200 dark:border-gray-700 shadow-sm">
+            {alphabet.map((letter) => (
+              <a 
+                key={letter}
+                href={`#letter-${letter}`}
+                className="px-3 py-1 text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
+                // Smooth scroll might require JS, keeping it simple with href for now
+              >
+                {letter}
+              </a>
+            ))}
+          </div>
+
           <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8 md:p-12">
-            <div className="space-y-8">
-              {glossaryTerms.map((item) => (
-                <div key={item.slug || item.term} id={item.slug || item.term} className="border-b border-gray-200 dark:border-gray-700 pb-6">
-                  <h2 className="text-2xl font-semibold text-gray-900 dark:text-white mb-2">{item.term}</h2>
-                  <p className="text-gray-700 dark:text-gray-300 leading-relaxed">
-                    {item.definition}
-                  </p>
-                  {/* Potential future link: */}
-                  {/* {item.relatedArticle && <Link href={item.relatedArticle}><a className="text-sm text-blue-600 hover:underline">קרא עוד...</a></Link>} */}
-                </div>
+            <div className="space-y-10">
+              {/* Iterate through grouped terms */}
+              {alphabet.map((letter) => (
+                <section key={letter} id={`letter-${letter}`}>
+                  <h2 className="text-3xl font-bold text-blue-600 dark:text-blue-400 border-b border-blue-200 dark:border-blue-800 pb-2 mb-6">
+                    {letter}
+                  </h2>
+                  <div className="space-y-8">
+                    {groupedTerms[letter].map((item) => (
+                      <div key={item.slug || item.term} id={item.slug || item.term} className="border-b border-gray-200 dark:border-gray-700 pb-6 last:border-b-0">
+                        <h3 className="text-2xl font-semibold text-gray-900 dark:text-white mb-2">{item.term}</h3>
+                        <p className="text-gray-700 dark:text-gray-300 leading-relaxed">
+                          {item.definition}
+                        </p>
+                      </div>
+                    ))}
+                  </div>
+                </section>
               ))}
             </div>
           </div>
