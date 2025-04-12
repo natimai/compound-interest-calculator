@@ -1,7 +1,7 @@
 import React from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
-import { Book, ArrowLeft, Sparkles, Target, Shield, Building2, TrendingUp, PiggyBank } from 'lucide-react';
+import { Book, ArrowLeft, Sparkles, Target, Shield, Building2, TrendingUp, PiggyBank, BookText } from 'lucide-react';
 
 const GuidesPage = () => {
   const guides = [
@@ -190,9 +190,13 @@ const GuidesPage = () => {
             <h1 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
               מדריכים פיננסיים
             </h1>
-            <p className="text-xl text-gray-600 dark:text-gray-300">
+            <p className="text-xl text-gray-600 dark:text-gray-300 mb-4">
               מדריכים מקיפים להבנת עולם ההשקעות והחיסכון
             </p>
+            <Link href="/glossary" className="inline-flex items-center gap-2 text-lg text-indigo-600 hover:text-indigo-800 dark:text-indigo-400 dark:hover:text-indigo-300 underline transition-colors">
+              <BookText className="w-5 h-5" />
+              צריכים הסבר למושג? בקרו במילון המונחים שלנו
+            </Link>
           </header>
 
           {categories.map(category => (
