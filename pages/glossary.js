@@ -180,7 +180,8 @@ export default function GlossaryPage() {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           
           <div className="text-center mb-12">
-            <BookText className="mx-auto h-12 w-12 text-indigo-600 mb-4" />
+            {/* Remove the BookText icon for debugging */}
+            {/* <BookText className="mx-auto h-12 w-12 text-indigo-600 mb-4" /> */}
             <h1 className="text-4xl font-extrabold text-gray-900 dark:text-white mb-4">מילון מונחים פיננסיים</h1>
             <p className="text-xl text-gray-600 dark:text-gray-300">הסברים פשוטים וברורים למושגים החשובים בעולם הפיננסים</p>
           </div>
